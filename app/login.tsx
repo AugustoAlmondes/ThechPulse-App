@@ -1,10 +1,9 @@
-import { COLORS } from "@/src/theme/global";
 import { StyleSheet, Text, View } from "react-native";
 
-export default function Home() {
+export default function Login() {
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Home</Text>
+            <Text>Login</Text>
         </View>
     )
 }
@@ -12,11 +11,7 @@ export default function Home() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: COLORS.neutral[800],
         justifyContent: 'center',
         alignItems: 'center'
-    },
-    title: {
-        color: COLORS.neutral.white
     }
 })

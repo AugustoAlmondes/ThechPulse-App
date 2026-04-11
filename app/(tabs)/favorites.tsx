@@ -1,10 +1,10 @@
 import { COLORS } from "@/src/theme/global";
 import { StyleSheet, Text, View } from "react-native";
 
-export default function Home() {
+export default function Favorites() {
     return (
         <View style={styles.container}>
-            <Text style={styles.title}>Home</Text>
+            <Text style={styles.title}>Favorites</Text>
         </View>
     )
 }

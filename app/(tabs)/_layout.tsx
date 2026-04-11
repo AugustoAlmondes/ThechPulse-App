@@ -1,35 +1,39 @@
-import { Tabs } from 'expo-router';
-import React from 'react';
+import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
+import Favorites from "./favorites";
+import { COLORS } from "@/src/theme/global";
+import Home from ".";
 
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+const Tab = createMaterialTopTabNavigator();
 
-export default function TabLayout() {
-  const colorScheme = useColorScheme();
+export default function TabsLayout() {
 
-  return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
-      }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
-        }}
-      />
-    </Tabs>
-  );
+    return (
+        <>
+            <Tab.Navigator
+                tabBarPosition="bottom"
+                screenOptions={{
+                    tabBarStyle: {
+                        backgroundColor: COLORS.neutral[900],
+                        height: 60,
+                        paddingBottom: 8,
+                    },
+                    tabBarIndicatorStyle: {
+                        width: 0
+                    },
+
+                    tabBarActiveTintColor: COLORS.neutral.white,
+                    tabBarInactiveTintColor: COLORS.neutral[300],
+                    tabBarLabelStyle: {
+                        fontSize: 14,
+                        fontWeight: '600',
+                        textTransform: 'none',
+                    },
+                }}
+
+            >
+                <Tab.Screen name="index" component={Home} />
+                <Tab.Screen name="favorites" component={Favorites} />
+            </Tab.Navigator>
+        </>
+    )
 }
