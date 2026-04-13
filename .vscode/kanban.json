@@ -5,12 +5,12 @@
             "title": "To-Do",
             "tasks": [
                 {
-                    "text": "Criar uma tela chamada jornal e adicionar a flatlist com os subjects\n",
-                    "id": "svzp7nnvya8qybxboem3rtw8"
+                    "text": "Adicionar background colorido para cada subject existente (Meus favoritos e Mais acessados\"",
+                    "id": "v49nzz6e9a2sla5v78t5kar3"
                 },
                 {
-                    "text": "Adicionar, na home, uma seção de \"Meus salvos\", algo do tipo",
-                    "id": "aqsclnlr8dut8sd6ad4rm50s"
+                    "text": "Criar uma tela chamada jornal e adicionar a flatlist com os subjects\n",
+                    "id": "svzp7nnvya8qybxboem3rtw8"
                 },
                 {
                     "text": "Remover ícone de pesquisa e adiciona 3 pontos para acessar configuração",
@@ -28,12 +28,17 @@
         },
         {
             "title": "Done",
-            "tasks": [],
+            "tasks": [
+                {
+                    "text": "Adicionar, na home, uma seção de \"Meus salvos\", algo do tipo",
+                    "id": "aqsclnlr8dut8sd6ad4rm50s"
+                }
+            ],
             "id": "ci1pb98733btvfgr9vrwlsg6",
             "color": "#00d084"
         }
     ],
     "autosave": true,
     "saveToFile": true,
-    "timestamp": 1776053369632
+    "timestamp": 1776056229945
 }
