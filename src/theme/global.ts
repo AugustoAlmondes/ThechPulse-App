@@ -60,4 +60,18 @@ export const COLORS = {
             700: "#c49000",
         },
     },
+
+    badges: {
+        blue: "#4a90e2",
+        green: "#27ae60",
+        purple: "#9b59b6",
+        pink: "#e2759f",
+        orange: "#f39c12",
+        teal: "#1abc9c",
+        red: "#b45b51",
+        indigo: "#5c6bc0",
+        cyan: "#57afbb",
+        lime: "#8bc34a",
+    },
+
 };

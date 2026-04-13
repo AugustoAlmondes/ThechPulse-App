@@ -1,0 +1,67 @@
+import { COLORS } from '@/src/theme/global'
+import { Image, StyleSheet, Text, View } from 'react-native'
+
+export default function FirstNews() {
+    return (
+        <View style={styles.container}>
+            <Image
+                style={styles.headerImage}
+                source={require('@/public/images/news.jpeg')} />
+
+            <Text style={styles.badge}>
+                LAST NEWS
+            </Text>
+
+            <View>
+                <Text style={styles.title}>
+                    NEURAL NETWORK REACH NEW BENCHMARKS IN ACHITECTURAL SIMULATION
+                </Text>
+
+                <Text
+                    style={styles.description}
+                >
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae eius accusamus, hic in quasi dolor dignissimos aspernatur quas consequuntur...
+                </Text>
+            </View>
+        </View>
+    )
+}
+
+const styles = StyleSheet.create({
+    container: {
+        padding: 15,
+        backgroundColor: COLORS.neutral[800],
+        borderRadius: 10
+
+    },
+    title: {
+        color: COLORS.neutral[200],
+        fontSize: 24,
+        fontWeight: '500',
+        marginBottom: 10
+    },
+    headerImage: {
+        height: 160,
+        marginBottom: 20,
+        width: '100%',
+        objectFit: 'cover'
+    },
+    badge: {
+        paddingHorizontal: 10,
+        paddingVertical: 2,
+        alignSelf: 'flex-start',
+        fontSize: 12,
+        fontWeight: 'bold',
+        color: COLORS.neutral.white,
+        borderRadius: 50,
+        backgroundColor: COLORS.badges.blue,
+        marginBottom: 10
+    },
+    description: {
+        color: COLORS.neutral[300],
+        fontSize: 14,
+        textAlign: 'justify',
+        letterSpacing: 0.5,
+        marginBottom: 10
+    }
+})
