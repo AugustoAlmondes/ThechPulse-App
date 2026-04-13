@@ -31,12 +31,12 @@ const styles = StyleSheet.create({
     container: {
         padding: 15,
         backgroundColor: COLORS.neutral[800],
-        borderRadius: 10
+        borderRadius: 2
 
     },
     title: {
         color: COLORS.neutral[200],
-        fontSize: 24,
+        fontSize: 26,
         fontWeight: '500',
         marginBottom: 10
     },
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
     },
     description: {
         color: COLORS.neutral[300],
-        fontSize: 14,
+        fontSize: 16,
         textAlign: 'justify',
         letterSpacing: 0.5,
         marginBottom: 10

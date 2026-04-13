@@ -38,33 +38,33 @@ export default function BestNews(props: BestNewsProps) {
 
 const styles = StyleSheet.create({
     container: {
-        flex: 1,
+        flexGrow: 1,
         // backgroundColor: COLORS.primary[700],
-        borderRadius: 10,
+        borderRadius: 2,
         paddingHorizontal: 15,
-        paddingVertical: 15
+        paddingVertical: 5
     },
     subject: {
         color: COLORS.neutral[500],
         fontSize: 14,
         marginRight: 10,
-        marginBottom: 10,
+        // marginBottom: 10,
         marginLeft: 7,
         marginTop: 10,
         alignSelf: 'flex-start',
     },
     title: {
         color: COLORS.neutral[200],
-        fontSize: 24,
+        fontSize: 18,
         fontWeight: '400',
-        marginBottom: 10
+        // marginBottom: 10
     },
     description: {
-        fontSize: 16,
+        fontSize: 14,
         color: COLORS.neutral[300],
         fontWeight: '400',
         lineHeight: 20.4,
         textAlign: 'justify',
-        marginBottom: 15
+        marginBottom: 10
     }
 })
