@@ -5,6 +5,7 @@ import Header from "@/src/components/layout/Header";
 import { COLORS } from "@/src/theme/global";
 import { Divider } from 'react-native-paper';
 import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
+import FavoriteNews from "@/src/components/home/FavoriteNews";
 
 const SUBJECTS = [
     'TechPulse',
@@ -95,6 +96,23 @@ export default function Home() {
             <View
                 style={styles.newsBody}
             >
+
+
+                <View style={{ marginVertical: 10 }}>
+                    <Text style={styles.title}>
+                        MEUS FAVORITOS
+                    </Text>
+                    <FlatList
+                        horizontal
+                        showsHorizontalScrollIndicator={false}
+                        data={NEWS}
+                        renderItem={({ item }) => (
+                            <FavoriteNews item={item} />
+                        )} />
+                </View>
+
+                <Divider style={styles.divider} />
+
                 <View>
                     <Text style={styles.title}>
                         ÚLTIMA NOTÍCIA
