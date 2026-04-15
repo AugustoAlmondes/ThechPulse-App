@@ -10,7 +10,6 @@ import Entypo from "@expo/vector-icons/Entypo";
 import { BEST_NEWS, NEWS } from "@/src/constants/news";
 
 
-
 export default function Home() {
     return (
         <ScrollView refreshControl={<RefreshControl refreshing={false} size="default" />}

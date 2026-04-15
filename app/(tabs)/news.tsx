@@ -2,7 +2,9 @@ import Header from "@/src/components/layout/Header";
 import { SUBJECTS } from "@/src/constants/subjects";
 import { COLORS } from "@/src/theme/global";
 import Feather from '@expo/vector-icons/Feather';
-import { FlatList, Keyboard, Pressable, ScrollView, StyleSheet, Text, TextInput, View } from "react-native";
+import { FlatList, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { NEWS } from "@/src/constants/news";
+import CardNews from "@/src/components/news/NewsCard";
 
 export default function News() {
     return (
@@ -29,14 +31,23 @@ export default function News() {
                         showsHorizontalScrollIndicator={false}
                         horizontal
                         data={(SUBJECTS)}
+                        keyExtractor={(_, index) => index.toString()}
                         contentContainerStyle={styles.subjects}
-                        renderItem={({ item, index }) => (
-                            <Text key={index} style={styles.subject}>{item}</Text>
+                        renderItem={({ item }) => (
+                            <Text style={styles.subject}>{item}</Text>
                         )}
                     />
                 </View>
+                <View style={{ gap: 25, marginBottom: 10 }}>
+                    <Text style={styles.title}>Últimas notícias</Text>
 
-                <Text style={styles.title}>Notícias</Text>
+                    {
+                        NEWS.map((item, index) => (
+                            <CardNews key={index} {...item} />
+                        ))
+                    }
+
+                </View>
             </ScrollView>
         </>
     )
@@ -59,7 +70,6 @@ const styles = StyleSheet.create({
     },
     searchContainer: {
         flexDirection: 'row',
-        marginHorizontal: 10,
         marginBottom: 20,
         paddingVertical: 4,
         gap: 5,
