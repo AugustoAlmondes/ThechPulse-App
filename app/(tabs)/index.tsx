@@ -6,6 +6,7 @@ import { COLORS } from "@/src/theme/global";
 import { Divider } from 'react-native-paper';
 import { FlatList, ScrollView, StyleSheet, Text, View } from "react-native";
 import FavoriteNews from "@/src/components/home/FavoriteNews";
+import Entypo from "@expo/vector-icons/Entypo";
 
 const SUBJECTS = [
     'TechPulse',
@@ -79,9 +80,17 @@ export default function Home() {
             showsHorizontalScrollIndicator={false}
             stickyHeaderIndices={[0]}
             style={styles.container}>
-            <Header
+            <Header>
+                <Text style={styles.headerTitle}>TechPulse</Text>
+                <Entypo
+                    name="dots-three-vertical"
+                    size={20}
+                    color="white"
+                />
+            </Header>
+            {/* <Header
                 title="TechPulse"
-            />
+            /> */}
             {/* <View style={styles.subjectsBody}>
                 <FlatList
                     showsHorizontalScrollIndicator={false}
@@ -205,6 +214,10 @@ const styles = StyleSheet.create({
     divider: {
         backgroundColor: COLORS.neutral[700] + 40,
         height: 3
+    },
+    headerTitle: {
+        color: COLORS.neutral.white,
+        fontSize: 24,
     }
 
 })

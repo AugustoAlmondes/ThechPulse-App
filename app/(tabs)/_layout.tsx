@@ -2,7 +2,9 @@ import { createMaterialTopTabNavigator } from "@react-navigation/material-top-ta
 import Favorites from "./favorites";
 import { COLORS } from "@/src/theme/global";
 import Home from ".";
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import Entypo from '@expo/vector-icons/Entypo';
+import News from "./news";
 const Tab = createMaterialTopTabNavigator();
 
 export default function TabsLayout() {
@@ -37,7 +39,18 @@ export default function TabsLayout() {
                         tabBarShowLabel: true,
                         tabBarLabel: 'Início',
                         tabBarIcon: ({ color }) => (
-                            <Entypo name="home" size={20} color={color} />
+                            <Entypo name="home" size={18} color={color} />
+                        )
+                    }}
+                />
+                <Tab.Screen
+                    name="news"
+                    component={News}
+                    options={{
+                        tabBarShowLabel: true,
+                        tabBarLabel: 'Notícias',
+                        tabBarIcon: ({ color }) => (
+                            <FontAwesome6 name="newspaper" size={18} color={color} />
                         )
                     }}
                 />
@@ -48,7 +61,7 @@ export default function TabsLayout() {
                         tabBarShowLabel: true,
                         tabBarLabel: 'Favoritos',
                         tabBarIcon: ({ color }) => (
-                            <Entypo name="heart" size={24} color={color} />
+                            <Entypo name="heart" size={20} color={color} />
                         )
                     }}
                 />

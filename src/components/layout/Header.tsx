@@ -1,17 +1,13 @@
 import { COLORS } from "@/src/theme/global";
 import { StyleSheet, Text, View } from "react-native";
 import Entypo from "@expo/vector-icons/Entypo";
+import React from "react";
 
-export default function Header({ title }: { title: string }) {
+export default function Header({ children }: { children: React.ReactNode }) {
     return (
         <>
             <View style={styles.container}>
-                <Text style={styles.title}>{title}</Text>
-                <Entypo
-                    name="menu"
-                    size={28}
-                    color="white"
-                    />
+                {children}
             </View>
         </>
     )
@@ -26,12 +22,8 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         flexDirection: 'row',
         alignItems: 'center',
-        height: 80,
+        minHeight: 80,
         paddingLeft: 30,
         paddingRight: 30,
-    },
-    title: {
-        color: COLORS.neutral.white,
-        fontSize: 20
     }
 })
