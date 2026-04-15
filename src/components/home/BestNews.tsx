@@ -39,7 +39,6 @@ export default function BestNews(props: BestNewsProps) {
 const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
-        // backgroundColor: COLORS.primary[700],
         borderRadius: 2,
         paddingHorizontal: 15,
         paddingVertical: 5
@@ -48,7 +47,6 @@ const styles = StyleSheet.create({
         color: COLORS.neutral[500],
         fontSize: 14,
         marginRight: 10,
-        // marginBottom: 10,
         marginLeft: 7,
         marginTop: 10,
         alignSelf: 'flex-start',
@@ -57,7 +55,6 @@ const styles = StyleSheet.create({
         color: COLORS.neutral[200],
         fontSize: 18,
         fontWeight: '400',
-        // marginBottom: 10
     },
     description: {
         fontSize: 14,
