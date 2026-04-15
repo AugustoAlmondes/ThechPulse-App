@@ -97,6 +97,14 @@ export default function Home() {
                 style={styles.newsBody}
             >
 
+                <View>
+                    {/* <Text style={styles.title}>
+                        ÚLTIMA NOTÍCIA
+                    </Text> */}
+                    <FirstNews />
+                </View>
+
+                <Divider style={styles.divider} />
 
                 <View style={{ marginVertical: 10 }}>
                     <Text style={styles.title}>
@@ -111,14 +119,6 @@ export default function Home() {
                         )} />
                 </View>
 
-                <Divider style={styles.divider} />
-
-                <View>
-                    <Text style={styles.title}>
-                        ÚLTIMA NOTÍCIA
-                    </Text>
-                    <FirstNews />
-                </View>
 
                 <Divider style={styles.divider} />
 

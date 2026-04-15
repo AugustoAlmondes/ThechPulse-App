@@ -1,5 +1,6 @@
 import { COLORS } from '@/src/theme/global'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import Feather from '@expo/vector-icons/Feather';
+import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
 
 export default function FirstNews() {
     return (
@@ -23,15 +24,30 @@ export default function FirstNews() {
                     Lorem ipsum dolor sit amet consectetur adipisicing elit. Quae eius accusamus, hic in quasi dolor dignissimos aspernatur quas consequuntur...
                 </Text>
             </View>
+
+            <Pressable style={styles.button}>
+                <Text
+                    style={{
+                        color: COLORS.neutral.white,
+                        fontSize: 14,
+                        fontWeight: 'bold',
+                    }}
+                >Ver mais</Text>
+                <Feather
+                    name='arrow-right'
+                    size={17}
+                    color={COLORS.neutral.white}
+                />
+            </Pressable>
         </View>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        padding: 15,
-        backgroundColor: COLORS.neutral[800],
-        borderRadius: 2
+        padding: 5,
+        // backgroundColor: COLORS.neutral[800],
+        // borderRadius: 2
 
     },
     title: {
@@ -46,6 +62,18 @@ const styles = StyleSheet.create({
         width: '100%',
         objectFit: 'cover'
     },
+    button: {
+        backgroundColor: COLORS.secondary[500],
+        alignSelf: 'flex-start',
+        flexDirection: 'row',
+        paddingHorizontal: 15,
+        paddingVertical: 4,
+        marginTop: 10,
+        borderRadius: 2,
+        gap: 10,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     badge: {
         paddingHorizontal: 10,
         paddingVertical: 2,
@@ -59,7 +87,7 @@ const styles = StyleSheet.create({
     },
     description: {
         color: COLORS.neutral[300],
-        fontSize: 16,
+        fontSize: 14,
         textAlign: 'justify',
         letterSpacing: 0.5,
         marginBottom: 10
