@@ -1,5 +1,7 @@
 import { COLORS } from '@/src/theme/global'
+import Entypo from '@expo/vector-icons/Entypo'
 import Feather from '@expo/vector-icons/Feather'
+import Ionicons from '@expo/vector-icons/Ionicons'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 interface NewsData {
@@ -10,27 +12,26 @@ interface NewsData {
     date: string
 }
 
-interface NewsProps {
-    color: string,
-    data: NewsData
-}
-
-export default function CardNews(props: NewsData) {
+export default function FavoriteCardNews(props: NewsData) {
     return (
         <View style={styles.newsCard}>
-            <Image
-                style={styles.newsImage}
-                source={props.image}
-                resizeMode="cover"
-            />
             <View style={styles.newsContent}>
+                <Text style={styles.newsSubject}>{props.subject}</Text>
                 <Text style={styles.newsTitle}>{props.title}</Text>
-                <View style={{ flexDirection: 'row', justifyContent: 'flex-end', marginBottom: 10, marginRight: 10 }}>
+                <Text style={styles.newsDate}>{props.date}</Text>
+                <View style={styles.cardActions}>
                     <TouchableOpacity activeOpacity={0.7} style={styles.actionButton}>
-                        <Feather name="share-2" color={COLORS.neutral.white} size={20} />
+                        <Entypo
+                            name='share'
+                            size={22}
+                            color={COLORS.neutral[300]} />
+
                     </TouchableOpacity>
                     <TouchableOpacity activeOpacity={0.7} style={styles.actionButton}>
-                        <Feather name="star" color={COLORS.neutral.white} size={20} />
+                        <Ionicons
+                            name="bookmark"
+                            size={22}
+                            color={COLORS.neutral[300]} />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -46,26 +47,32 @@ const styles = StyleSheet.create({
         overflow: 'hidden',
         minHeight: 120,
     },
-    newsImage: {
-        width: '100%',
-        height: 100,
-        objectFit: 'cover'
-    },
     newsContent: {
         flex: 1,
         justifyContent: 'space-between',
+        paddingHorizontal: 15,
+        paddingVertical: 20
+    },
+    newsSubject: {
+        backgroundColor: COLORS.badges.blue,
+        alignSelf: 'flex-start',
+        paddingHorizontal: 10,
+        fontSize: 12,
+        fontWeight: '600',
+        color: COLORS.neutral.white,
+        paddingVertical: 2,
+        borderRadius: 100
     },
     newsTitle: {
         marginTop: 10,
-        paddingHorizontal: 10,
         color: COLORS.neutral.white,
-        fontSize: 16,
+        fontSize: 18,
     },
-    newsDescription: {
+    newsDate: {
         color: COLORS.neutral[200],
-        fontSize: 14,
-        lineHeight: 20,
-        marginBottom: 12,
+        fontSize: 16,
+        fontWeight: 300,
+        marginTop: 12,
     },
     newsActions: {
         flexDirection: 'row',
@@ -78,5 +85,10 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
     },
+    cardActions: {
+        flexDirection: 'row',
+        justifyContent: 'flex-end',
+        marginBottom: 10
+    }
 })
 

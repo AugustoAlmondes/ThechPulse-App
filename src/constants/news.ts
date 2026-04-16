@@ -18,35 +18,35 @@ export const BEST_NEWS = [
 
 export const NEWS = [
     {
-        title: 'NEURAL NETWORK REACH NEW BENCHMARKS IN ACHITECTURAL SIMULATION',
+        title: 'Neural network reach new benchmarks in achitectural simulation',
         subject: 'HARDWARE',
         description: 'Non nemo error amet excepturi nostrum eveniet! Tenetur omnis aspernatur nisi mollitia deleniti accusamus ducimus.',
         image: require('@/public/images/news.jpeg'),
         date: '07-03-2026'
     },
     {
-        title: 'ADVANCEMENTS IN QUANTUM COMPUTING FOR DATA ANALYSIS',
+        title: 'Advancements in quantum computing for data analysis',
         subject: 'AI',
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
         image: require('@/public/images/news4.jpg'),
         date: '07-03-2026'
     },
     {
-        title: 'THE FUTURE OF FRONT-END DEVELOPMENT WITH REACT NATIVE',
+        title: 'The future of front-end development with react native',
         subject: 'FRONT-END',
         description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
         image: require('@/public/images/news3.jpg'),
         date: '07-03-2026'
     },
     {
-        title: 'BREAKTHROUGHS IN GAME DESIGN USING MACHINE LEARNING',
+        title: 'Breakthroughs in game design using machine learning',
         subject: 'GAME',
         description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
         image: require('@/public/images/news2.jpg'),
         date: '07-03-2026'
     },
     {
-        title: 'EXPLORING THE ETHICS OF ARTIFICIAL INTELLIGENCE',
+        title: 'Exploring the ethics of artificial intelligence',
         subject: 'ARTIFICIAL INTELLIGENCE',
         description: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
         image: require('@/public/images/news5.jpg'),
