@@ -80,7 +80,6 @@ const styles = StyleSheet.create({
     title: {
         color: COLORS.neutral[200],
         fontSize: 20,
-        // textAlign:'justify',
         fontWeight: '600',
         marginBottom: 10
     },

@@ -3,9 +3,10 @@ import { SUBJECTS } from "@/src/constants/subjects";
 import { COLORS } from "@/src/theme/global";
 import Feather from '@expo/vector-icons/Feather';
 import { FlatList, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { NEWS as NEWS_DATA} from "@/src/constants/news";
+import { NEWS as NEWS_DATA } from "@/src/constants/news";
 // import CardNews from "@/src/components/home/GlobalNewsCard";
 import News from "@/src/components/home/News";
+import Card from "@/src/components/shared/Card";
 
 export default function AllNews() {
     return (
@@ -43,11 +44,11 @@ export default function AllNews() {
                     <Text style={styles.title}>Últimas notícias</Text>
 
                     {
-                        NEWS_DATA.map((item, index) => (    
-                            <News
+                        NEWS_DATA.map((item, index) => (
+                            <Card
                                 key={index}
                                 data={item}
-                                color={COLORS.neutral[700]}
+                                color={COLORS.neutral[800]}
                             />
                         ))
                     }

@@ -1,6 +1,6 @@
 import { COLORS } from '@/src/theme/global'
 import Feather from '@expo/vector-icons/Feather';
-import { Image, Pressable, StyleSheet, Text, View } from 'react-native'
+import { Image, Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 export default function FirstNews() {
     return (
@@ -25,7 +25,7 @@ export default function FirstNews() {
                 </Text>
             </View>
 
-            <Pressable style={styles.button}>
+            <TouchableOpacity activeOpacity={0.7} style={styles.button}>
                 <Text
                     style={{
                         color: COLORS.neutral.white,
@@ -38,7 +38,7 @@ export default function FirstNews() {
                     size={17}
                     color={COLORS.neutral.white}
                 />
-            </Pressable>
+            </TouchableOpacity>
         </View>
     )
 }
@@ -63,7 +63,7 @@ const styles = StyleSheet.create({
         objectFit: 'cover'
     },
     button: {
-        backgroundColor: COLORS.secondary[500],
+        backgroundColor: COLORS.badges.indigo,
         alignSelf: 'flex-start',
         flexDirection: 'row',
         paddingHorizontal: 15,

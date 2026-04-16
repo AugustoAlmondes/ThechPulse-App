@@ -6,6 +6,9 @@ import { FlatList, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpac
 import { NEWS as NEWS_DATA } from "@/src/constants/news";
 // import CardNews from "@/src/components/home/GlobalNewsCard";
 import News from "@/src/components/home/News";
+import Card from "@/src/components/shared/Card";
+import Ionicons from "@expo/vector-icons/Ionicons";
+import Entypo from "@expo/vector-icons/Entypo";
 
 export default function ReadLater() {
     return (
@@ -17,6 +20,7 @@ export default function ReadLater() {
             <ScrollView style={styles.container}
                 keyboardShouldPersistTaps='handled'
             >
+
                 <View
                     style={{ flexDirection: 'row', gap: 15, }}
                 >
@@ -84,15 +88,25 @@ export default function ReadLater() {
                         </Text>
                     </View>
                 </View>
-                <Text style={styles.title}>Ler Depois</Text>
-                <View style={{ gap: 25, marginBottom: 10 }}>
+                <Text style={styles.title}>Veja as notícias salvas por você para ler depois:</Text>
+                <View style={{ gap: 15, marginBottom: 10 }}>
 
                     {
                         NEWS_DATA.map((item, index) => (
-                            <News
+                            <Card
                                 key={index}
                                 data={item}
-                                color={COLORS.neutral[700]}
+                                showDescription={false}
+                                showDate={false}
+                                showSubjects={false}
+                                color={COLORS.neutral[800]}
+                                actions={
+                                    <TouchableOpacity
+                                        activeOpacity={0.7}
+                                        style={{ backgroundColor: COLORS.primary[700], paddingHorizontal: 13, paddingVertical: 3 }}>
+                                        <Text style={{ color: COLORS.neutral.white, fontWeight: '600', fontSize: 12 }}>Lido</Text>
+                                    </TouchableOpacity>
+                                }
                             />
                         ))
                     }

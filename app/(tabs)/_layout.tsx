@@ -74,7 +74,7 @@ export default function TabsLayout() {
                     }}
                 />
                 <Tab.Screen
-                    name="read-later"
+                    name="read"
                     component={ReadLater}
                     options={{
                         ...DEFAULT_CONFIG_TAB,

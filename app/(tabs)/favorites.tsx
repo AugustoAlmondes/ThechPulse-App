@@ -3,6 +3,7 @@ import CardNews from "@/src/components/favorite/FavoriteNewsCard";
 import FavoriteNews from "@/src/components/home/FavoriteNews";
 import News from "@/src/components/home/News";
 import Header from "@/src/components/layout/Header";
+import Card from "@/src/components/shared/Card";
 import { NEWS } from "@/src/constants/news";
 import { SUBJECTS } from "@/src/constants/subjects";
 import { COLORS } from "@/src/theme/global";
@@ -26,12 +27,17 @@ export default function Favorites() {
                     />
                 </View>
 
-                <View style={{ gap: 25, marginBottom: 10 }}>
+                <View style={{ gap: 15, marginBottom: 10 }}>
                     {
                         NEWS.map((item, index) => (
-                            <FavoriteCardNews
+                            <Card
                                 key={index}
-                                {...item}
+                                data={item}
+                                showDescription={false}
+                                showImage={false}
+                                showSubjects={false}
+                                showDate={false}
+                                color={COLORS.neutral[800]}
                             />
                         ))
                     }

@@ -4,10 +4,12 @@ import News from "@/src/components/home/News";
 import Header from "@/src/components/layout/Header";
 import { COLORS } from "@/src/theme/global";
 import { Divider } from 'react-native-paper';
-import { FlatList, RefreshControl, ScrollView, StyleSheet, Text, View } from "react-native";
+import { FlatList, RefreshControl, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import FavoriteNews from "@/src/components/home/FavoriteNews";
 import Entypo from "@expo/vector-icons/Entypo";
 import { BEST_NEWS, NEWS } from "@/src/constants/news";
+import Card from "@/src/components/shared/Card";
+import Feather from "@expo/vector-icons/Feather";
 
 
 export default function Home() {
@@ -24,17 +26,11 @@ export default function Home() {
                     color="white"
                 />
             </Header>
-            {/* <Header
-                title="TechPulse"
-            /> */}
             <View
                 style={styles.newsBody}
             >
 
                 <View>
-                    {/* <Text style={styles.title}>
-                        ÚLTIMA NOTÍCIA
-                    </Text> */}
                     <FirstNews />
                 </View>
 
@@ -51,6 +47,20 @@ export default function Home() {
                         renderItem={({ item }) => (
                             <FavoriteNews item={item} />
                         )} />
+                    <TouchableOpacity activeOpacity={0.7} style={styles.button}>
+                        <Text
+                            style={{
+                                color: COLORS.neutral.white,
+                                fontSize: 14,
+                                fontWeight: 'bold',
+                            }}
+                        >Ver meu favoritos</Text>
+                        <Feather
+                            name='arrow-right'
+                            size={17}
+                            color={COLORS.neutral.white}
+                        />
+                    </TouchableOpacity>
                 </View>
 
 
@@ -61,18 +71,87 @@ export default function Home() {
                         MAIS ACESSADAS
                     </Text>
                     <View style={{ gap: 20 }}>
-                        <BestNews
-                            color={COLORS.neutral[700]}
-                            data={BEST_NEWS[0]}
-                        />
-                        <BestNews
-                            color={COLORS.neutral[700]}
-                            data={BEST_NEWS[1]}
-                        />
-                        <BestNews
-                            color={COLORS.neutral[700]}
-                            data={BEST_NEWS[2]}
-                        />
+                        <View
+                            style={{
+                                gap: 5,
+                                flexDirection: 'row'
+                            }}
+                        >
+                            <View
+                                style={{
+                                    width: 40,
+                                    height: 40,
+                                    backgroundColor: COLORS.rank.gold,
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                }}
+                            >
+                                <Text style={{ color: COLORS.neutral.white, fontWeight: 'bold', fontSize: 16 }}>1</Text>
+                            </View>
+                            <Card
+                                color={COLORS.secondary[800]}
+                                data={NEWS[0]}
+                                showDate={false}
+                                showAction={false}
+                                showCreator={false}
+                                showImage={false}
+                                showSubjects={false}
+                            />
+                        </View>
+                        <View
+                            style={{
+                                gap: 5,
+                                flexDirection: 'row'
+                            }}
+                        >
+                            <View
+                                style={{
+                                    width: 40,
+                                    height: 40,
+                                    backgroundColor: COLORS.rank.silver,
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                }}
+                            >
+                                <Text style={{ color: COLORS.neutral.white, fontWeight: 'bold', fontSize: 16 }}>2</Text>
+                            </View>
+                            <Card
+                                color={COLORS.secondary[800]}
+                                data={NEWS[1]}
+                                showDate={false}
+                                showAction={false}
+                                showCreator={false}
+                                showImage={false}
+                                showSubjects={false}
+                            />
+                        </View>
+                        <View
+                            style={{
+                                gap: 5,
+                                flexDirection: 'row'
+                            }}
+                        >
+                            <View
+                                style={{
+                                    width: 40,
+                                    height: 40,
+                                    backgroundColor: COLORS.rank.bronze,
+                                    alignItems: 'center',
+                                    justifyContent: 'center',
+                                }}
+                            >
+                                <Text style={{ color: COLORS.neutral.white, fontWeight: 'bold', fontSize: 16 }}>3</Text>
+                            </View>
+                            <Card
+                                color={COLORS.secondary[800]}
+                                data={NEWS[2]}
+                                showDate={false}
+                                showAction={false}
+                                showCreator={false}
+                                showImage={false}
+                                showSubjects={false}
+                            />
+                        </View>
                     </View>
                 </View>
 
@@ -84,9 +163,11 @@ export default function Home() {
                     </Text>
                     {
                         NEWS.map((item, index) => (
-                            <News
+                            <Card
                                 key={index}
-                                color={COLORS.primary[700]}
+                                showDate={false}
+                                showAction={false}
+                                color={COLORS.neutral[800]}
                                 data={item}
                             />
                         ))
@@ -122,6 +203,18 @@ const styles = StyleSheet.create({
     headerTitle: {
         color: COLORS.neutral.white,
         fontSize: 24,
-    }
+    },
+    button: {
+        backgroundColor: COLORS.badges.indigo + 60,
+        alignSelf: 'flex-start',
+        flexDirection: 'row',
+        paddingHorizontal: 15,
+        paddingVertical: 4,
+        marginTop: 20,
+        borderRadius: 2,
+        gap: 10,
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
 
 })

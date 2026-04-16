@@ -74,4 +74,10 @@ export const COLORS = {
         lime: "#8bc34a",
     },
 
+    rank:{
+        gold:"#d1b827ff",
+        silver:"#C0C0C0",
+        bronze:"#CD7F32",
+    }
+
 };
