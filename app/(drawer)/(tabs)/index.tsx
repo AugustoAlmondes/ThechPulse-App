@@ -10,21 +10,39 @@ import Entypo from "@expo/vector-icons/Entypo";
 import { BEST_NEWS, NEWS } from "@/src/constants/news";
 import Card from "@/src/components/shared/Card";
 import Feather from "@expo/vector-icons/Feather";
+import { useNavigation } from "expo-router";
+import { DrawerActions } from "@react-navigation/native";
 
 
 export default function Home() {
+
+    const navigation = useNavigation();
+
     return (
         <ScrollView refreshControl={<RefreshControl refreshing={false} size="default" />}
             showsHorizontalScrollIndicator={false}
             stickyHeaderIndices={[0]}
             style={styles.container}>
             <Header>
-                <Text style={styles.headerTitle}>TechPulse</Text>
-                <Entypo
-                    name="dots-three-vertical"
-                    size={20}
-                    color="white"
-                />
+                <View style={{
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    gap: 15
+                }}>
+                    <TouchableOpacity 
+                    activeOpacity={0.7}
+                    onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+                    >
+                        <Feather
+                            name="menu"
+                            size={27}
+                            color="white"
+                            style={{ alignSelf: 'center', marginTop: 2 }}
+                        />
+                    </TouchableOpacity>
+                    <Text style={styles.headerTitle}>TechPulse</Text>
+                </View>
             </Header>
             <View
                 style={styles.newsBody}
@@ -81,12 +99,13 @@ export default function Home() {
                                 style={{
                                     width: 40,
                                     height: 40,
-                                    backgroundColor: COLORS.rank.gold,
+                                    backgroundColor: COLORS.neutral[800],
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                 }}
                             >
-                                <Text style={{ color: COLORS.neutral.white, fontWeight: 'bold', fontSize: 16 }}>1</Text>
+                                <Entypo name="medal" size={24} color={COLORS.rank.gold} />
+                                {/* <Text style={{ color: COLORS.neutral.white, fontWeight: 'bold', fontSize: 16 }}></Text> */}
                             </View>
                             <Card
                                 color={COLORS.secondary[800]}
@@ -108,12 +127,13 @@ export default function Home() {
                                 style={{
                                     width: 40,
                                     height: 40,
-                                    backgroundColor: COLORS.rank.silver,
+                                    backgroundColor: COLORS.neutral[800],
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                 }}
                             >
-                                <Text style={{ color: COLORS.neutral.white, fontWeight: 'bold', fontSize: 16 }}>2</Text>
+                                <Entypo name="medal" size={24} color={COLORS.rank.silver} />
+                                {/* <Text style={{ color: COLORS.neutral.white, fontWeight: 'bold', fontSize: 16 }}>2</Text> */}
                             </View>
                             <Card
                                 color={COLORS.secondary[800]}
@@ -135,12 +155,13 @@ export default function Home() {
                                 style={{
                                     width: 40,
                                     height: 40,
-                                    backgroundColor: COLORS.rank.bronze,
+                                    backgroundColor: COLORS.neutral[800],
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                 }}
                             >
-                                <Text style={{ color: COLORS.neutral.white, fontWeight: 'bold', fontSize: 16 }}>3</Text>
+                                <Entypo name="medal" size={24} color={COLORS.rank.bronze} />
+                                {/* <Text style={{ color: COLORS.neutral.white, fontWeight: 'bold', fontSize: 16 }}>3</Text> */}
                             </View>
                             <Card
                                 color={COLORS.secondary[800]}

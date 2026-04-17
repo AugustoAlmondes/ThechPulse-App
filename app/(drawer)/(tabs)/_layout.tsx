@@ -6,6 +6,7 @@ import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import Entypo from '@expo/vector-icons/Entypo';
 import AllNews from "./news";
 import ReadLater from "./read";
+import Profile from "./profile";
 const Tab = createMaterialTopTabNavigator();
 
 const DEFAULT_CONFIG_TAB = {

@@ -1,6 +1,9 @@
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Stack } from "expo-router";
 import { COLORS } from '@/src/theme/global';
+
+const Drawer = createDrawerNavigator();
 
 export default function RootLayout() {
 
@@ -19,7 +22,7 @@ export default function RootLayout() {
         }
       }}
     >
-      <Stack.Screen name="(tabs)" />
+      <Stack.Screen name="(drawer)" />
       <Stack.Screen name="login" />
     </Stack>
   )

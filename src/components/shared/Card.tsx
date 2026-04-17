@@ -1,6 +1,6 @@
 import React, { ReactNode, useState } from 'react'
 import { COLORS } from '@/src/theme/global'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Entypo from '@expo/vector-icons/Entypo';
 
@@ -40,7 +40,7 @@ export default function Card({
     const [isFavorite, setIsFavorite] = useState(true);
 
     return (
-        <View style={[styles.container, { backgroundColor: color }]}>
+        <TouchableOpacity activeOpacity={0.8} style={[styles.container, { backgroundColor: color }]}>
             {showImage && data.image && (
                 <Image
                     style={styles.image}
@@ -104,7 +104,7 @@ export default function Card({
                 </View>
             )}
             </View>
-        </View>
+        </TouchableOpacity>
     )
 }
 
