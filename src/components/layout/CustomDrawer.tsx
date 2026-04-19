@@ -3,45 +3,58 @@ import Entypo from "@expo/vector-icons/Entypo";
 import { DrawerContentScrollView, DrawerItemList } from "@react-navigation/drawer";
 import { Image, Text, TouchableOpacity, View, StyleSheet } from "react-native";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import Fontisto from '@expo/vector-icons/Fontisto';
 import { Divider } from "react-native-paper";
+import { useState } from "react";
 
 export default function CustomDrawer(props: any) {
+
+    const [isLogin, setIsLogin] = useState(false);
+
     return (
         <DrawerContentScrollView
             {...props}
             contentContainerStyle={styles.container}
             style={styles.scroll}
         >
-            <View style={styles.header}>
+            {
+                isLogin ? <View style={styles.header}>
+                    <View style={styles.userInfo}>
+                        <Image
+                            source={{ uri: 'https://i.pravatar.cc/100' }}
+                            style={styles.avatar}
+                        />
 
-                <Fontisto
-                    name="player-settings"
-                    size={23}
-                    color={COLORS.neutral[400]}
-                    style={styles.settingsIcon}
-                />
+                        <Text style={styles.userName}>
+                            Augusto Almondes
+                        </Text>
 
-                <View style={styles.userInfo}>
+                        <Text style={styles.userEmail}>
+                            augusto@email.com
+                        </Text>
+                    </View>
+
                     <Image
-                        source={{ uri: 'https://i.pravatar.cc/100' }}
-                        style={styles.avatar}
+                        source={require('@/public/images/1.jpg')}
+                        style={styles.headerBackground}
                     />
+                </View> :
+                    <>
+                        <View style={{ height: 160, gap: 15, alignItems: 'center', justifyContent: 'center' }}>
+                            <TouchableOpacity activeOpacity={0.8} style={styles.googleButton}>
+                                <Image source={require('@/assets/google-icon.png')} style={{ width: 20, height: 20 }} />
+                                <Text>Entrar com Google</Text>
+                            </TouchableOpacity>
+                            <TouchableOpacity activeOpacity={0.8} style={styles.githubButton}>
+                                <Image source={require('@/assets/GitHub_Invertocat_White.png')} style={{ width: 20, height: 20 }} />
+                                <Text
+                                    style={{ color: COLORS.neutral.white, }}
+                                >Entrar com Github</Text>
+                            </TouchableOpacity>
+                        </View>
 
-                    <Text style={styles.userName}>
-                        Augusto Almondes
-                    </Text>
-
-                    <Text style={styles.userEmail}>
-                        augusto@email.com
-                    </Text>
-                </View>
-
-                <Image
-                    source={require('@/public/images/1.jpg')}
-                    style={styles.headerBackground}
-                />
-            </View>
+                        <Divider style={{ backgroundColor: COLORS.neutral[800], height: 2, marginTop: 5 }} />
+                    </>
+            }
 
             <View style={styles.drawerList}>
                 <DrawerItemList {...props} />
@@ -76,6 +89,28 @@ const styles = StyleSheet.create({
     },
     scroll: {
         backgroundColor: COLORS.neutral[900],
+    },
+    googleButton: {
+        width: '100%',
+        height: 40,
+        flexDirection: 'row',
+        borderRadius: 2,
+        backgroundColor: COLORS.neutral.white,
+        alignItems: 'center',
+        fontWeight: '600',
+        gap: 10,
+        justifyContent: 'center',
+    },
+    githubButton: {
+        width: '100%',
+        height: 40,
+        flexDirection: 'row',
+        borderRadius: 2,
+        backgroundColor: COLORS.github,
+        alignItems: 'center',
+        fontWeight: '600',
+        gap: 10,
+        justifyContent: 'center',
     },
     header: {
         width: '100%',

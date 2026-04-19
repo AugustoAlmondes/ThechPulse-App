@@ -61,6 +61,8 @@ export const COLORS = {
         },
     },
 
+    github: "#171717",
+
     badges: {
         blue: "#4a90e2",
         green: "#27ae60",
