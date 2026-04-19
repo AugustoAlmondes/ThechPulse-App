@@ -1,10 +1,10 @@
 import { COLORS } from '@/src/theme/global'
 import Ionicons from '@expo/vector-icons/Ionicons'
-import { Image, StyleSheet, Text, View } from 'react-native'
+import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
 export default function FavoriteNews({ item }: { item: any }) {
     return (
-        <View style={styles.container}>
+        <TouchableOpacity activeOpacity={0.8} style={styles.container}>
             <Image
                 style={styles.image}
                 source={item.image} />
@@ -19,7 +19,7 @@ export default function FavoriteNews({ item }: { item: any }) {
             <Text style={styles.subject}>
                 {item.date}
             </Text>
-        </View >
+        </TouchableOpacity >
     )
 }
 

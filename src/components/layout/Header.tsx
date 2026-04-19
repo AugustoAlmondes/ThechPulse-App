@@ -1,6 +1,6 @@
 import { COLORS } from "@/src/theme/global";
-import { StyleSheet, Text, View } from "react-native";
-import Entypo from "@expo/vector-icons/Entypo";
+import { StyleSheet, View } from "react-native";
+// import Entypo from "@expo/vector-icons/Entypo";
 import React from "react";
 
 export default function Header({ children }: { children: React.ReactNode }) {
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
         justifyContent: 'space-between',
         flexDirection: 'row',
         alignItems: 'center',
-        minHeight: 50,
+        minHeight: 70,
         paddingLeft: 20,
         paddingRight: 30,
     }
