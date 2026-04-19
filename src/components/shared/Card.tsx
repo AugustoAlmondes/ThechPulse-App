@@ -22,6 +22,7 @@ interface CardProps {
     showSubjects?: boolean,
     showDate?: boolean,
     showImage?: boolean,
+    minHeigth?: number,
     showCreator?: boolean
 }
 
@@ -34,13 +35,14 @@ export default function Card({
     showSubjects = true,
     showDate = true,
     showImage = true,
-    showCreator = true
+    showCreator = true,
+    minHeigth = 100
 }: CardProps) {
 
     const [isFavorite, setIsFavorite] = useState(true);
 
     return (
-        <TouchableOpacity activeOpacity={0.8} style={[styles.container, { backgroundColor: color }]}>
+        <TouchableOpacity activeOpacity={0.8} style={[styles.container, { backgroundColor: color, minHeight: minHeigth }]}>
             {showImage && data.image && (
                 <Image
                     style={styles.image}
@@ -115,7 +117,6 @@ const styles = StyleSheet.create({
         flex:1,
         padding: 10,
         gap: 15,
-        minHeight: 100,
         alignItems: 'flex-start'
     },
     image: {

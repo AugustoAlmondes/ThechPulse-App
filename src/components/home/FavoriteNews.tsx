@@ -1,8 +1,9 @@
 import { COLORS } from '@/src/theme/global'
+import { NewsType } from '@/src/types/NewsType'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 
-export default function FavoriteNews({ item }: { item: any }) {
+export default function FavoriteNews({ item }: { item: NewsType }) {
     return (
         <TouchableOpacity activeOpacity={0.8} style={styles.container}>
             <Image

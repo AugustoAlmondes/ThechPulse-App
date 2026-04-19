@@ -16,6 +16,73 @@ export const BEST_NEWS = [
     }
 ]
 
+export const HISTORY = [
+    {
+        title: 'Neural network reach new benchmarks in achitectural simulation',
+        subject: 'HARDWARE',
+        description: 'Non nemo error amet excepturi nostrum eveniet! Tenetur omnis aspernatur nisi mollitia deleniti accusamus ducimus.',
+        image: require('@/public/images/news.jpeg'),
+        date: '2025-04-19T14:32:00Z',
+        by: 'Tech lider'
+    },
+    {
+        title: 'Advancements in quantum computing for data analysis',
+        subject: 'AI',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        image: require('@/public/images/news4.jpg'),
+        date: '2025-04-19T14:32:00Z',
+        by: 'InfoTech'
+    },
+    {
+        title: 'The future of front-end development with react native',
+        subject: 'FRONT-END',
+        description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+        image: require('@/public/images/news3.jpg'),
+        date: '2025-04-18T14:32:00Z',
+        by: 'InfoTech'
+    },
+    {
+        title: 'Breakthroughs in game design using machine learning',
+        subject: 'GAME',
+        description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
+        image: require('@/public/images/news2.jpg'),
+        date: '2025-04-18T14:32:00Z',
+        by: 'G1 Notícias'
+    },
+    {
+        title: 'Exploring the ethics of artificial intelligence',
+        subject: 'ARTIFICIAL INTELLIGENCE',
+        description: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
+        image: require('@/public/images/news5.jpg'),
+        date: '2025-04-17T14:32:00Z',
+        by: 'G1 Notícias'
+    },
+    {
+        title: 'Neural network reach new benchmarks in achitectural simulation',
+        subject: 'HARDWARE',
+        description: 'Non nemo error amet excepturi nostrum eveniet! Tenetur omnis aspernatur nisi mollitia deleniti accusamus ducimus.',
+        image: require('@/public/images/news.jpeg'),
+        date: '2025-04-16T14:32:00Z',
+        by: 'Tech lider'
+    },
+    {
+        title: 'Advancements in quantum computing for data analysis',
+        subject: 'AI',
+        description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.',
+        image: require('@/public/images/news4.jpg'),
+        date: '2025-04-16T14:32:00Z',
+        by: 'InfoTech'
+    },
+    {
+        title: 'The future of front-end development with react native',
+        subject: 'FRONT-END',
+        description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+        image: require('@/public/images/news3.jpg'),
+        date: '2025-04-15T14:32:00Z',
+        by: 'InfoTech'
+    },
+]
+
 export const NEWS = [
     {
         title: 'Neural network reach new benchmarks in achitectural simulation',
@@ -39,7 +106,7 @@ export const NEWS = [
         description: 'Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
         image: require('@/public/images/news3.jpg'),
         date: '07-03-2026',
-        by:'InfoTech'
+        by: 'InfoTech'
     },
     {
         title: 'Breakthroughs in game design using machine learning',
@@ -47,7 +114,7 @@ export const NEWS = [
         description: 'Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur.',
         image: require('@/public/images/news2.jpg'),
         date: '07-03-2026',
-        by:'G1 Notícias'
+        by: 'G1 Notícias'
     },
     {
         title: 'Exploring the ethics of artificial intelligence',
@@ -55,6 +122,6 @@ export const NEWS = [
         description: 'Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.',
         image: require('@/public/images/news5.jpg'),
         date: '07-03-2026',
-        by:'G1 Notícias'
+        by: 'G1 Notícias'
     },
 ]
