@@ -5,10 +5,11 @@ import { Image, Text, TouchableOpacity, View, StyleSheet } from "react-native";
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { Divider } from "react-native-paper";
 import { useState } from "react";
+import { router } from "expo-router";
 
 export default function CustomDrawer(props: any) {
 
-    const [isLogin, setIsLogin] = useState(false);
+    const [isLogin, setIsLogin] = useState(true);
 
     return (
         <DrawerContentScrollView
@@ -38,22 +39,17 @@ export default function CustomDrawer(props: any) {
                         style={styles.headerBackground}
                     />
                 </View> :
-                    <>
-                        <View style={{ height: 160, gap: 15, alignItems: 'center', justifyContent: 'center' }}>
-                            <TouchableOpacity activeOpacity={0.8} style={styles.googleButton}>
-                                <Image source={require('@/assets/google-icon.png')} style={{ width: 20, height: 20 }} />
-                                <Text>Entrar com Google</Text>
-                            </TouchableOpacity>
-                            <TouchableOpacity activeOpacity={0.8} style={styles.githubButton}>
-                                <Image source={require('@/assets/GitHub_Invertocat_White.png')} style={{ width: 20, height: 20 }} />
-                                <Text
-                                    style={{ color: COLORS.neutral.white, }}
-                                >Entrar com Github</Text>
-                            </TouchableOpacity>
-                        </View>
-
-                        <Divider style={{ backgroundColor: COLORS.neutral[800], height: 2, marginTop: 5 }} />
-                    </>
+                    <View style={styles.loginPlaceholder}>
+                        <TouchableOpacity 
+                            activeOpacity={0.8} 
+                            style={styles.signInButton}
+                            onPress={() => router.push('/login')}
+                        >
+                            <MaterialCommunityIcons name="login" size={20} color="white" />
+                            <Text style={styles.signInButtonText}>Entrar em sua conta</Text>
+                        </TouchableOpacity>
+                        <Text style={styles.signInSubtitle}>Acesse seus favoritos e muito mais</Text>
+                    </View>
             }
 
             <View style={styles.drawerList}>
@@ -62,7 +58,7 @@ export default function CustomDrawer(props: any) {
 
             <Divider style={{ backgroundColor: COLORS.neutral[800], height: 2, marginBottom: 5 }} />
 
-            <TouchableOpacity
+            {/* <TouchableOpacity
                 activeOpacity={0.8}
                 style={styles.logoutButton}
             >
@@ -74,7 +70,7 @@ export default function CustomDrawer(props: any) {
                 <Text style={styles.logoutText}>
                     Sair
                 </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
         </DrawerContentScrollView>
     );
 }
@@ -90,27 +86,37 @@ const styles = StyleSheet.create({
     scroll: {
         backgroundColor: COLORS.neutral[900],
     },
-    googleButton: {
-        width: '100%',
-        height: 40,
-        flexDirection: 'row',
-        borderRadius: 2,
-        backgroundColor: COLORS.neutral.white,
-        alignItems: 'center',
-        fontWeight: '600',
-        gap: 10,
+    loginPlaceholder: {
+        height: 160,
+        paddingHorizontal: 20,
         justifyContent: 'center',
+        alignItems: 'center',
+        gap: 10,
     },
-    githubButton: {
+    signInButton: {
         width: '100%',
-        height: 40,
+        height: 48,
         flexDirection: 'row',
-        borderRadius: 2,
-        backgroundColor: COLORS.github,
+        borderRadius: 12,
+        backgroundColor: COLORS.primary[500],
         alignItems: 'center',
-        fontWeight: '600',
-        gap: 10,
         justifyContent: 'center',
+        gap: 10,
+        shadowColor: COLORS.primary[500],
+        shadowOffset: { width: 0, height: 4 },
+        shadowOpacity: 0.2,
+        shadowRadius: 8,
+        elevation: 4,
+    },
+    signInButtonText: {
+        color: 'white',
+        fontSize: 16,
+        fontWeight: 'bold',
+    },
+    signInSubtitle: {
+        color: COLORS.neutral[400],
+        fontSize: 12,
+        textAlign: 'center',
     },
     header: {
         width: '100%',

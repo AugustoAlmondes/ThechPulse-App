@@ -43,11 +43,43 @@ export default function DrawerLayout() {
             />
 
             <Drawer.Screen
-                name="config"
+                name="settings"
                 options={{
                     title: 'Configurações',
                     headerShown: false,
                     drawerIcon: ({ color }) => <Ionicons name='settings' size={20} color={color} />
+                }}
+            />
+
+            <Drawer.Screen
+                name="about"
+                options={{
+                    drawerItemStyle: { display: 'none' },
+                    headerShown: false,
+                }}
+            />
+
+            <Drawer.Screen
+                name="theme"
+                options={{
+                    drawerItemStyle: { display: 'none' },
+                    headerShown: false,
+                }}
+            />
+
+            <Drawer.Screen
+                name="privacy"
+                options={{
+                    drawerItemStyle: { display: 'none' },
+                    headerShown: false,
+                }}
+            />
+
+            <Drawer.Screen
+                name="notifications"
+                options={{
+                    drawerItemStyle: { display: 'none' },
+                    headerShown: false,
                 }}
             />
         </Drawer>

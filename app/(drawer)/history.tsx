@@ -4,7 +4,8 @@ import { HISTORY, NEWS } from '@/src/constants/news';
 import { COLORS } from '@/src/theme/global';
 import { groupNewsByDate } from '@/src/utils/groupNewsByDate';
 import Feather from '@expo/vector-icons/Feather';
-import { router } from 'expo-router'
+import { DrawerActions } from '@react-navigation/native';
+import { router, useNavigation } from 'expo-router'
 import { useMemo } from 'react';
 import { SectionList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { ScrollView } from 'react-native-gesture-handler';
@@ -12,7 +13,7 @@ import { ScrollView } from 'react-native-gesture-handler';
 export default function History() {
 
     const sections = useMemo(() => groupNewsByDate(HISTORY), [HISTORY])
-
+    const navigation = useNavigation();
     return (
         <>
             <Header>
@@ -22,18 +23,12 @@ export default function History() {
                     alignItems: 'center',
                     gap: 15
                 }}>
-                    <TouchableOpacity
-                        activeOpacity={0.7}
-                        onPress={() => {
-                            if (router.canGoBack()) {
-                                router.back();
-                            } else {
-                                router.replace('/(drawer)/(tabs)');
-                            }
-                        }}
+                    <TouchableOpacity 
+                    activeOpacity={0.7}
+                    onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
                     >
                         <Feather
-                            name="arrow-left"
+                            name="menu"
                             size={27}
                             color="white"
                             style={{ alignSelf: 'center', marginTop: 2 }}
