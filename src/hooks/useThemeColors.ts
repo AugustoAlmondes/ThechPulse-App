@@ -13,10 +13,8 @@ export function useThemeColors(): AppTheme {
     const systemScheme = useColorScheme() // 'light' | 'dark' | null
 
     if (mode === 'system') {
-        // @ts-ignore
         return systemScheme === 'light' ? lightTheme : darkTheme
     }
 
-    // @ts-ignore
     return mode === 'light' ? lightTheme : darkTheme
 }

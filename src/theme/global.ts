@@ -84,8 +84,54 @@ export const COLORS = {
 
 };
 
+export interface AppTheme {
+    background: string;
+    backgroundSecondary: string;
+    backgroundTertiary: string;
+    surface: string;
+    surfaceHover: string;
+    textPrimary: string;
+    textSecondary: string;
+    textTertiary: string;
+    textMuted: string;
+    textSubtle: string;
+    textDisabled: string;
+    border: string;
+    divider: string;
+    headerBackground: string;
+    headerText: string;
+    headerIcon: string;
+    tabBarBackground: string;
+    tabBarActive: string;
+    tabBarInactive: string;
+    drawerBackground: string;
+    drawerActiveBackground: string;
+    drawerActiveText: string;
+    drawerInactiveText: string;
+    cardBackground: string;
+    cardTitle: string;
+    cardDescription: string;
+    cardDate: string;
+    cardSubject: string;
+    searchBackground: string;
+    searchText: string;
+    searchPlaceholder: string;
+    primaryButton: string;
+    primaryButtonText: string;
+    accentButton: string;
+    statusBarStyle: 'light' | 'dark';
+    overlay: string;
+    settingItemBackground: string;
+    settingItemText: string;
+    sectionTitleColor: string;
+    chevronColor: string;
+    favoriteCardBackground: string;
+    statsBackground: string;
+    statsText: string;
+}
+
 // Semantic tokens for dark theme (matches current behavior)
-export const darkTheme = {
+export const darkTheme: AppTheme = {
     // Backgrounds
     background: COLORS.neutral[900],
     backgroundSecondary: COLORS.neutral[800],
@@ -135,7 +181,7 @@ export const darkTheme = {
     accentButton: COLORS.badges.indigo,
 
     // Misc
-    statusBarStyle: 'light' as const,
+    statusBarStyle: 'light',
     overlay: 'rgba(18, 23, 29, 0.85)',
 
     // Settings
@@ -153,7 +199,7 @@ export const darkTheme = {
 };
 
 // Semantic tokens for light theme
-export const lightTheme = {
+export const lightTheme: AppTheme = {
     // Backgrounds
     background: "#F5F7FA",
     backgroundSecondary: "#FFFFFF",
@@ -203,7 +249,7 @@ export const lightTheme = {
     accentButton: COLORS.badges.indigo,
 
     // Misc
-    statusBarStyle: 'dark' as const,
+    statusBarStyle: 'dark',
     overlay: 'rgba(245, 247, 250, 0.92)',
 
     // Settings
@@ -219,5 +265,3 @@ export const lightTheme = {
     statsBackground: COLORS.secondary[100],
     statsText: COLORS.secondary[800],
 };
-
-export type AppTheme = typeof darkTheme;
