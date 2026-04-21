@@ -3,6 +3,7 @@ import { COLORS } from '@/src/theme/global'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Entypo from '@expo/vector-icons/Entypo';
+import { useThemeColors } from '@/src/hooks/useThemeColors'
 
 interface NewsData {
     title: string,
@@ -14,7 +15,7 @@ interface NewsData {
 }
 
 interface CardProps {
-    color: string,
+    color?: string,
     data: NewsData,
     showDescription?: boolean,
     showAction?: boolean,
@@ -40,9 +41,10 @@ export default function Card({
 }: CardProps) {
 
     const [isFavorite, setIsFavorite] = useState(true);
+    const theme = useThemeColors();
 
     return (
-        <TouchableOpacity activeOpacity={0.8} style={[styles.container, { backgroundColor: color, minHeight: minHeigth }]}>
+        <TouchableOpacity activeOpacity={0.8} style={[styles.container, { backgroundColor: color || theme.cardBackground, minHeight: minHeigth }]}>
             {showImage && data.image && (
                 <Image
                     style={styles.image}
@@ -52,29 +54,29 @@ export default function Card({
 
             <View style={styles.rightContent}>
                 {showSubjects && data.subject && (
-                    <Text style={styles.subject}>
+                    <Text style={[styles.subject, { backgroundColor: COLORS.badges.blue + 60, color: theme.cardSubject }]}>
                         {data.subject}
                     </Text>
                 )}
 
-                <Text style={styles.title} numberOfLines={showDescription ? undefined : 2}>
+                <Text style={[styles.title, { color: theme.cardTitle }]} numberOfLines={showDescription ? undefined : 2}>
                     {data.title}
                 </Text>
 
                 {showCreator && data.by && (
-                    <Text style={styles.by}>
+                    <Text style={[styles.by, { color: theme.textMuted }]}>
                         por {data.by}
                     </Text>
                 )}
 
                 {showDescription && data.description && (
-                    <Text style={styles.description} numberOfLines={2}>
+                    <Text style={[styles.description, { color: theme.cardDescription }]} numberOfLines={2}>
                         {data.description}
                     </Text>
                 )}
 
                 {showDate && data.date && (
-                    <Text style={styles.date}>
+                    <Text style={[styles.date, { color: theme.cardDate }]}>
                         {data.date}
                     </Text>
                 )}
@@ -87,17 +89,17 @@ export default function Card({
                                 <Entypo
                                     name="share"
                                     size={18}
-                                    color={COLORS.neutral[600]}
+                                    color={theme.textDisabled}
                                 />
                                 <Ionicons
                                     name="bookmark"
                                     size={18}
-                                    color={COLORS.neutral[600]}
+                                    color={theme.textDisabled}
                                 />
                                 <Ionicons
                                     name="heart"
                                     size={18}
-                                    color={COLORS.neutral[600]}
+                                    color={theme.textDisabled}
                                 />
                             </View>
                         </>
@@ -124,7 +126,6 @@ const styles = StyleSheet.create({
         height: 100,
         borderRadius: 2,
         objectFit: 'cover',
-        // alignSelf:'center'
     },
     rightContent: {
         flex: 1,
@@ -132,37 +133,28 @@ const styles = StyleSheet.create({
         paddingVertical: 2
     },
     subject: {
-        color: COLORS.neutral.white,
-        backgroundColor: COLORS.badges.blue + 60,
         alignSelf: 'flex-start',
         paddingHorizontal: 10,
         paddingVertical: 2,
         borderRadius: 100,
-        // marginTop:10,
         fontSize: 10,
         fontWeight: '600',
         marginBottom: 5,
         textTransform: 'uppercase',
     },
     title: {
-        color: COLORS.neutral[200],
         fontSize: 15,
         fontWeight: '600',
         lineHeight: 18,
     },
     by: {
-        color: COLORS.neutral[400],
         fontSize: 12,
-        // marginTop: 10
     },
     description: {
-        color: COLORS.neutral[300],
         fontSize: 13,
         lineHeight: 18,
-        // marginTop: 4,
     },
     date: {
-        color: COLORS.neutral[500],
         fontSize: 11,
     },
     footer: {

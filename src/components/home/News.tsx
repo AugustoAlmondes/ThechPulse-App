@@ -2,6 +2,7 @@ import { COLORS } from '@/src/theme/global'
 import { Image, StyleSheet, Text, View } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Entypo from '@expo/vector-icons/Entypo';
+import { useThemeColors } from '@/src/hooks/useThemeColors';
 
 interface NewsData {
     title: string,
@@ -17,24 +18,26 @@ interface NewsProps {
 }
 
 export default function News(props: NewsProps) {
+    const theme = useThemeColors();
+
     return (
         <View style={[styles.container, { backgroundColor: props.color + 30 }]}>
             <Image
                 style={styles.image}
                 source={props.data.image}
             />
-            <Text style={styles.date}>
+            <Text style={[styles.date, { color: theme.textSubtle }]}>
                 {props.data.date}
             </Text>
 
             <Text
-                style={styles.title}
+                style={[styles.title, { color: theme.textSecondary }]}
             >
                 {props.data.title}
             </Text>
 
             <Text
-                style={styles.description}
+                style={[styles.description, { color: theme.textTertiary }]}
             >
                 {props.data.description}
             </Text>
@@ -44,12 +47,12 @@ export default function News(props: NewsProps) {
                 <Entypo
                     name='share'
                     size={22}
-                    color={COLORS.neutral[300]} />
+                    color={theme.textTertiary} />
 
                 <Ionicons
                     name="bookmark-outline"
                     size={22}
-                    color={COLORS.neutral[300]} />
+                    color={theme.textTertiary} />
             </View>
         </View>
     )
@@ -58,7 +61,6 @@ export default function News(props: NewsProps) {
 const styles = StyleSheet.create({
     container: {
         flexGrow: 1,
-        // backgroundColor: COLORS.primary[700],
         borderRadius: 2,
         paddingHorizontal: 15,
         paddingVertical: 15
@@ -69,7 +71,6 @@ const styles = StyleSheet.create({
         objectFit: 'cover'
     },
     date: {
-        color: COLORS.neutral[500],
         fontSize: 14,
         marginRight: 10,
         marginBottom: 10,
@@ -78,14 +79,12 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
     },
     title: {
-        color: COLORS.neutral[200],
         fontSize: 20,
         fontWeight: '600',
         marginBottom: 10
     },
     description: {
         fontSize: 14,
-        color: COLORS.neutral[300],
         fontWeight: '400',
         lineHeight: 20.4,
         textAlign: 'justify',

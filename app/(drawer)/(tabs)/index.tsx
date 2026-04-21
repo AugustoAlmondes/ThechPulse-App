@@ -2,6 +2,7 @@ import BestNews from "@/src/components/home/BestNews";
 import FirstNews from "@/src/components/home/FirstNews";
 import News from "@/src/components/home/News";
 import Header from "@/src/components/layout/Header";
+import { useThemeColors } from "@/src/hooks/useThemeColors";
 import { COLORS } from "@/src/theme/global";
 import { Divider } from 'react-native-paper';
 import { FlatList, RefreshControl, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
@@ -17,12 +18,13 @@ import { DrawerActions } from "@react-navigation/native";
 export default function Home() {
 
     const navigation = useNavigation();
+    const theme = useThemeColors();
 
     return (
         <ScrollView refreshControl={<RefreshControl refreshing={false} size="default" />}
             showsHorizontalScrollIndicator={false}
             stickyHeaderIndices={[0]}
-            style={styles.container}>
+            style={[styles.container, { backgroundColor: theme.background }]}>
             <Header>
                 <View style={{
                     flexDirection: 'row',
@@ -37,11 +39,11 @@ export default function Home() {
                         <Feather
                             name="menu"
                             size={27}
-                            color="white"
+                            color={theme.headerIcon}
                             style={{ alignSelf: 'center', marginTop: 2 }}
                         />
                     </TouchableOpacity>
-                    <Text style={styles.headerTitle}>TechPulse</Text>
+                    <Text style={[styles.headerTitle, { color: theme.headerText }]}>TechPulse</Text>
                 </View>
             </Header>
             <View
@@ -52,10 +54,10 @@ export default function Home() {
                     <FirstNews />
                 </View>
 
-                <Divider style={styles.divider} />
+                <Divider style={[styles.divider, { backgroundColor: theme.divider }]} />
 
                 <View style={{ marginVertical: 10 }}>
-                    <Text style={styles.title}>
+                    <Text style={[styles.title, { color: theme.textSubtle }]}>
                         MEUS FAVORITOS
                     </Text>
                     <FlatList
@@ -65,10 +67,10 @@ export default function Home() {
                         renderItem={({ item }) => (
                             <FavoriteNews item={item} />
                         )} />
-                    <TouchableOpacity activeOpacity={0.7} style={styles.button}>
+                    <TouchableOpacity activeOpacity={0.7} style={[styles.button, { backgroundColor: theme.accentButton + '60' }]}>
                         <Text
                             style={{
-                                color: COLORS.neutral.white,
+                                color: theme.textPrimary,
                                 fontSize: 14,
                                 fontWeight: 'bold',
                             }}
@@ -76,16 +78,16 @@ export default function Home() {
                         <Feather
                             name='arrow-right'
                             size={17}
-                            color={COLORS.neutral.white}
+                            color={theme.textPrimary}
                         />
                     </TouchableOpacity>
                 </View>
 
 
-                <Divider style={styles.divider} />
+                <Divider style={[styles.divider, { backgroundColor: theme.divider }]} />
 
                 <View style={{ marginVertical: 10 }}>
-                    <Text style={styles.title}>
+                    <Text style={[styles.title, { color: theme.textSubtle }]}>
                         MAIS ACESSADAS
                     </Text>
                     <View style={{ gap: 20 }}>
@@ -99,16 +101,15 @@ export default function Home() {
                                 style={{
                                     width: 40,
                                     height: 40,
-                                    backgroundColor: COLORS.neutral[800],
+                                    backgroundColor: theme.cardBackground,
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                 }}
                             >
                                 <Entypo name="medal" size={24} color={COLORS.rank.gold} />
-                                {/* <Text style={{ color: COLORS.neutral.white, fontWeight: 'bold', fontSize: 16 }}></Text> */}
                             </View>
                             <Card
-                                color={COLORS.secondary[800]}
+                                color={theme.cardBackground}
                                 data={NEWS[0]}
                                 showDate={false}
                                 showAction={false}
@@ -127,16 +128,15 @@ export default function Home() {
                                 style={{
                                     width: 40,
                                     height: 40,
-                                    backgroundColor: COLORS.neutral[800],
+                                    backgroundColor: theme.cardBackground,
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                 }}
                             >
                                 <Entypo name="medal" size={24} color={COLORS.rank.silver} />
-                                {/* <Text style={{ color: COLORS.neutral.white, fontWeight: 'bold', fontSize: 16 }}>2</Text> */}
                             </View>
                             <Card
-                                color={COLORS.secondary[800]}
+                                color={theme.cardBackground}
                                 data={NEWS[1]}
                                 showDate={false}
                                 showAction={false}
@@ -155,16 +155,15 @@ export default function Home() {
                                 style={{
                                     width: 40,
                                     height: 40,
-                                    backgroundColor: COLORS.neutral[800],
+                                    backgroundColor: theme.cardBackground,
                                     alignItems: 'center',
                                     justifyContent: 'center',
                                 }}
                             >
                                 <Entypo name="medal" size={24} color={COLORS.rank.bronze} />
-                                {/* <Text style={{ color: COLORS.neutral.white, fontWeight: 'bold', fontSize: 16 }}>3</Text> */}
                             </View>
                             <Card
-                                color={COLORS.secondary[800]}
+                                color={theme.cardBackground}
                                 data={NEWS[2]}
                                 showDate={false}
                                 showAction={false}
@@ -177,9 +176,9 @@ export default function Home() {
                 </View>
 
 
-                <Divider style={styles.divider} />
+                <Divider style={[styles.divider, { backgroundColor: theme.divider }]} />
                 <View style={{ gap: 20 }}>
-                    <Text style={styles.title}>
+                    <Text style={[styles.title, { color: theme.textSubtle }]}>
                         VEJA MAIS
                     </Text>
                     {
@@ -188,7 +187,7 @@ export default function Home() {
                                 key={index}
                                 showDate={false}
                                 showAction={false}
-                                color={COLORS.neutral[800]}
+                                color={theme.cardBackground}
                                 data={item}
                             />
                         ))
@@ -202,10 +201,8 @@ export default function Home() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: COLORS.neutral[900],
     },
     title: {
-        color: COLORS.neutral[500],
         fontSize: 24,
         fontWeight: '400',
         marginBottom: 10,
@@ -218,15 +215,12 @@ const styles = StyleSheet.create({
         gap: 20
     },
     divider: {
-        backgroundColor: COLORS.neutral[700] + 40,
         height: 3
     },
     headerTitle: {
-        color: COLORS.neutral.white,
         fontSize: 24,
     },
     button: {
-        backgroundColor: COLORS.badges.indigo + 60,
         alignSelf: 'flex-start',
         flexDirection: 'row',
         paddingHorizontal: 15,

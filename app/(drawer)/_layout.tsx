@@ -1,27 +1,30 @@
 import CustomDrawer from '@/src/components/layout/CustomDrawer'
+import { useThemeColors } from '@/src/hooks/useThemeColors'
 import { COLORS } from '@/src/theme/global'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { Drawer } from 'expo-router/drawer'
 import { Text, View } from 'react-native'
 
 export default function DrawerLayout() {
+    const theme = useThemeColors();
+
     return (
         <Drawer
             drawerContent={(props) => <CustomDrawer{...props} />}
             screenOptions={{
-                headerTintColor: COLORS.neutral.white,
+                headerTintColor: theme.headerIcon,
                 drawerStyle: {
                     width: 300,
-                    backgroundColor: COLORS.neutral[900],
+                    backgroundColor: theme.drawerBackground,
                 },
                 drawerItemStyle: {
                     marginHorizontal: 0,
                     marginVertical: 0,
                     borderRadius: 0,
                 },
-                drawerActiveBackgroundColor: COLORS.neutral[800],
-                drawerActiveTintColor: COLORS.neutral.white,
-                drawerInactiveTintColor: COLORS.neutral[400],
+                drawerActiveBackgroundColor: theme.drawerActiveBackground,
+                drawerActiveTintColor: theme.drawerActiveText,
+                drawerInactiveTintColor: theme.drawerInactiveText,
             }}>
 
             <Drawer.Screen

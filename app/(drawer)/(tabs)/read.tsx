@@ -1,23 +1,25 @@
 import Header from "@/src/components/layout/Header";
 import { SUBJECTS } from "@/src/constants/subjects";
+import { useThemeColors } from "@/src/hooks/useThemeColors";
 import { COLORS } from "@/src/theme/global";
 import Feather from '@expo/vector-icons/Feather';
 import { FlatList, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { NEWS as NEWS_DATA } from "@/src/constants/news";
-// import CardNews from "@/src/components/home/GlobalNewsCard";
 import News from "@/src/components/home/News";
 import Card from "@/src/components/shared/Card";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import Entypo from "@expo/vector-icons/Entypo";
 
 export default function ReadLater() {
+    const theme = useThemeColors();
+
     return (
         <>
             <Header>
-                <Text style={styles.headerTitle}>Ler Depois</Text>
+                <Text style={[styles.headerTitle, { color: theme.headerText }]}>Ler Depois</Text>
             </Header>
 
-            <ScrollView style={styles.container}
+            <ScrollView style={[styles.container, { backgroundColor: theme.background }]}
                 keyboardShouldPersistTaps='handled'
             >
 
@@ -26,7 +28,7 @@ export default function ReadLater() {
                 >
                     <View
                         style={{
-                            backgroundColor: COLORS.secondary[700],
+                            backgroundColor: theme.statsBackground,
                             height: 100,
                             flex: 1,
                             alignItems: 'center',
@@ -38,7 +40,7 @@ export default function ReadLater() {
                         <Text style={{
                             textAlign: 'center',
                             width: '100%',
-                            color: COLORS.secondary[200],
+                            color: theme.statsText,
                             fontSize: 14,
                             fontWeight: '200',
                         }}>
@@ -49,7 +51,7 @@ export default function ReadLater() {
                             style={{
                                 fontSize: 25,
                                 fontWeight: '600',
-                                color: COLORS.secondary[200],
+                                color: theme.statsText,
                             }}
                         >
                             {NEWS_DATA.length}
@@ -57,7 +59,7 @@ export default function ReadLater() {
                     </View>
                     <View
                         style={{
-                            backgroundColor: COLORS.secondary[700],
+                            backgroundColor: theme.statsBackground,
                             height: 100,
                             flex: 1,
                             width: 140,
@@ -70,7 +72,7 @@ export default function ReadLater() {
                         <Text style={{
                             textAlign: 'center',
                             width: '100%',
-                            color: COLORS.secondary[200],
+                            color: theme.statsText,
                             fontSize: 14,
                             fontWeight: '200',
                         }}>
@@ -81,14 +83,14 @@ export default function ReadLater() {
                             style={{
                                 fontSize: 25,
                                 fontWeight: '600',
-                                color: COLORS.secondary[200],
+                                color: theme.statsText,
                             }}
                         >
                             {NEWS_DATA.length + 12}
                         </Text>
                     </View>
                 </View>
-                <Text style={styles.title}>Veja as notícias salvas por você para ler depois:</Text>
+                <Text style={[styles.title, { color: theme.textPrimary }]}>Veja as notícias salvas por você para ler depois:</Text>
                 <View style={{ gap: 15, marginBottom: 10 }}>
 
                     {
@@ -99,7 +101,7 @@ export default function ReadLater() {
                                 showDescription={false}
                                 showDate={false}
                                 showSubjects={false}
-                                color={COLORS.neutral[800]}
+                                color={theme.cardBackground}
                                 actions={
                                     <TouchableOpacity
                                         activeOpacity={0.7}
@@ -120,55 +122,15 @@ export default function ReadLater() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: COLORS.neutral[900],
         paddingHorizontal: 15,
     },
     title: {
-        color: COLORS.neutral.white,
         marginTop: 20,
         marginBottom: 10
     },
     headerTitle: {
         width: '100%',
-        color: COLORS.neutral.white,
         fontSize: 22,
         fontWeight: '200'
-    },
-    searchContainer: {
-        flexDirection: 'row',
-        marginBottom: 20,
-        paddingVertical: 4,
-        gap: 5,
-        paddingHorizontal: 10,
-        borderRadius: 10,
-        alignItems: 'center',
-        backgroundColor: COLORS.neutral[700] + 70,
-    },
-    searchInput: {
-        width: '100%',
-        color: COLORS.neutral.white,
-        height: 40,
-        paddingHorizontal: 10,
-        paddingVertical: 4,
-    },
-    subjectsBody: {
-        width: '100%',
-        marginBottom: 15,
-    },
-    subjects: {
-        color: COLORS.neutral.white,
-        fontSize: 14,
-        paddingVertical: 6,
-        borderRadius: 20
-    },
-    subject: {
-        color: COLORS.neutral.white,
-        fontSize: 16,
-        marginRight: 10,
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-        alignSelf: 'flex-start',
-        backgroundColor: COLORS.primary[700],
-        borderRadius: 20,
     },
 })

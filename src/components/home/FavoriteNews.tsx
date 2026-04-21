@@ -2,22 +2,25 @@ import { COLORS } from '@/src/theme/global'
 import { NewsType } from '@/src/types/NewsType'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { useThemeColors } from '@/src/hooks/useThemeColors'
 
 export default function FavoriteNews({ item }: { item: NewsType }) {
+    const theme = useThemeColors();
+
     return (
-        <TouchableOpacity activeOpacity={0.8} style={styles.container}>
+        <TouchableOpacity activeOpacity={0.8} style={[styles.container, { backgroundColor: theme.favoriteCardBackground }]}>
             <Image
                 style={styles.image}
                 source={item.image} />
 
-            <Text style={[styles.subject, { marginTop: 5 }]}>
+            <Text style={[styles.subject, { color: theme.textSubtle, marginTop: 5 }]}>
                 {item.subject}
             </Text>
 
-            <Text style={styles.title}>
+            <Text style={[styles.title, { color: theme.textSecondary }]}>
                 {item.title}
             </Text>
-            <Text style={styles.subject}>
+            <Text style={[styles.subject, { color: theme.textSubtle }]}>
                 {item.date}
             </Text>
         </TouchableOpacity >
@@ -29,14 +32,12 @@ const styles = StyleSheet.create({
         maxWidth: 250,
         height: 270,
         marginHorizontal:5,
-        backgroundColor: COLORS.primary[800] + 80,
         borderRadius: 2,
         padding: 10,
         marginRight: 10,
         gap: 5
     },
     title: {
-        color: COLORS.neutral[200],
         fontSize: 14,
         textAlign: 'justify'
     },
@@ -46,7 +47,6 @@ const styles = StyleSheet.create({
         objectFit: 'cover'
     },
     subject: {
-        color: COLORS.neutral[500],
         fontSize: 12,
         alignSelf: 'flex-start',
     },

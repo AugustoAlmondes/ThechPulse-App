@@ -1,21 +1,22 @@
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Stack } from "expo-router";
-import { COLORS } from '@/src/theme/global';
+import { useThemeColors } from '@/src/hooks/useThemeColors';
 
 const Drawer = createDrawerNavigator();
 
 export default function RootLayout() {
 
   const insets = useSafeAreaInsets();
+  const theme = useThemeColors();
 
   return (
     <Stack
       screenOptions={{
         headerShown: false,
-        statusBarStyle: 'light',
+        statusBarStyle: theme.statusBarStyle,
         contentStyle: {
-          backgroundColor: COLORS.neutral[900],
+          backgroundColor: theme.background,
           paddingTop: insets.top,
           paddingBottom: insets.bottom,
           boxShadow: 'none',

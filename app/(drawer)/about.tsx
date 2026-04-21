@@ -1,12 +1,15 @@
 import Header from '@/src/components/layout/Header';
+import { useThemeColors } from '@/src/hooks/useThemeColors';
 import { COLORS } from '@/src/theme/global';
 import Feather from '@expo/vector-icons/Feather';
 import { router } from 'expo-router';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function About() {
+    const theme = useThemeColors();
+
     return (
-        <>
+        <View style={{ flex: 1, backgroundColor: theme.background }}>
             <Header>
                 <View style={styles.headerContent}>
                     <TouchableOpacity
@@ -16,32 +19,31 @@ export default function About() {
                         <Feather
                             name="arrow-left"
                             size={27}
-                            color="white"
+                            color={theme.headerIcon}
                         />
                     </TouchableOpacity>
-                    <Text style={styles.headerTitle}>Sobre</Text>
+                    <Text style={[styles.headerTitle, { color: theme.headerText }]}>Sobre</Text>
                 </View>
             </Header>
 
             <View style={styles.container}>
                 <View style={styles.content}>
                     <Feather name="info" size={64} color={COLORS.primary[500]} />
-                    <Text style={styles.title}>TeachPulse</Text>
-                    <Text style={styles.description}>
+                    <Text style={[styles.title, { color: theme.textPrimary }]}>TeachPulse</Text>
+                    <Text style={[styles.description, { color: theme.textTertiary }]}>
                         Sua plataforma de notícias favorita. 
                         Acompanhe o que há de novo no mundo da tecnologia.
                     </Text>
-                    <Text style={styles.version}>Versão 1.0.0</Text>
+                    <Text style={[styles.version, { color: theme.textSubtle }]}>Versão 1.0.0</Text>
                 </View>
             </View>
-        </>
+        </View>
     );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: COLORS.neutral[900],
         padding: 20,
         justifyContent: 'center',
     },
@@ -51,7 +53,6 @@ const styles = StyleSheet.create({
         gap: 15,
     },
     headerTitle: {
-        color: COLORS.neutral.white,
         fontSize: 24,
     },
     content: {
@@ -61,17 +62,14 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 28,
         fontWeight: 'bold',
-        color: COLORS.neutral.white,
     },
     description: {
         fontSize: 16,
-        color: COLORS.neutral[400],
         textAlign: 'center',
         lineHeight: 24,
     },
     version: {
         fontSize: 14,
-        color: COLORS.neutral[600],
         marginTop: 20,
     },
 });

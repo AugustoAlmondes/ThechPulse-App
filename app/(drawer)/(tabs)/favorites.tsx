@@ -6,24 +6,27 @@ import Header from "@/src/components/layout/Header";
 import Card from "@/src/components/shared/Card";
 import { NEWS } from "@/src/constants/news";
 import { SUBJECTS } from "@/src/constants/subjects";
+import { useThemeColors } from "@/src/hooks/useThemeColors";
 import { COLORS } from "@/src/theme/global";
 import Feather from "@expo/vector-icons/Feather";
 import { FlatList, TextInput, ScrollView, StyleSheet, Text, View } from "react-native";
 
 export default function Favorites() {
+    const theme = useThemeColors();
+
     return (
         <>
             <Header>
-                <Text style={styles.headerTitle}>Favoritas</Text>
+                <Text style={[styles.headerTitle, { color: theme.headerText }]}>Favoritas</Text>
             </Header>
-            <ScrollView style={styles.container}>
+            <ScrollView style={[styles.container, { backgroundColor: theme.background }]}>
 
-                <View style={styles.searchContainer}>
-                    <Feather name="search" color={COLORS.neutral[400]} size={24} />
+                <View style={[styles.searchContainer, { backgroundColor: theme.searchBackground }]}>
+                    <Feather name="search" color={theme.searchPlaceholder} size={24} />
                     <TextInput
                         placeholder="Buscar"
-                        placeholderTextColor={COLORS.neutral[400]}
-                        style={styles.searchInput}
+                        placeholderTextColor={theme.searchPlaceholder}
+                        style={[styles.searchInput, { color: theme.searchText }]}
                     />
                 </View>
 
@@ -37,7 +40,7 @@ export default function Favorites() {
                                 showImage={false}
                                 showSubjects={false}
                                 showDate={false}
-                                color={COLORS.neutral[800]}
+                                color={theme.cardBackground}
                             />
                         ))
                     }
@@ -52,7 +55,6 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         paddingHorizontal: 15,
-        backgroundColor: COLORS.neutral[900]
     },
     searchContainer: {
         flexDirection: 'row',
@@ -62,21 +64,17 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         borderRadius: 10,
         alignItems: 'center',
-        backgroundColor: COLORS.neutral[700] + 70,
     },
     searchInput: {
         width: '100%',
-        color: COLORS.neutral.white,
         height: 40,
         paddingHorizontal: 10,
         paddingVertical: 4,
     },
     title: {
-        color: COLORS.neutral.white
     },
     headerTitle: {
         width: '100%',
-        color: COLORS.neutral.white,
         fontSize: 22,
         fontWeight: '200'
     },

@@ -83,3 +83,141 @@ export const COLORS = {
     }
 
 };
+
+// Semantic tokens for dark theme (matches current behavior)
+export const darkTheme = {
+    // Backgrounds
+    background: COLORS.neutral[900],
+    backgroundSecondary: COLORS.neutral[800],
+    backgroundTertiary: COLORS.neutral[700],
+    surface: COLORS.neutral[800],
+    surfaceHover: COLORS.neutral[700],
+
+    // Text
+    textPrimary: COLORS.neutral.white,
+    textSecondary: COLORS.neutral[200],
+    textTertiary: COLORS.neutral[300],
+    textMuted: COLORS.neutral[400],
+    textSubtle: COLORS.neutral[500],
+    textDisabled: COLORS.neutral[600],
+
+    // Borders & Dividers
+    border: COLORS.neutral[800],
+    divider: COLORS.neutral[700] + '40',
+
+    // Header / Navigation
+    headerBackground: COLORS.neutral[900],
+    headerText: COLORS.neutral.white,
+    headerIcon: COLORS.neutral.white,
+    tabBarBackground: COLORS.neutral[900],
+    tabBarActive: COLORS.neutral.white,
+    tabBarInactive: COLORS.neutral[300] + '60',
+    drawerBackground: COLORS.neutral[900],
+    drawerActiveBackground: COLORS.neutral[800],
+    drawerActiveText: COLORS.neutral.white,
+    drawerInactiveText: COLORS.neutral[400],
+
+    // Cards
+    cardBackground: COLORS.neutral[800],
+    cardTitle: COLORS.neutral[200],
+    cardDescription: COLORS.neutral[300],
+    cardDate: COLORS.neutral[500],
+    cardSubject: COLORS.neutral.white,
+
+    // Search
+    searchBackground: COLORS.neutral[700] + '70',
+    searchText: COLORS.neutral.white,
+    searchPlaceholder: COLORS.neutral[400],
+
+    // Buttons
+    primaryButton: COLORS.primary[500],
+    primaryButtonText: COLORS.neutral.white,
+    accentButton: COLORS.badges.indigo,
+
+    // Misc
+    statusBarStyle: 'light' as const,
+    overlay: 'rgba(18, 23, 29, 0.85)',
+
+    // Settings
+    settingItemBackground: COLORS.neutral[800],
+    settingItemText: COLORS.neutral.white,
+    sectionTitleColor: COLORS.neutral[500],
+    chevronColor: COLORS.neutral[600],
+
+    // Favorite card
+    favoriteCardBackground: COLORS.primary[800] + '80',
+
+    // Stats boxes
+    statsBackground: COLORS.secondary[700],
+    statsText: COLORS.secondary[200],
+};
+
+// Semantic tokens for light theme
+export const lightTheme = {
+    // Backgrounds
+    background: "#F5F7FA",
+    backgroundSecondary: "#FFFFFF",
+    backgroundTertiary: "#E8ECF1",
+    surface: "#FFFFFF",
+    surfaceHover: "#F0F3F7",
+
+    // Text
+    textPrimary: "#1A2233",
+    textSecondary: "#2C3E50",
+    textTertiary: "#4A5568",
+    textMuted: "#6B7C8A",
+    textSubtle: "#8FA0AD",
+    textDisabled: "#B0BEC5",
+
+    // Borders & Dividers
+    border: "#E0E6ED",
+    divider: "#CBD5DC" + '60',
+
+    // Header / Navigation
+    headerBackground: "#FFFFFF",
+    headerText: "#1A2233",
+    headerIcon: "#2C3E50",
+    tabBarBackground: "#FFFFFF",
+    tabBarActive: "#1A2233",
+    tabBarInactive: "#8FA0AD",
+    drawerBackground: "#FFFFFF",
+    drawerActiveBackground: "#F0F3F7",
+    drawerActiveText: "#1A2233",
+    drawerInactiveText: "#6B7C8A",
+
+    // Cards
+    cardBackground: "#FFFFFF",
+    cardTitle: "#2C3E50",
+    cardDescription: "#4A5568",
+    cardDate: "#8FA0AD",
+    cardSubject: "#FFFFFF",
+
+    // Search
+    searchBackground: "#E8ECF1",
+    searchText: "#1A2233",
+    searchPlaceholder: "#8FA0AD",
+
+    // Buttons
+    primaryButton: COLORS.primary[500],
+    primaryButtonText: "#FFFFFF",
+    accentButton: COLORS.badges.indigo,
+
+    // Misc
+    statusBarStyle: 'dark' as const,
+    overlay: 'rgba(245, 247, 250, 0.92)',
+
+    // Settings
+    settingItemBackground: "#FFFFFF",
+    settingItemText: "#1A2233",
+    sectionTitleColor: "#6B7C8A",
+    chevronColor: "#B0BEC5",
+
+    // Favorite card
+    favoriteCardBackground: COLORS.primary[100],
+
+    // Stats boxes
+    statsBackground: COLORS.secondary[100],
+    statsText: COLORS.secondary[800],
+};
+
+export type AppTheme = typeof darkTheme;

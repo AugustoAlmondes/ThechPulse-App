@@ -1,3 +1,4 @@
+import { useThemeColors } from "@/src/hooks/useThemeColors";
 import { COLORS } from "@/src/theme/global";
 import Entypo from "@expo/vector-icons/Entypo";
 import { DrawerContentScrollView, DrawerItemList } from "@react-navigation/drawer";
@@ -10,12 +11,13 @@ import { router } from "expo-router";
 export default function CustomDrawer(props: any) {
 
     const [isLogin, setIsLogin] = useState(true);
+    const theme = useThemeColors();
 
     return (
         <DrawerContentScrollView
             {...props}
             contentContainerStyle={styles.container}
-            style={styles.scroll}
+            style={[styles.scroll, { backgroundColor: theme.drawerBackground }]}
         >
             {
                 isLogin ? <View style={styles.header}>
@@ -25,11 +27,11 @@ export default function CustomDrawer(props: any) {
                             style={styles.avatar}
                         />
 
-                        <Text style={styles.userName}>
+                        <Text style={[styles.userName, { color: theme.textPrimary }]}>
                             Augusto Almondes
                         </Text>
 
-                        <Text style={styles.userEmail}>
+                        <Text style={[styles.userEmail, { color: theme.textMuted }]}>
                             augusto@email.com
                         </Text>
                     </View>
@@ -48,7 +50,7 @@ export default function CustomDrawer(props: any) {
                             <MaterialCommunityIcons name="login" size={20} color="white" />
                             <Text style={styles.signInButtonText}>Entrar em sua conta</Text>
                         </TouchableOpacity>
-                        <Text style={styles.signInSubtitle}>Acesse seus favoritos e muito mais</Text>
+                        <Text style={[styles.signInSubtitle, { color: theme.textMuted }]}>Acesse seus favoritos e muito mais</Text>
                     </View>
             }
 
@@ -56,21 +58,7 @@ export default function CustomDrawer(props: any) {
                 <DrawerItemList {...props} />
             </View>
 
-            <Divider style={{ backgroundColor: COLORS.neutral[800], height: 2, marginBottom: 5 }} />
-
-            {/* <TouchableOpacity
-                activeOpacity={0.8}
-                style={styles.logoutButton}
-            >
-                <MaterialCommunityIcons
-                    name="logout"
-                    size={20}
-                    color={COLORS.neutral.white}
-                />
-                <Text style={styles.logoutText}>
-                    Sair
-                </Text>
-            </TouchableOpacity> */}
+            <Divider style={{ backgroundColor: theme.border, height: 2, marginBottom: 5 }} />
         </DrawerContentScrollView>
     );
 }
@@ -84,7 +72,6 @@ const styles = StyleSheet.create({
         paddingBottom: 10,
     },
     scroll: {
-        backgroundColor: COLORS.neutral[900],
     },
     loginPlaceholder: {
         height: 160,
@@ -114,7 +101,6 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
     },
     signInSubtitle: {
-        color: COLORS.neutral[400],
         fontSize: 12,
         textAlign: 'center',
     },
@@ -141,12 +127,10 @@ const styles = StyleSheet.create({
         marginBottom: 10,
     },
     userName: {
-        color: 'white',
         fontSize: 17,
         fontWeight: 'bold',
     },
     userEmail: {
-        color: COLORS.neutral[400],
         fontSize: 13,
     },
     headerBackground: {
@@ -161,13 +145,11 @@ const styles = StyleSheet.create({
     },
     logoutButton: {
         padding: 15,
-        // backgroundColor: COLORS.badges.red + '50',
         gap: 10,
         flexDirection: 'row',
         alignItems: 'center',
     },
     logoutText: {
-        color: COLORS.neutral.white,
         fontSize: 15,
     },
 });

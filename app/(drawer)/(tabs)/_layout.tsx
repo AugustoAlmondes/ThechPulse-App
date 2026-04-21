@@ -1,6 +1,6 @@
 import { createMaterialTopTabNavigator } from "@react-navigation/material-top-tabs"
 import Favorites from "./favorites";
-import { COLORS } from "@/src/theme/global";
+import { useThemeColors } from "@/src/hooks/useThemeColors";
 import Home from ".";
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import Entypo from '@expo/vector-icons/Entypo';
@@ -16,6 +16,7 @@ const DEFAULT_CONFIG_TAB = {
     },
 }
 export default function TabsLayout() {
+    const theme = useThemeColors();
 
     return (
         <>
@@ -23,15 +24,15 @@ export default function TabsLayout() {
                 tabBarPosition="bottom"
                 screenOptions={{
                     tabBarStyle: {
-                        backgroundColor: COLORS.neutral[900],
+                        backgroundColor: theme.tabBarBackground,
                         height: 70,
                         paddingBottom: 8,
                     },
                     tabBarIndicatorStyle: {
                         width: 0
                     },
-                    tabBarActiveTintColor: COLORS.neutral.white,
-                    tabBarInactiveTintColor: COLORS.neutral[300] + 60,
+                    tabBarActiveTintColor: theme.tabBarActive,
+                    tabBarInactiveTintColor: theme.tabBarInactive,
                     animationEnabled: false,
                     tabBarLabelStyle: {
                         fontSize: 14,

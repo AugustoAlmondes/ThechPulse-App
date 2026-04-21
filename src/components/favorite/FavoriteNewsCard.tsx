@@ -3,6 +3,7 @@ import Entypo from '@expo/vector-icons/Entypo'
 import Feather from '@expo/vector-icons/Feather'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { useThemeColors } from '@/src/hooks/useThemeColors'
 
 interface NewsData {
     title: string,
@@ -13,25 +14,27 @@ interface NewsData {
 }
 
 export default function FavoriteCardNews(props: NewsData) {
+    const theme = useThemeColors();
+
     return (
-        <View style={styles.newsCard}>
+        <View style={[styles.newsCard, { backgroundColor: theme.surface }]}>
             <View style={styles.newsContent}>
-                <Text style={styles.newsSubject}>{props.subject}</Text>
-                <Text style={styles.newsTitle}>{props.title}</Text>
-                <Text style={styles.newsDate}>{props.date}</Text>
+                <Text style={[styles.newsSubject, { backgroundColor: COLORS.badges.blue, color: COLORS.neutral.white }]}>{props.subject}</Text>
+                <Text style={[styles.newsTitle, { color: theme.textPrimary }]}>{props.title}</Text>
+                <Text style={[styles.newsDate, { color: theme.textSecondary }]}>{props.date}</Text>
                 <View style={styles.cardActions}>
                     <TouchableOpacity activeOpacity={0.7} style={styles.actionButton}>
                         <Entypo
                             name='share'
                             size={22}
-                            color={COLORS.neutral[300]} />
+                            color={theme.textTertiary} />
 
                     </TouchableOpacity>
                     <TouchableOpacity activeOpacity={0.7} style={styles.actionButton}>
                         <Ionicons
                             name="bookmark"
                             size={22}
-                            color={COLORS.neutral[300]} />
+                            color={theme.textTertiary} />
                     </TouchableOpacity>
                 </View>
             </View>
@@ -41,8 +44,6 @@ export default function FavoriteCardNews(props: NewsData) {
 
 const styles = StyleSheet.create({
     newsCard: {
-        // flexDirection: 'row',
-        backgroundColor: COLORS.neutral[800],
         borderRadius: 2,
         overflow: 'hidden',
         minHeight: 120,
@@ -54,24 +55,20 @@ const styles = StyleSheet.create({
         paddingVertical: 20
     },
     newsSubject: {
-        backgroundColor: COLORS.badges.blue,
         alignSelf: 'flex-start',
         paddingHorizontal: 10,
         fontSize: 12,
         fontWeight: '600',
-        color: COLORS.neutral.white,
         paddingVertical: 2,
         borderRadius: 100
     },
     newsTitle: {
         marginTop: 10,
-        color: COLORS.neutral.white,
         fontSize: 18,
     },
     newsDate: {
-        color: COLORS.neutral[200],
         fontSize: 16,
-        fontWeight: 300,
+        fontWeight: '300',
         marginTop: 12,
     },
     newsActions: {
@@ -91,4 +88,3 @@ const styles = StyleSheet.create({
         marginBottom: 10
     }
 })
-

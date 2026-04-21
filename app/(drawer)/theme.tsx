@@ -1,10 +1,21 @@
 import Header from '@/src/components/layout/Header';
+import { useThemeColors } from '@/src/hooks/useThemeColors';
+import { ThemeMode, useThemeStore } from '@/src/store/useThemeStore';
 import { COLORS } from '@/src/theme/global';
 import Feather from '@expo/vector-icons/Feather';
 import { router } from 'expo-router';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
+const OPTIONS: { key: ThemeMode; label: string; icon: 'moon' | 'sun' | 'monitor' }[] = [
+    { key: 'dark', label: 'Escuro', icon: 'moon' },
+    { key: 'light', label: 'Claro', icon: 'sun' },
+    { key: 'system', label: 'Sistema', icon: 'monitor' },
+];
+
 export default function Theme() {
+    const theme = useThemeColors();
+    const { mode, setMode } = useThemeStore();
+
     return (
         <>
             <Header>
@@ -16,37 +27,54 @@ export default function Theme() {
                         <Feather
                             name="arrow-left"
                             size={27}
-                            color="white"
+                            color={theme.headerIcon}
                         />
                     </TouchableOpacity>
-                    <Text style={styles.headerTitle}>Tema</Text>
+                    <Text style={[styles.headerTitle, { color: theme.headerText }]}>Tema</Text>
                 </View>
             </Header>
 
-            <View style={styles.container}>
+            <View style={[styles.container, { backgroundColor: theme.background }]}>
                 <View style={styles.content}>
                     <Feather name="moon" size={64} color={COLORS.primary[500]} />
-                    <Text style={styles.title}>Preferências de Tema</Text>
-                    <Text style={styles.description}>
+                    <Text style={[styles.title, { color: theme.textPrimary }]}>Preferências de Tema</Text>
+                    <Text style={[styles.description, { color: theme.textMuted }]}>
                         Escolha entre o modo claro, escuro ou seguir o sistema.
                     </Text>
                     
                     <View style={styles.optionList}>
-                        <TouchableOpacity style={[styles.option, styles.selectedOption]}>
-                            <Feather name="moon" size={20} color="white" />
-                            <Text style={styles.optionText}>Escuro</Text>
-                            <Feather name="check" size={20} color={COLORS.primary[500]} />
-                        </TouchableOpacity>
-                        
-                        <TouchableOpacity style={styles.option}>
-                            <Feather name="sun" size={20} color={COLORS.neutral[400]} />
-                            <Text style={[styles.optionText, { color: COLORS.neutral[400] }]}>Claro</Text>
-                        </TouchableOpacity>
-                        
-                        <TouchableOpacity style={styles.option}>
-                            <Feather name="monitor" size={20} color={COLORS.neutral[400]} />
-                            <Text style={[styles.optionText, { color: COLORS.neutral[400] }]}>Sistema</Text>
-                        </TouchableOpacity>
+                        {OPTIONS.map((opt) => {
+                            const isSelected = mode === opt.key;
+                            return (
+                                <TouchableOpacity
+                                    key={opt.key}
+                                    style={[
+                                        styles.option,
+                                        { backgroundColor: theme.surface },
+                                        isSelected && styles.selectedOption,
+                                    ]}
+                                    onPress={() => setMode(opt.key)}
+                                    activeOpacity={0.7}
+                                >
+                                    <Feather
+                                        name={opt.icon}
+                                        size={20}
+                                        color={isSelected ? theme.textPrimary : theme.textMuted}
+                                    />
+                                    <Text
+                                        style={[
+                                            styles.optionText,
+                                            { color: isSelected ? theme.textPrimary : theme.textMuted },
+                                        ]}
+                                    >
+                                        {opt.label}
+                                    </Text>
+                                    {isSelected && (
+                                        <Feather name="check" size={20} color={COLORS.primary[500]} />
+                                    )}
+                                </TouchableOpacity>
+                            );
+                        })}
                     </View>
                 </View>
             </View>
@@ -57,7 +85,6 @@ export default function Theme() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: COLORS.neutral[900],
         padding: 20,
     },
     headerContent: {
@@ -66,7 +93,6 @@ const styles = StyleSheet.create({
         gap: 15,
     },
     headerTitle: {
-        color: COLORS.neutral.white,
         fontSize: 24,
     },
     content: {
@@ -77,11 +103,9 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 24,
         fontWeight: 'bold',
-        color: COLORS.neutral.white,
     },
     description: {
         fontSize: 16,
-        color: COLORS.neutral[400],
         textAlign: 'center',
         marginBottom: 20,
     },
@@ -92,7 +116,6 @@ const styles = StyleSheet.create({
     option: {
         flexDirection: 'row',
         alignItems: 'center',
-        backgroundColor: COLORS.neutral[800],
         padding: 16,
         borderRadius: 12,
         gap: 12,
@@ -104,7 +127,6 @@ const styles = StyleSheet.create({
     optionText: {
         flex: 1,
         fontSize: 16,
-        color: COLORS.neutral.white,
         fontWeight: '500',
     },
 });

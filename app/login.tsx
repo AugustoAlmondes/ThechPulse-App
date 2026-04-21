@@ -1,8 +1,11 @@
 import { COLORS } from "@/src/theme/global";
 import { Image, ImageBackground, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { router } from "expo-router";
+import { useThemeColors } from "@/src/hooks/useThemeColors";
 
 export default function Login() {
+    const theme = useThemeColors();
+
     return (
         <View style={styles.container}>
             <ImageBackground 
@@ -10,30 +13,30 @@ export default function Login() {
                 style={styles.background}
                 resizeMode="cover"
             >
-                <View style={styles.overlay}>
+                <View style={[styles.overlay, { backgroundColor: theme.overlay }]}>
                     <View style={styles.content}>
                         <View style={styles.header}>
                             <View style={styles.logoContainer}>
                                 <Text style={styles.logoText}>TP</Text>
                             </View>
-                            <Text style={styles.title}>TeachPulse</Text>
-                            <Text style={styles.subtitle}>Sua pulsação no mundo da educação e tecnologia</Text>
+                            <Text style={[styles.title, { color: theme.textPrimary }]}>TeachPulse</Text>
+                            <Text style={[styles.subtitle, { color: theme.textMuted }]}>Sua pulsação no mundo da educação e tecnologia</Text>
                         </View>
 
                         <View style={styles.footer}>
                             <TouchableOpacity 
                                 activeOpacity={0.8} 
-                                style={styles.googleButton}
+                                style={[styles.googleButton, { backgroundColor: theme.surface }]}
                                 onPress={() => router.replace('/(drawer)/(tabs)')}
                             >
                                 <Image 
                                     source={require('@/assets/google-icon.png')} 
                                     style={styles.googleIcon} 
                                 />
-                                <Text style={styles.googleButtonText}>Continuar com Google</Text>
+                                <Text style={[styles.googleButtonText, { color: theme.textPrimary }]}>Continuar com Google</Text>
                             </TouchableOpacity>
                             
-                            <Text style={styles.termsText}>
+                            <Text style={[styles.termsText, { color: theme.textSubtle }]}>
                                 Ao continuar, você concorda com nossos{" "}
                                 <Text style={styles.linkText}>Termos de Serviço</Text> e{" "}
                                 <Text style={styles.linkText}>Política de Privacidade</Text>.
@@ -55,7 +58,6 @@ const styles = StyleSheet.create({
     },
     overlay: {
         flex: 1,
-        backgroundColor: 'rgba(18, 23, 29, 0.85)', // dark overlay using COLORS.neutral[950] logic
         padding: 30,
         justifyContent: 'center',
     },
@@ -89,12 +91,10 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 36,
         fontWeight: 'bold',
-        color: 'white',
         letterSpacing: 1,
     },
     subtitle: {
         fontSize: 16,
-        color: COLORS.neutral[400],
         textAlign: 'center',
         marginTop: 10,
         lineHeight: 22,
@@ -107,7 +107,6 @@ const styles = StyleSheet.create({
         height: 56,
         flexDirection: 'row',
         borderRadius: 16,
-        backgroundColor: 'white',
         alignItems: 'center',
         justifyContent: 'center',
         gap: 12,
@@ -122,13 +121,11 @@ const styles = StyleSheet.create({
         height: 24,
     },
     googleButtonText: {
-        color: '#1f2933', // neutral 900
         fontSize: 16,
         fontWeight: '600',
     },
     termsText: {
         textAlign: 'center',
-        color: COLORS.neutral[500],
         fontSize: 12,
         lineHeight: 18,
     },

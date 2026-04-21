@@ -1,30 +1,32 @@
 import Header from "@/src/components/layout/Header";
 import { SUBJECTS } from "@/src/constants/subjects";
+import { useThemeColors } from "@/src/hooks/useThemeColors";
 import { COLORS } from "@/src/theme/global";
 import Feather from '@expo/vector-icons/Feather';
 import { FlatList, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { NEWS as NEWS_DATA } from "@/src/constants/news";
-// import CardNews from "@/src/components/home/GlobalNewsCard";
 import News from "@/src/components/home/News";
 import Card from "@/src/components/shared/Card";
 
 export default function AllNews() {
+    const theme = useThemeColors();
+
     return (
         <>
             <Header>
-                <Text style={styles.headerTitle}>Notícias</Text>
+                <Text style={[styles.headerTitle, { color: theme.headerText }]}>Notícias</Text>
             </Header>
 
-            <ScrollView style={styles.container}
+            <ScrollView style={[styles.container, { backgroundColor: theme.background }]}
                 keyboardShouldPersistTaps='handled'
             >
 
-                <View style={styles.searchContainer}>
-                    <Feather name="search" color={COLORS.neutral[400]} size={24} />
+                <View style={[styles.searchContainer, { backgroundColor: theme.searchBackground }]}>
+                    <Feather name="search" color={theme.searchPlaceholder} size={24} />
                     <TextInput
                         placeholder="Buscar"
-                        placeholderTextColor={COLORS.neutral[400]}
-                        style={styles.searchInput}
+                        placeholderTextColor={theme.searchPlaceholder}
+                        style={[styles.searchInput, { color: theme.searchText }]}
                     />
                 </View>
 
@@ -41,14 +43,14 @@ export default function AllNews() {
                     />
                 </View>
                 <View style={{ gap: 25, marginBottom: 10 }}>
-                    <Text style={styles.title}>Últimas notícias</Text>
+                    <Text style={[styles.title, { color: theme.textPrimary }]}>Últimas notícias</Text>
 
                     {
                         NEWS_DATA.map((item, index) => (
                             <Card
                                 key={index}
                                 data={item}
-                                color={COLORS.neutral[800]}
+                                color={theme.cardBackground}
                             />
                         ))
                     }
@@ -62,15 +64,12 @@ export default function AllNews() {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        backgroundColor: COLORS.neutral[900],
         paddingHorizontal: 15,
     },
     title: {
-        color: COLORS.neutral.white
     },
     headerTitle: {
         width: '100%',
-        color: COLORS.neutral.white,
         fontSize: 22,
         fontWeight: '200'
     },
@@ -82,11 +81,9 @@ const styles = StyleSheet.create({
         paddingHorizontal: 10,
         borderRadius: 10,
         alignItems: 'center',
-        backgroundColor: COLORS.neutral[700] + 70,
     },
     searchInput: {
         width: '100%',
-        color: COLORS.neutral.white,
         height: 40,
         paddingHorizontal: 10,
         paddingVertical: 4,
@@ -96,7 +93,6 @@ const styles = StyleSheet.create({
         marginBottom: 15,
     },
     subjects: {
-        color: COLORS.neutral.white,
         fontSize: 14,
         paddingVertical: 6,
         borderRadius: 20
