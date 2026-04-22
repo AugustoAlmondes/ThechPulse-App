@@ -35,10 +35,12 @@ export default function Card({
     minHeigth = 100
 }: CardProps) {
     const theme = useThemeColors();
-    const { isFavorite, addFavoriteNews, removeFavoriteNews } = useFavoriteStore();
+    const isFav = useFavoriteStore(state => state.favoriteNews.some(n => n.id === data.id));
+    const addFavoriteNews = useFavoriteStore(state => state.addFavoriteNews);
+    const removeFavoriteNews = useFavoriteStore(state => state.removeFavoriteNews);
 
     const handleFavorite = () => {
-        if (isFavorite(data)) {
+        if (isFav) {
             removeFavoriteNews(data)
         } else {
             addFavoriteNews(data)
@@ -108,7 +110,7 @@ export default function Card({
                                         name="heart"
                                         size={18}
                                         onPress={handleFavorite}
-                                        color={isFavorite(data) ? COLORS.badges.red : theme.textDisabled}
+                                        color={isFav ? COLORS.badges.red : theme.textDisabled}
                                     />
                                 </View>
                             </>
