@@ -1,12 +1,9 @@
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
-import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Stack } from "expo-router";
 import { useThemeColors } from '@/src/hooks/useThemeColors';
+import { ThemeProvider } from '@/src/providers/ThemeProvider';
 
-const Drawer = createDrawerNavigator();
-
-export default function RootLayout() {
-
+function RootLayoutInner() {
   const insets = useSafeAreaInsets();
   const theme = useThemeColors();
 
@@ -26,5 +23,13 @@ export default function RootLayout() {
       <Stack.Screen name="(drawer)" />
       <Stack.Screen name="login" />
     </Stack>
+  )
+}
+
+export default function RootLayout() {
+  return (
+    <ThemeProvider>
+      <RootLayoutInner />
+    </ThemeProvider>
   )
 }
