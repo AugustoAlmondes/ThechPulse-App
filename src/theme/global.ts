@@ -70,7 +70,7 @@ export const COLORS = {
         pink: "#e2759f",
         orange: "#f39c12",
         teal: "#1abc9c",
-        red: "#b45b51",
+        red: "#b94639ff",
         indigo: "#5c6bc0",
         cyan: "#57afbb",
         lime: "#8bc34a",

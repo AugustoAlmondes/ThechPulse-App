@@ -11,14 +11,16 @@ import Entypo from "@expo/vector-icons/Entypo";
 import { BEST_NEWS, REAL_NEWS } from "@/src/constants/news";
 import Card from "@/src/components/shared/Card";
 import Feather from "@expo/vector-icons/Feather";
-import { useNavigation } from "expo-router";
+import { router, useNavigation } from "expo-router";
 import { DrawerActions } from "@react-navigation/native";
+import { useFavoriteStore } from "@/src/store/useFavoriteStore";
 
 
 export default function Home() {
 
     const navigation = useNavigation();
     const theme = useThemeColors();
+    const favoriteNews = useFavoriteStore(state => state.favoriteNews);
 
     return (
         <ScrollView refreshControl={<RefreshControl refreshing={false} size="default" />}
@@ -32,9 +34,9 @@ export default function Home() {
                     alignItems: 'center',
                     gap: 15
                 }}>
-                    <TouchableOpacity 
-                    activeOpacity={0.7}
-                    onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+                    <TouchableOpacity
+                        activeOpacity={0.7}
+                        onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
                     >
                         <Feather
                             name="menu"
@@ -54,34 +56,41 @@ export default function Home() {
                     <FirstNews />
                 </View>
 
-                <Divider style={[styles.divider, { backgroundColor: theme.divider }]} />
+                {favoriteNews.length > 0 &&
+                    <>
+                        <Divider style={[styles.divider, { backgroundColor: theme.divider }]} />
 
-                <View style={{ marginVertical: 10 }}>
-                    <Text style={[styles.title, { color: theme.textSubtle }]}>
-                        MEUS FAVORITOS
-                    </Text>
-                    <FlatList
-                        horizontal
-                        showsHorizontalScrollIndicator={false}
-                        data={REAL_NEWS.news}
-                        renderItem={({ item }) => (
-                            <FavoriteNews item={item} />
-                        )} />
-                    <TouchableOpacity activeOpacity={0.7} style={[styles.button, { backgroundColor: theme.accentButton + '60' }]}>
-                        <Text
-                            style={{
-                                color: theme.textPrimary,
-                                fontSize: 14,
-                                fontWeight: 'bold',
-                            }}
-                        >Ver meu favoritos</Text>
-                        <Feather
-                            name='arrow-right'
-                            size={17}
-                            color={theme.textPrimary}
-                        />
-                    </TouchableOpacity>
-                </View>
+                        <View style={{ marginVertical: 10 }}>
+                            <Text style={[styles.title, { color: theme.textSubtle }]}>
+                                MEUS FAVORITOS
+                            </Text>
+                            <FlatList
+                                horizontal
+                                showsHorizontalScrollIndicator={false}
+                                data={favoriteNews}
+                                keyExtractor={(item) => item.id}
+                                renderItem={({ item }) => (
+                                    <FavoriteNews item={item} />
+                                )} />
+                            <TouchableOpacity
+                                onPress={() => router.push('/(drawer)/(tabs)/favorites')}
+                                activeOpacity={0.7} style={[styles.button, { backgroundColor: theme.accentButton + '60' }]}>
+                                <Text
+                                    style={{
+                                        color: theme.textPrimary,
+                                        fontSize: 14,
+                                        fontWeight: 'bold',
+                                    }}
+                                >Ver meu favoritos</Text>
+                                <Feather
+                                    name='arrow-right'
+                                    size={17}
+                                    color={theme.textPrimary}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    </>
+                }
 
 
                 <Divider style={[styles.divider, { backgroundColor: theme.divider }]} />

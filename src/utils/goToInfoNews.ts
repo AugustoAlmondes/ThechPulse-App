@@ -7,7 +7,8 @@ export const goToInfoNews = (data: TypeNews) => {
         params: {
             id: data.id,
             url: data.url,
-            title: data.title
+            title: data.title,
+            newsData: JSON.stringify(data)
         }
     });
 };

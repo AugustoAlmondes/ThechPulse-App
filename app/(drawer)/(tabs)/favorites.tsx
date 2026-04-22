@@ -1,10 +1,9 @@
 import Header from "@/src/components/layout/Header";
 import Card from "@/src/components/shared/Card";
-// import Card from "@/src/components/shared/Card";
-// import { REAL_NEWS } from "@/src/constants/news";
 import { useThemeColors } from "@/src/hooks/useThemeColors";
 import { useFavoriteStore } from "@/src/store/useFavoriteStore";
 import Feather from "@expo/vector-icons/Feather";
+import Ionicons from "@expo/vector-icons/Ionicons";
 import { TextInput, ScrollView, StyleSheet, Text, View } from "react-native";
 
 export default function Favorites() {
@@ -26,7 +25,7 @@ export default function Favorites() {
                     />
                 </View>
 
-                <View style={{ gap: 15, marginBottom: 10 }}>
+                {favoriteNews.length > 0 ? <View style={{ gap: 15, marginBottom: 10 }}>
                     {
                         favoriteNews.map((item, index) => (
                             <Card
@@ -41,7 +40,12 @@ export default function Favorites() {
                         ))
                     }
 
-                </View>
+                </View> : (
+                    <View style={{ flex: 1, marginTop: 150, justifyContent: 'center', alignItems: 'center', flexDirection: 'column', gap: 20 }}>
+                        <Text style={[styles.headerTitle, { color: theme.textDisabled, textAlign: 'center' }]}>Nenhuma notícia favoritada</Text>
+                        <Ionicons name="heart-outline" size={40} color={theme.textDisabled + 70} />
+                    </View>
+                )}
             </ScrollView>
         </>
     )

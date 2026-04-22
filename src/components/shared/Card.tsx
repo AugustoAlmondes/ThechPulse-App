@@ -8,6 +8,7 @@ import { TypeNews } from '@/src/types/NewsType';
 import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import { useFavoriteStore } from '@/src/store/useFavoriteStore';
+import { goToInfoNews } from '@/src/utils/goToInfoNews';
 
 interface CardProps {
     color?: string,
@@ -51,7 +52,7 @@ export default function Card({
         <TouchableOpacity
             activeOpacity={0.8}
             style={[styles.container, { backgroundColor: color || theme.cardBackground, minHeight: minHeigth }]}
-        // onPress={handlePress}
+        onPress={() => goToInfoNews(data)}
         >
             {showImage && data.image && (
                 <Image
@@ -96,22 +97,27 @@ export default function Card({
                         {actions ? actions : (
                             <>
                                 <View style={{ flexDirection: 'row', gap: 5 }}>
-                                    <Entypo
-                                        name="share"
-                                        size={18}
-                                        color={theme.textDisabled}
-                                    />
-                                    <Ionicons
-                                        name="bookmark"
-                                        size={18}
-                                        color={theme.textDisabled}
-                                    />
-                                    <Ionicons
-                                        name="heart"
-                                        size={18}
-                                        onPress={handleFavorite}
-                                        color={isFav ? COLORS.badges.red : theme.textDisabled}
-                                    />
+                                    <TouchableOpacity hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }} onPress={() => {}}>
+                                        <Entypo
+                                            name="share"
+                                            size={18}
+                                            color={theme.textDisabled}
+                                        />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }} onPress={() => {}}>
+                                        <Ionicons
+                                            name="bookmark"
+                                            size={18}
+                                            color={theme.textDisabled}
+                                        />
+                                    </TouchableOpacity>
+                                    <TouchableOpacity hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }} onPress={handleFavorite}>
+                                        <Ionicons
+                                            name="heart"
+                                            size={18}
+                                            color={isFav ? COLORS.badges.red : theme.textDisabled}
+                                        />
+                                    </TouchableOpacity>
                                 </View>
                             </>
 
