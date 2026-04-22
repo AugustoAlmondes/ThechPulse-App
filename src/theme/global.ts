@@ -201,7 +201,7 @@ export const darkTheme: AppTheme = {
 // Semantic tokens for light theme
 export const lightTheme: AppTheme = {
     // Backgrounds
-    background: "#F5F7FA",
+    background: "#ffffffff",
     backgroundSecondary: "#FFFFFF",
     backgroundTertiary: "#E8ECF1",
     surface: "#FFFFFF",
@@ -232,7 +232,7 @@ export const lightTheme: AppTheme = {
     drawerInactiveText: "#6B7C8A",
 
     // Cards
-    cardBackground: "#FFFFFF",
+    cardBackground: "#F5F7FA",
     cardTitle: "#2C3E50",
     cardDescription: "#4A5568",
     cardDate: "#8FA0AD",

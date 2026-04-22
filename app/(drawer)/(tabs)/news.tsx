@@ -5,6 +5,7 @@ import { COLORS } from "@/src/theme/global";
 import Feather from '@expo/vector-icons/Feather';
 import { FlatList, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { NEWS as NEWS_DATA } from "@/src/constants/news";
+import { REAL_NEWS } from "@/src/constants/news";
 import News from "@/src/components/home/News";
 import Card from "@/src/components/shared/Card";
 
@@ -31,22 +32,13 @@ export default function AllNews() {
                 </View>
 
                 <View style={styles.subjectsBody}>
-                    <FlatList
-                        showsHorizontalScrollIndicator={false}
-                        horizontal
-                        data={(SUBJECTS)}
-                        keyExtractor={(_, index) => index.toString()}
-                        contentContainerStyle={styles.subjects}
-                        renderItem={({ item }) => (
-                            <Text style={styles.subject}>{item}</Text>
-                        )}
-                    />
+                    <Subjects/>
                 </View>
                 <View style={{ gap: 25, marginBottom: 10 }}>
                     <Text style={[styles.title, { color: theme.textPrimary }]}>Últimas notícias</Text>
 
                     {
-                        NEWS_DATA.map((item, index) => (
+                        REAL_NEWS.news.map((item, index) => (
                             <Card
                                 key={index}
                                 data={item}
@@ -58,6 +50,21 @@ export default function AllNews() {
                 </View>
             </ScrollView>
         </>
+    )
+}
+
+const Subjects = () => {
+    return (
+        <FlatList
+            showsHorizontalScrollIndicator={false}
+            horizontal
+            data={(SUBJECTS)}
+            keyExtractor={(_, index) => index.toString()}
+            contentContainerStyle={styles.subjects}
+            renderItem={({ item }) => (
+                <Text style={styles.subject}>{item}</Text>
+            )}
+        />
     )
 }
 

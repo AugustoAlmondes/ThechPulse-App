@@ -4,7 +4,7 @@ import FavoriteNews from "@/src/components/home/FavoriteNews";
 import News from "@/src/components/home/News";
 import Header from "@/src/components/layout/Header";
 import Card from "@/src/components/shared/Card";
-import { NEWS } from "@/src/constants/news";
+import { REAL_NEWS } from "@/src/constants/news";
 import { SUBJECTS } from "@/src/constants/subjects";
 import { useThemeColors } from "@/src/hooks/useThemeColors";
 import { COLORS } from "@/src/theme/global";
@@ -32,7 +32,7 @@ export default function Favorites() {
 
                 <View style={{ gap: 15, marginBottom: 10 }}>
                     {
-                        NEWS.map((item, index) => (
+                        REAL_NEWS.news.map((item, index) => (
                             <Card
                                 key={index}
                                 data={item}

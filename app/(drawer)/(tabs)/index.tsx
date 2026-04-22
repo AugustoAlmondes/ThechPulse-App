@@ -8,7 +8,7 @@ import { Divider } from 'react-native-paper';
 import { FlatList, RefreshControl, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import FavoriteNews from "@/src/components/home/FavoriteNews";
 import Entypo from "@expo/vector-icons/Entypo";
-import { BEST_NEWS, NEWS } from "@/src/constants/news";
+import { BEST_NEWS, REAL_NEWS } from "@/src/constants/news";
 import Card from "@/src/components/shared/Card";
 import Feather from "@expo/vector-icons/Feather";
 import { useNavigation } from "expo-router";
@@ -63,7 +63,7 @@ export default function Home() {
                     <FlatList
                         horizontal
                         showsHorizontalScrollIndicator={false}
-                        data={NEWS}
+                        data={REAL_NEWS.news}
                         renderItem={({ item }) => (
                             <FavoriteNews item={item} />
                         )} />
@@ -110,7 +110,7 @@ export default function Home() {
                             </View>
                             <Card
                                 color={theme.cardBackground}
-                                data={NEWS[0]}
+                                data={REAL_NEWS.news[0]}
                                 showDate={false}
                                 showAction={false}
                                 showCreator={false}
@@ -137,7 +137,7 @@ export default function Home() {
                             </View>
                             <Card
                                 color={theme.cardBackground}
-                                data={NEWS[1]}
+                                data={REAL_NEWS.news[1]}
                                 showDate={false}
                                 showAction={false}
                                 showCreator={false}
@@ -164,7 +164,7 @@ export default function Home() {
                             </View>
                             <Card
                                 color={theme.cardBackground}
-                                data={NEWS[2]}
+                                data={REAL_NEWS.news[2]}
                                 showDate={false}
                                 showAction={false}
                                 showCreator={false}
@@ -182,7 +182,7 @@ export default function Home() {
                         VEJA MAIS
                     </Text>
                     {
-                        NEWS.map((item, index) => (
+                        REAL_NEWS.news.map((item, index) => (
                             <Card
                                 key={index}
                                 showDate={false}

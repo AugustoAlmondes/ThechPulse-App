@@ -1,22 +1,16 @@
 import React, { ReactNode, useState } from 'react'
 import { COLORS } from '@/src/theme/global'
-import { Image, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Entypo from '@expo/vector-icons/Entypo';
 import { useThemeColors } from '@/src/hooks/useThemeColors'
-
-interface NewsData {
-    title: string,
-    description: string,
-    subject: string,
-    image: any,
-    date: string,
-    by: string
-}
+import { TypeNews } from '@/src/types/NewsType';
+import { Image } from 'expo-image';
+import { router } from 'expo-router';
 
 interface CardProps {
     color?: string,
-    data: NewsData,
+    data: TypeNews,
     showDescription?: boolean,
     showAction?: boolean,
     actions?: ReactNode,
@@ -43,19 +37,36 @@ export default function Card({
     const [isFavorite, setIsFavorite] = useState(true);
     const theme = useThemeColors();
 
+    console.log(data);
+
     return (
-        <TouchableOpacity activeOpacity={0.8} style={[styles.container, { backgroundColor: color || theme.cardBackground, minHeight: minHeigth }]}>
+        <TouchableOpacity
+            onPress={() => {
+                console.log("Clicou aqui", data.url)
+                router.push({
+                    pathname: '/(drawer)/(tabs)/webview/[id]',
+                    params: {
+                        id: data.id,
+                        url: data.url,
+                        title: data.title
+                    }
+                })
+            }}
+
+            activeOpacity={0.8} style={[styles.container, { backgroundColor: color || theme.cardBackground, minHeight: minHeigth }]}>
             {showImage && data.image && (
                 <Image
+                    cachePolicy="disk"
+                    transition={300}
+                    source={{ uri: data.image.toString() }}
                     style={styles.image}
-                    source={data.image}
                 />
             )}
 
             <View style={styles.rightContent}>
-                {showSubjects && data.subject && (
+                {showSubjects && data.category && (
                     <Text style={[styles.subject, { backgroundColor: COLORS.badges.blue + 60, color: theme.cardSubject }]}>
-                        {data.subject}
+                        {data.category[0]}
                     </Text>
                 )}
 
@@ -63,9 +74,9 @@ export default function Card({
                     {data.title}
                 </Text>
 
-                {showCreator && data.by && (
+                {showCreator && data.author && (
                     <Text style={[styles.by, { color: theme.textMuted }]}>
-                        por {data.by}
+                        por {data.author}
                     </Text>
                 )}
 
@@ -75,38 +86,38 @@ export default function Card({
                     </Text>
                 )}
 
-                {showDate && data.date && (
+                {showDate && data.published && (
                     <Text style={[styles.date, { color: theme.cardDate }]}>
-                        {data.date}
+                        {data.published}
                     </Text>
                 )}
 
-            {showAction && (
-                <View style={styles.footer}>
-                    {actions ? actions : (
-                        <>
-                            <View style={{ flexDirection: 'row', gap: 5 }}>
-                                <Entypo
-                                    name="share"
-                                    size={18}
-                                    color={theme.textDisabled}
-                                />
-                                <Ionicons
-                                    name="bookmark"
-                                    size={18}
-                                    color={theme.textDisabled}
-                                />
-                                <Ionicons
-                                    name="heart"
-                                    size={18}
-                                    color={theme.textDisabled}
-                                />
-                            </View>
-                        </>
+                {showAction && (
+                    <View style={styles.footer}>
+                        {actions ? actions : (
+                            <>
+                                <View style={{ flexDirection: 'row', gap: 5 }}>
+                                    <Entypo
+                                        name="share"
+                                        size={18}
+                                        color={theme.textDisabled}
+                                    />
+                                    <Ionicons
+                                        name="bookmark"
+                                        size={18}
+                                        color={theme.textDisabled}
+                                    />
+                                    <Ionicons
+                                        name="heart"
+                                        size={18}
+                                        color={theme.textDisabled}
+                                    />
+                                </View>
+                            </>
 
-                    )}
-                </View>
-            )}
+                        )}
+                    </View>
+                )}
             </View>
         </TouchableOpacity>
     )
@@ -115,8 +126,8 @@ export default function Card({
 const styles = StyleSheet.create({
     container: {
         flexDirection: 'row',
-        borderRadius: 2,
-        flex:1,
+        borderRadius: 10,
+        flex: 1,
         padding: 10,
         gap: 15,
         alignItems: 'flex-start'

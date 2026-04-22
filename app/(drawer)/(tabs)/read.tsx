@@ -4,7 +4,7 @@ import { useThemeColors } from "@/src/hooks/useThemeColors";
 import { COLORS } from "@/src/theme/global";
 import Feather from '@expo/vector-icons/Feather';
 import { FlatList, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { NEWS as NEWS_DATA } from "@/src/constants/news";
+import { REAL_NEWS } from "@/src/constants/news";
 import News from "@/src/components/home/News";
 import Card from "@/src/components/shared/Card";
 import Ionicons from "@expo/vector-icons/Ionicons";
@@ -54,7 +54,7 @@ export default function ReadLater() {
                                 color: theme.statsText,
                             }}
                         >
-                            {NEWS_DATA.length}
+                            {REAL_NEWS.news.length}
                         </Text>
                     </View>
                     <View
@@ -86,7 +86,7 @@ export default function ReadLater() {
                                 color: theme.statsText,
                             }}
                         >
-                            {NEWS_DATA.length + 12}
+                            {REAL_NEWS.news.length + 12}
                         </Text>
                     </View>
                 </View>
@@ -94,7 +94,7 @@ export default function ReadLater() {
                 <View style={{ gap: 15, marginBottom: 10 }}>
 
                     {
-                        NEWS_DATA.map((item, index) => (
+                        REAL_NEWS.news.map((item, index) => (
                             <Card
                                 key={index}
                                 data={item}
