@@ -5,21 +5,11 @@ import { useThemeColors } from '@/src/hooks/useThemeColors'
 import { router } from 'expo-router'
 import { REAL_NEWS } from '@/src/constants/news';
 import { Image } from 'expo-image';
+import { goToInfoNews } from '@/src/utils/goToInfoNews';
 
 export default function FirstNews() {
     const theme = useThemeColors();
     const data = REAL_NEWS.news[0];
-
-    const handlePress = () => {
-        router.push({
-            pathname: '/webview/[id]',
-            params: {
-                id: data.id,
-                url: data.url,
-                title: data.title
-            }
-        });
-    };
 
     return (
         <View style={styles.container}>
@@ -47,9 +37,11 @@ export default function FirstNews() {
                 </Text>
             </View>
 
-            <TouchableOpacity activeOpacity={0.7} style={[styles.button, { backgroundColor: COLORS.badges.indigo }]}>
+            <TouchableOpacity
+                onPress={() => goToInfoNews(data)}
+                activeOpacity={0.7}
+                style={[styles.button, { backgroundColor: COLORS.badges.indigo }]}>
                 <Text
-                    onPress={handlePress}
                     style={{
                         color: COLORS.neutral.white,
                         fontSize: 14,

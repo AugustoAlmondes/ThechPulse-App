@@ -7,6 +7,7 @@ import { useThemeColors } from '@/src/hooks/useThemeColors'
 import { TypeNews } from '@/src/types/NewsType';
 import { Image } from 'expo-image';
 import { router } from 'expo-router';
+import { useFavoriteStore } from '@/src/store/useFavoriteStore';
 
 interface CardProps {
     color?: string,
@@ -33,26 +34,22 @@ export default function Card({
     showCreator = true,
     minHeigth = 100
 }: CardProps) {
-
-    const [isFavorite, setIsFavorite] = useState(true);
     const theme = useThemeColors();
+    const { isFavorite, addFavoriteNews, removeFavoriteNews } = useFavoriteStore();
 
-    const handlePress = () => {
-        router.push({
-            pathname: '/webview/[id]',
-            params: {
-                id: data.id,
-                url: data.url,
-                title: data.title
-            }
-        });
-    };
+    const handleFavorite = () => {
+        if (isFavorite(data)) {
+            removeFavoriteNews(data)
+        } else {
+            addFavoriteNews(data)
+        }
+    }
 
     return (
-        <TouchableOpacity 
-            activeOpacity={0.8} 
+        <TouchableOpacity
+            activeOpacity={0.8}
             style={[styles.container, { backgroundColor: color || theme.cardBackground, minHeight: minHeigth }]}
-            onPress={handlePress}
+        // onPress={handlePress}
         >
             {showImage && data.image && (
                 <Image
@@ -110,7 +107,8 @@ export default function Card({
                                     <Ionicons
                                         name="heart"
                                         size={18}
-                                        color={theme.textDisabled}
+                                        onPress={handleFavorite}
+                                        color={isFavorite(data) ? COLORS.badges.red : theme.textDisabled}
                                     />
                                 </View>
                             </>

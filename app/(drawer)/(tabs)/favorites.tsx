@@ -1,19 +1,15 @@
-import FavoriteCardNews from "@/src/components/favorite/FavoriteNewsCard";
-import CardNews from "@/src/components/favorite/FavoriteNewsCard";
-import FavoriteNews from "@/src/components/home/FavoriteNews";
-import News from "@/src/components/home/News";
 import Header from "@/src/components/layout/Header";
 import Card from "@/src/components/shared/Card";
-import { REAL_NEWS } from "@/src/constants/news";
-import { SUBJECTS } from "@/src/constants/subjects";
+// import Card from "@/src/components/shared/Card";
+// import { REAL_NEWS } from "@/src/constants/news";
 import { useThemeColors } from "@/src/hooks/useThemeColors";
-import { COLORS } from "@/src/theme/global";
+import { useFavoriteStore } from "@/src/store/useFavoriteStore";
 import Feather from "@expo/vector-icons/Feather";
-import { FlatList, TextInput, ScrollView, StyleSheet, Text, View } from "react-native";
+import { TextInput, ScrollView, StyleSheet, Text, View } from "react-native";
 
 export default function Favorites() {
     const theme = useThemeColors();
-
+    const { favoriteNews } = useFavoriteStore();
     return (
         <>
             <Header>
@@ -32,7 +28,7 @@ export default function Favorites() {
 
                 <View style={{ gap: 15, marginBottom: 10 }}>
                     {
-                        REAL_NEWS.news.map((item, index) => (
+                        favoriteNews.map((item, index) => (
                             <Card
                                 key={index}
                                 data={item}

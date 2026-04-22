@@ -1,14 +1,9 @@
 import Header from "@/src/components/layout/Header";
-import { SUBJECTS } from "@/src/constants/subjects";
 import { useThemeColors } from "@/src/hooks/useThemeColors";
 import { COLORS } from "@/src/theme/global";
-import Feather from '@expo/vector-icons/Feather';
-import { FlatList, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { REAL_NEWS } from "@/src/constants/news";
-import News from "@/src/components/home/News";
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
+// import { REAL_NEWS } from "@/src/constants/news";
 import Card from "@/src/components/shared/Card";
-import Ionicons from "@expo/vector-icons/Ionicons";
-import Entypo from "@expo/vector-icons/Entypo";
 
 export default function ReadLater() {
     const theme = useThemeColors();
@@ -54,7 +49,7 @@ export default function ReadLater() {
                                 color: theme.statsText,
                             }}
                         >
-                            {REAL_NEWS.news.length}
+                            {/* {REAL_NEWS.news.length} */}
                         </Text>
                     </View>
                     <View
@@ -86,14 +81,14 @@ export default function ReadLater() {
                                 color: theme.statsText,
                             }}
                         >
-                            {REAL_NEWS.news.length + 12}
+                            {/* {REAL_NEWS.news.length + 12} */}
                         </Text>
                     </View>
                 </View>
                 <Text style={[styles.title, { color: theme.textPrimary }]}>Veja as notícias salvas por você para ler depois:</Text>
                 <View style={{ gap: 15, marginBottom: 10 }}>
 
-                    {
+                    {/* {
                         REAL_NEWS.news.map((item, index) => (
                             <Card
                                 key={index}
@@ -111,7 +106,7 @@ export default function ReadLater() {
                                 }
                             />
                         ))
-                    }
+                    } */}
 
                 </View>
             </ScrollView>
