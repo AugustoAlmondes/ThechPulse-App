@@ -37,23 +37,23 @@ export default function Card({
     const [isFavorite, setIsFavorite] = useState(true);
     const theme = useThemeColors();
 
-    console.log(data);
+    const handlePress = () => {
+        router.push({
+            pathname: '/webview/[id]',
+            params: {
+                id: data.id,
+                url: data.url,
+                title: data.title
+            }
+        });
+    };
 
     return (
-        <TouchableOpacity
-            onPress={() => {
-                console.log("Clicou aqui", data.url)
-                router.push({
-                    pathname: '/(drawer)/(tabs)/webview/[id]',
-                    params: {
-                        id: data.id,
-                        url: data.url,
-                        title: data.title
-                    }
-                })
-            }}
-
-            activeOpacity={0.8} style={[styles.container, { backgroundColor: color || theme.cardBackground, minHeight: minHeigth }]}>
+        <TouchableOpacity 
+            activeOpacity={0.8} 
+            style={[styles.container, { backgroundColor: color || theme.cardBackground, minHeight: minHeigth }]}
+            onPress={handlePress}
+        >
             {showImage && data.image && (
                 <Image
                     cachePolicy="disk"
@@ -156,7 +156,7 @@ const styles = StyleSheet.create({
     title: {
         fontSize: 15,
         fontWeight: '600',
-        lineHeight: 18,
+        lineHeight: 18
     },
     by: {
         fontSize: 12,

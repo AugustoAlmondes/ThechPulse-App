@@ -22,6 +22,7 @@ function RootLayoutInner() {
     >
       <Stack.Screen name="(drawer)" />
       <Stack.Screen name="login" />
+      <Stack.Screen name="webview/[id]" />
     </Stack>
   )
 }
