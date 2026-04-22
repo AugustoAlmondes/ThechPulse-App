@@ -4,9 +4,19 @@ import { COLORS } from "@/src/theme/global";
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 // import { REAL_NEWS } from "@/src/constants/news";
 import Card from "@/src/components/shared/Card";
+import { useReadStore } from "@/src/store/useReadStore";
+import { TypeNews } from "@/src/types/NewsType";
+import Ionicons from "@expo/vector-icons/Ionicons";
 
 export default function ReadLater() {
     const theme = useThemeColors();
+    const read = useReadStore(state => state.readNews);
+    const totalReadyNews = useReadStore(state => state.totalReadNews);
+    const removeReadNews = useReadStore(state => state.removeReadNews);
+
+    const remove = (data: TypeNews) => {
+        removeReadNews(data)
+    }
 
     return (
         <>
@@ -23,7 +33,7 @@ export default function ReadLater() {
                 >
                     <View
                         style={{
-                            backgroundColor: theme.statsBackground,
+                            backgroundColor: theme.background,
                             height: 100,
                             flex: 1,
                             alignItems: 'center',
@@ -49,10 +59,10 @@ export default function ReadLater() {
                                 color: theme.statsText,
                             }}
                         >
-                            {/* {REAL_NEWS.news.length} */}
+                            {totalReadyNews}
                         </Text>
                     </View>
-                    <View
+                    {/* <View
                         style={{
                             backgroundColor: theme.statsBackground,
                             height: 100,
@@ -81,34 +91,41 @@ export default function ReadLater() {
                                 color: theme.statsText,
                             }}
                         >
-                            {/* {REAL_NEWS.news.length + 12} */}
+                            {REAL_NEWS.news.length + 12}
                         </Text>
-                    </View>
+                    </View> */}
                 </View>
                 <Text style={[styles.title, { color: theme.textPrimary }]}>Veja as notícias salvas por você para ler depois:</Text>
-                <View style={{ gap: 15, marginBottom: 10 }}>
+                {
+                    read.length > 0 ?
+                        <View style={{ gap: 15, marginBottom: 10 }}>
 
-                    {/* {
-                        REAL_NEWS.news.map((item, index) => (
-                            <Card
-                                key={index}
-                                data={item}
-                                showDescription={false}
-                                showDate={false}
-                                showSubjects={false}
-                                color={theme.cardBackground}
-                                actions={
-                                    <TouchableOpacity
-                                        activeOpacity={0.7}
-                                        style={{ backgroundColor: COLORS.primary[700], paddingHorizontal: 13, paddingVertical: 3 }}>
-                                        <Text style={{ color: COLORS.neutral.white, fontWeight: '600', fontSize: 12 }}>Lido</Text>
-                                    </TouchableOpacity>
-                                }
-                            />
-                        ))
-                    } */}
-
-                </View>
+                            {
+                                read.map((item, index) => (
+                                    <Card
+                                        key={index}
+                                        data={item}
+                                        showDescription={false}
+                                        showDate={false}
+                                        showSubjects={false}
+                                        color={theme.cardBackground}
+                                        actions={
+                                            <TouchableOpacity
+                                                onPress={() => remove(item)}
+                                                activeOpacity={0.7}
+                                                style={{ backgroundColor: COLORS.primary[700], paddingHorizontal: 13, paddingVertical: 3 }}>
+                                                <Text style={{ color: COLORS.neutral.white, fontWeight: '600', fontSize: 12 }}>Lido</Text>
+                                            </TouchableOpacity>
+                                        }
+                                    />
+                                ))
+                            }
+                        </View> :
+                        <View style={{ flex: 1, marginTop: 150, justifyContent: 'center', alignItems: 'center', flexDirection: 'column', gap: 20 }}>
+                            <Text style={[styles.headerTitle, { color: theme.textDisabled, textAlign: 'center' }]}>Nenhuma notícia salva para ler depois.</Text>
+                            <Ionicons name="book-outline" size={40} color={theme.textDisabled + 70} />
+                        </View>
+                }
             </ScrollView>
         </>
     )

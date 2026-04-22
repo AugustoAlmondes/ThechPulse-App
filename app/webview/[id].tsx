@@ -8,17 +8,22 @@ import { COLORS } from '@/src/theme/global';
 import Entypo from '@expo/vector-icons/Entypo';
 import { useFavoriteStore } from '@/src/store/useFavoriteStore';
 import { TypeNews } from '@/src/types/NewsType';
+import { useReadStore } from '@/src/store/useReadStore';
 
 export default function NewsWebView() {
     const { url, title, newsData, id } = useLocalSearchParams();
     const theme = useThemeColors();
     const router = useRouter();
-    
+
     // Favorite Logic
     const parsedData: TypeNews | null = newsData ? JSON.parse(newsData as string) : null;
     const isFav = useFavoriteStore(state => state.favoriteNews.some(n => n.id === id));
     const addFavoriteNews = useFavoriteStore(state => state.addFavoriteNews);
     const removeFavoriteNews = useFavoriteStore(state => state.removeFavoriteNews);
+
+    const isRead = useReadStore(state => state.readNews.some(n => n.id === id));
+    const addReadNews = useReadStore(state => state.addReadNews);
+    const removeReadNews = useReadStore(state => state.removeReadNews);
 
     const handleFavorite = () => {
         if (!parsedData) return;
@@ -29,10 +34,19 @@ export default function NewsWebView() {
         }
     };
 
+    const handleRead = () => {
+        if (!parsedData) return;
+        if (isRead) {
+            removeReadNews(parsedData);
+        } else {
+            addReadNews(parsedData);
+        }
+    };
+
     // FAB Draggable Logic
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const pan = useRef(new Animated.ValueXY()).current;
-    
+
     const panResponder = useRef(
         PanResponder.create({
             onMoveShouldSetPanResponder: (e, gestureState) => {
@@ -91,12 +105,12 @@ export default function NewsWebView() {
             >
                 {isMenuOpen && (
                     <View style={styles.menuOptions}>
-                        <TouchableOpacity activeOpacity={0.7} style={[styles.menuItem, { backgroundColor: theme.cardBackground }]} onPress={() => {}}>
+                        <TouchableOpacity activeOpacity={0.7} style={[styles.menuItem, { backgroundColor: theme.cardBackground }]} onPress={() => { }}>
                             <Entypo name="share" size={20} color={theme.textPrimary} />
                         </TouchableOpacity>
-                        
-                        <TouchableOpacity activeOpacity={0.7} style={[styles.menuItem, { backgroundColor: theme.cardBackground }]} onPress={() => {}}>
-                            <Ionicons name="bookmark" size={20} color={theme.textPrimary} />
+
+                        <TouchableOpacity activeOpacity={0.7} style={[styles.menuItem, { backgroundColor: theme.cardBackground }]} onPress={handleRead}>
+                            <Ionicons name="bookmark" size={20} color={isRead ? COLORS.badges.blue : theme.textPrimary} />
                         </TouchableOpacity>
 
                         <TouchableOpacity activeOpacity={0.7} style={[styles.menuItem, { backgroundColor: theme.cardBackground }]} onPress={handleFavorite}>

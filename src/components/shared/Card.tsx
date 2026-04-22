@@ -9,6 +9,7 @@ import { Image } from 'expo-image';
 import { router } from 'expo-router';
 import { useFavoriteStore } from '@/src/store/useFavoriteStore';
 import { goToInfoNews } from '@/src/utils/goToInfoNews';
+import { useReadStore } from '@/src/store/useReadStore';
 
 interface CardProps {
     color?: string,
@@ -36,6 +37,11 @@ export default function Card({
     minHeigth = 100
 }: CardProps) {
     const theme = useThemeColors();
+
+    const isRead = useReadStore(state => state.isRead(data));
+    const addReadNews = useReadStore(state => state.addReadNews);
+    const removeReadNews = useReadStore(state => state.removeReadNews);
+
     const isFav = useFavoriteStore(state => state.favoriteNews.some(n => n.id === data.id));
     const addFavoriteNews = useFavoriteStore(state => state.addFavoriteNews);
     const removeFavoriteNews = useFavoriteStore(state => state.removeFavoriteNews);
@@ -48,11 +54,20 @@ export default function Card({
         }
     }
 
+    const handleRead = () => {
+        if (isRead) {
+            removeReadNews(data)
+        } else {
+            const res = addReadNews(data);
+            if (typeof res === 'string') alert(res);
+        }
+    }
+
     return (
         <TouchableOpacity
             activeOpacity={0.8}
             style={[styles.container, { backgroundColor: color || theme.cardBackground, minHeight: minHeigth }]}
-        onPress={() => goToInfoNews(data)}
+            onPress={() => goToInfoNews(data)}
         >
             {showImage && data.image && (
                 <Image
@@ -97,18 +112,18 @@ export default function Card({
                         {actions ? actions : (
                             <>
                                 <View style={{ flexDirection: 'row', gap: 5 }}>
-                                    <TouchableOpacity hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }} onPress={() => {}}>
+                                    <TouchableOpacity hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }} onPress={() => { }}>
                                         <Entypo
                                             name="share"
                                             size={18}
                                             color={theme.textDisabled}
                                         />
                                     </TouchableOpacity>
-                                    <TouchableOpacity hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }} onPress={() => {}}>
+                                    <TouchableOpacity hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }} onPress={handleRead}>
                                         <Ionicons
-                                            name="bookmark"
+                                            name={"bookmark"}
                                             size={18}
-                                            color={theme.textDisabled}
+                                            color={isRead ? COLORS.badges.blue : theme.textDisabled}
                                         />
                                     </TouchableOpacity>
                                     <TouchableOpacity hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }} onPress={handleFavorite}>
