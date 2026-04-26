@@ -37,7 +37,7 @@ export default function CustomDrawer(props: any) {
                     </View>
 
                     <Image
-                        source={require('@/public/images/1.jpg')}
+                        source={theme.statusBarStyle === 'light' ? require('@/public/images/1.jpg') : require('@/public/images/2.jpg')}
                         style={styles.headerBackground}
                     />
                 </View> :
