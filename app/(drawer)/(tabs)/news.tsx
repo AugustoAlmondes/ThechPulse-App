@@ -3,14 +3,21 @@ import { SUBJECTS } from "@/src/constants/subjects";
 import { useThemeColors } from "@/src/hooks/useThemeColors";
 import { COLORS } from "@/src/theme/global";
 import Feather from '@expo/vector-icons/Feather';
-import { FlatList, Image, ScrollView, StyleSheet, Text, TextInput, TouchableOpacity, View } from "react-native";
-import { NEWS as NEWS_DATA } from "@/src/constants/news";
+import { FlatList, StyleSheet, Text, TextInput, View } from "react-native";
+import { ScrollView } from "react-native-gesture-handler";
 import { REAL_NEWS } from "@/src/constants/news";
-import News from "@/src/components/home/News";
 import Card from "@/src/components/shared/Card";
+import { useState } from "react";
 
 export default function AllNews() {
     const theme = useThemeColors();
+    const [query, setQuery] = useState('');
+
+    const filteredNews = query.trim()
+        ? REAL_NEWS.news.filter(item =>
+            item.title.toLowerCase().includes(query.toLowerCase())
+          )
+        : REAL_NEWS.news;
 
     return (
         <>
@@ -18,35 +25,54 @@ export default function AllNews() {
                 <Text style={[styles.headerTitle, { color: theme.headerText }]}>Notícias</Text>
             </Header>
 
-            <ScrollView style={[styles.container, { backgroundColor: theme.background }]}
+            <ScrollView 
+                style={[styles.container, { backgroundColor: theme.background }]}
                 keyboardShouldPersistTaps='handled'
             >
-
                 <View style={[styles.searchContainer, { backgroundColor: theme.searchBackground }]}>
                     <Feather name="search" color={theme.searchPlaceholder} size={24} />
                     <TextInput
-                        placeholder="Buscar"
+                        placeholder="Buscar por título"
                         placeholderTextColor={theme.searchPlaceholder}
                         style={[styles.searchInput, { color: theme.searchText }]}
+                        value={query}
+                        onChangeText={setQuery}
+                        returnKeyType="search"
+                        clearButtonMode="while-editing"
+                        autoCorrect={false}
                     />
                 </View>
 
-                <View style={styles.subjectsBody}>
-                    <Subjects/>
-                </View>
-                <View style={{ gap: 25, marginBottom: 10 }}>
-                    <Text style={[styles.title, { color: theme.textPrimary }]}>Últimas notícias</Text>
+                {!query.trim() && (
+                    <View style={styles.subjectsBody}>
+                        <Subjects/>
+                    </View>
+                )}
 
-                    {
-                        REAL_NEWS.news.map((item, index) => (
+                <View style={{ gap: 25, marginBottom: 10 }}>
+                    {!query.trim() && (
+                        <Text style={[styles.title, { color: theme.textPrimary }]}>Últimas notícias</Text>
+                    )}
+
+                    {filteredNews.length > 0 ? (
+                        filteredNews.map((item, index) => (
                             <Card
                                 key={index}
                                 data={item}
                                 color={theme.cardBackground}
                             />
                         ))
-                    }
-
+                    ) : (
+                        <View style={styles.emptyState}>
+                            <Feather name="search" size={40} color={theme.textMuted} />
+                            <Text style={[styles.emptyTitle, { color: theme.textPrimary }]}>
+                                Nenhum resultado
+                            </Text>
+                            <Text style={[styles.emptySubtitle, { color: theme.textMuted }]}>
+                                Não encontramos notícias com "{query}"
+                            </Text>
+                        </View>
+                    )}
                 </View>
             </ScrollView>
         </>
@@ -113,5 +139,20 @@ const styles = StyleSheet.create({
         alignSelf: 'flex-start',
         backgroundColor: COLORS.primary[700],
         borderRadius: 20,
+    },
+    emptyState: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        paddingVertical: 60,
+        gap: 12,
+    },
+    emptyTitle: {
+        fontSize: 18,
+        fontWeight: '600',
+    },
+    emptySubtitle: {
+        fontSize: 14,
+        textAlign: 'center',
+        paddingHorizontal: 20,
     },
 })
