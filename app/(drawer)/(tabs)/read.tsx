@@ -7,12 +7,24 @@ import Card from "@/src/components/shared/Card";
 import { useReadStore } from "@/src/store/useReadStore";
 import { TypeNews } from "@/src/types/NewsType";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useScrollStore } from "@/src/store/useScrollStore";
+import { useEffect, useRef } from "react";
 
 export default function ReadLater() {
     const theme = useThemeColors();
     const read = useReadStore(state => state.readNews);
     const totalReadyNews = useReadStore(state => state.totalReadNews);
     const removeReadNews = useReadStore(state => state.removeReadNews);
+    const { shouldScrollToTop, resetScroll } = useScrollStore();
+    const ScrollViewRef = useRef<ScrollView>(null);
+
+    useEffect(() => {
+        if (shouldScrollToTop) {
+            ScrollViewRef.current?.scrollTo({ y: 0, animated: true });
+            resetScroll();
+        }
+    }, [shouldScrollToTop, resetScroll])
+    
 
     const remove = (data: TypeNews) => {
         removeReadNews(data)
@@ -24,7 +36,7 @@ export default function ReadLater() {
                 <Text style={[styles.headerTitle, { color: theme.headerText }]}>Ler Depois</Text>
             </Header>
 
-            <ScrollView style={[styles.container, { backgroundColor: theme.background }]}
+            <ScrollView ref={ScrollViewRef} style={[styles.container, { backgroundColor: theme.background }]}
                 keyboardShouldPersistTaps='handled'
             >
 

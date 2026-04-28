@@ -2,19 +2,31 @@ import Header from "@/src/components/layout/Header";
 import Card from "@/src/components/shared/Card";
 import { useThemeColors } from "@/src/hooks/useThemeColors";
 import { useFavoriteStore } from "@/src/store/useFavoriteStore";
+import { useScrollStore } from "@/src/store/useScrollStore";
 import Feather from "@expo/vector-icons/Feather";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useEffect, useRef } from "react";
 import { TextInput, ScrollView, StyleSheet, Text, View } from "react-native";
 
 export default function Favorites() {
     const theme = useThemeColors();
     const { favoriteNews } = useFavoriteStore();
+    const { shouldScrollToTop, resetScroll } = useScrollStore();
+    const ScrollViewRef = useRef<ScrollView>(null);
+
+    useEffect(() => {
+        if (shouldScrollToTop) {
+            ScrollViewRef.current?.scrollTo({ y: 0, animated: true });
+            resetScroll();
+        }
+    }, [shouldScrollToTop, resetScroll])
+
     return (
         <>
             <Header>
                 <Text style={[styles.headerTitle, { color: theme.headerText }]}>Favoritas</Text>
             </Header>
-            <ScrollView style={[styles.container, { backgroundColor: theme.background }]}>
+            <ScrollView ref={ScrollViewRef} style={[styles.container, { backgroundColor: theme.background }]}>
 
                 <View style={[styles.searchContainer, { backgroundColor: theme.searchBackground }]}>
                     <Feather name="search" color={theme.searchPlaceholder} size={24} />

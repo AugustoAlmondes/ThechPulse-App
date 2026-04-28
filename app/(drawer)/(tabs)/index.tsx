@@ -25,7 +25,6 @@ export default function Home() {
     const favoriteNews = useFavoriteStore(state => state.favoriteNews);
 
     useEffect(() => {
-        console.log(shouldScrollToTop)
         if (shouldScrollToTop) {
             scrollViewRef.current?.scrollTo({ y: 0, animated: true });
             resetScroll();

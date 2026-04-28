@@ -2,9 +2,11 @@ import Header from "@/src/components/layout/Header";
 import Card from "@/src/components/shared/Card";
 import { useThemeColors } from "@/src/hooks/useThemeColors";
 import { HistoricDay, useHistoricStore } from "@/src/store/historicStore";
+import { useScrollStore } from "@/src/store/useScrollStore";
 import { COLORS } from "@/src/theme/global";
 import Feather from "@expo/vector-icons/Feather";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useEffect, useRef } from "react";
 import {
     Alert,
     ScrollView,
@@ -33,6 +35,8 @@ export default function Historic() {
     const removeHistoricEntry = useHistoricStore((state) => state.removeHistoricEntry);
     const clearHistoric = useHistoricStore((state) => state.clearHistoric);
     const totalHistoric = useHistoricStore((state) => state.totalHistoric());
+    const { shouldScrollToTop, resetScroll } = useScrollStore();
+    const ScrollViewRef = useRef<ScrollView>(null);
 
     const handleClearAll = () => {
         Alert.alert(
@@ -44,6 +48,13 @@ export default function Historic() {
             ]
         );
     };
+
+    useEffect(() => {
+        if (shouldScrollToTop) {
+            ScrollViewRef.current?.scrollTo({ y: 0, animated: true });
+            resetScroll();
+        }
+    }, [shouldScrollToTop, resetScroll])
 
     return (
         <>
@@ -64,6 +75,7 @@ export default function Historic() {
             </Header>
 
             <ScrollView
+                ref={ScrollViewRef}
                 style={[styles.container, { backgroundColor: theme.background }]}
                 contentContainerStyle={styles.content}
             >

@@ -7,16 +7,26 @@ import { FlatList, StyleSheet, Text, TextInput, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { REAL_NEWS } from "@/src/constants/news";
 import Card from "@/src/components/shared/Card";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import { useScrollStore } from "@/src/store/useScrollStore";
 
 export default function AllNews() {
     const theme = useThemeColors();
     const [query, setQuery] = useState('');
+    const { shouldScrollToTop, resetScroll } = useScrollStore();
+    const ScrollViewRef = useRef<ScrollView>(null);
+
+    useEffect(() => {
+        if (shouldScrollToTop) {
+            ScrollViewRef.current?.scrollTo({ y: 0, animated: true });
+            resetScroll();
+        }
+    }, [shouldScrollToTop, resetScroll])
 
     const filteredNews = query.trim()
         ? REAL_NEWS.news.filter(item =>
             item.title.toLowerCase().includes(query.toLowerCase())
-          )
+        )
         : REAL_NEWS.news;
 
     return (
@@ -25,7 +35,8 @@ export default function AllNews() {
                 <Text style={[styles.headerTitle, { color: theme.headerText }]}>Notícias</Text>
             </Header>
 
-            <ScrollView 
+            <ScrollView
+                ref={ScrollViewRef}
                 style={[styles.container, { backgroundColor: theme.background }]}
                 keyboardShouldPersistTaps='handled'
             >
@@ -45,7 +56,7 @@ export default function AllNews() {
 
                 {!query.trim() && (
                     <View style={styles.subjectsBody}>
-                        <Subjects/>
+                        <Subjects />
                     </View>
                 )}
 
@@ -69,7 +80,7 @@ export default function AllNews() {
                                 Nenhum resultado
                             </Text>
                             <Text style={[styles.emptySubtitle, { color: theme.textMuted }]}>
-                                Não encontramos notícias com "{query}"
+                                {'Não encontramos notícias com "' + query + '"'}
                             </Text>
                         </View>
                     )}

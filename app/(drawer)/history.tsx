@@ -5,10 +5,12 @@ import Feather from '@expo/vector-icons/Feather';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { DrawerActions } from '@react-navigation/native';
 import { useNavigation } from 'expo-router'
-import { useMemo } from 'react';
+import { useEffect, useMemo, useRef } from 'react';
 import { Alert, SectionList, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useThemeColors } from '@/src/hooks/useThemeColors';
 import { useHistoricStore } from '@/src/store/historicStore';
+import { useScrollStore } from '@/src/store/useScrollStore';
+import { ScrollView } from 'react-native-gesture-handler';
 
 export default function History() {
 
@@ -19,6 +21,21 @@ export default function History() {
 
     const navigation = useNavigation();
     const theme = useThemeColors();
+    const { shouldScrollToTop, resetScroll } = useScrollStore();
+    const ScrollViewRef = useRef<SectionList>(null);
+
+    useEffect(() => {
+        if (shouldScrollToTop) {
+            ScrollViewRef.current?.scrollToLocation({
+                sectionIndex: 0,
+                itemIndex: 0,
+                animated: true,
+                viewOffset: 0
+            });
+            resetScroll();
+        }
+    }, [shouldScrollToTop, resetScroll])
+
 
     const sections = useMemo(() => {
         const todayStr = new Date().toISOString().split('T')[0];
@@ -108,6 +125,7 @@ export default function History() {
                 </View>
             ) : (
                 <SectionList
+                    ref={ScrollViewRef}
                     style={styles.container}
                     sections={sections}
                     keyExtractor={(item) => item.id}

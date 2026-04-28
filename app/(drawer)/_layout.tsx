@@ -1,16 +1,21 @@
 import CustomDrawer from '@/src/components/layout/CustomDrawer'
 import { useThemeColors } from '@/src/hooks/useThemeColors'
-import { COLORS } from '@/src/theme/global'
 import Ionicons from '@expo/vector-icons/Ionicons'
 import { Drawer } from 'expo-router/drawer'
-import { Text, View } from 'react-native'
+import { useScrollStore } from '@/src/store/useScrollStore'
 
 export default function DrawerLayout() {
     const theme = useThemeColors();
+    const { triggerScrollToTop } = useScrollStore();
 
     return (
         <Drawer
             drawerContent={(props) => <CustomDrawer{...props} />}
+            screenListeners={{
+                drawerItemPress: () => {
+                    triggerScrollToTop();
+                }
+            }}
             screenOptions={{
                 headerTintColor: theme.headerIcon,
                 drawerStyle: {
