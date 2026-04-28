@@ -7,21 +7,27 @@ import Entypo from '@expo/vector-icons/Entypo';
 import AllNews from "./news";
 import ReadLater from "./read";
 import Profile from "./profile";
+import { useScrollStore } from "@/src/store/useScrollStore";
 const Tab = createMaterialTopTabNavigator();
 
 const DEFAULT_CONFIG_TAB = {
     tabBarShowLabel: true,
-    tabBarLabelStyle: { 
+    tabBarLabelStyle: {
         fontSize: 12,
     },
 }
 export default function TabsLayout() {
     const theme = useThemeColors();
-
+    const triggerScrollToTop = useScrollStore(state => state.triggerScrollToTop);
     return (
         <>
             <Tab.Navigator
                 tabBarPosition="bottom"
+                screenListeners={{
+                    tabPress: () => {
+                        triggerScrollToTop();
+                    },
+                }}
                 screenOptions={{
                     tabBarStyle: {
                         backgroundColor: theme.tabBarBackground,

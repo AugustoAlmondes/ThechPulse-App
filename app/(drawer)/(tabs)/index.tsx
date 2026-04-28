@@ -1,6 +1,4 @@
-import BestNews from "@/src/components/home/BestNews";
 import FirstNews from "@/src/components/home/FirstNews";
-import News from "@/src/components/home/News";
 import Header from "@/src/components/layout/Header";
 import { useThemeColors } from "@/src/hooks/useThemeColors";
 import { COLORS } from "@/src/theme/global";
@@ -8,22 +6,36 @@ import { Divider } from 'react-native-paper';
 import { FlatList, RefreshControl, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import FavoriteNews from "@/src/components/home/FavoriteNews";
 import Entypo from "@expo/vector-icons/Entypo";
-import { BEST_NEWS, REAL_NEWS } from "@/src/constants/news";
+import { REAL_NEWS } from "@/src/constants/news";
 import Card from "@/src/components/shared/Card";
 import Feather from "@expo/vector-icons/Feather";
 import { router, useNavigation } from "expo-router";
 import { DrawerActions } from "@react-navigation/native";
 import { useFavoriteStore } from "@/src/store/useFavoriteStore";
+import { useScrollStore } from "@/src/store/useScrollStore";
+import { useEffect, useRef } from "react";
 
 
 export default function Home() {
 
     const navigation = useNavigation();
     const theme = useThemeColors();
+    const scrollViewRef = useRef<ScrollView>(null);
+    const { shouldScrollToTop, resetScroll } = useScrollStore();
     const favoriteNews = useFavoriteStore(state => state.favoriteNews);
 
+    useEffect(() => {
+        console.log(shouldScrollToTop)
+        if (shouldScrollToTop) {
+            scrollViewRef.current?.scrollTo({ y: 0, animated: true });
+            resetScroll();
+        }
+    }, [shouldScrollToTop, resetScroll])
+
     return (
-        <ScrollView refreshControl={<RefreshControl refreshing={false} size="default" />}
+        <ScrollView
+            ref={scrollViewRef}
+            refreshControl={<RefreshControl refreshing={false} size="default" />}
             showsHorizontalScrollIndicator={false}
             stickyHeaderIndices={[0]}
             style={[styles.container, { backgroundColor: theme.background }]}>
