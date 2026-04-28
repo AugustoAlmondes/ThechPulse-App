@@ -28,7 +28,7 @@ export default function Privacy() {
 
             <ScrollView style={styles.container} contentContainerStyle={styles.scrollContent}>
                 <Text style={[styles.title, { color: theme.textPrimary }]}>Política de Privacidade</Text>
-                <Text style={[styles.date, { color: theme.textSubtle }]}>Última atualização: 21 de Abril de 2026</Text>
+                {/* <Text style={[styles.date, { color: theme.textSubtle }]}>Última atualização: 21 de Abril de 2026</Text> */}
                 
                 <View style={styles.section}>
                     <Text style={[styles.sectionTitle, { color: COLORS.primary[500] }]}>1. Coleta de Dados</Text>
