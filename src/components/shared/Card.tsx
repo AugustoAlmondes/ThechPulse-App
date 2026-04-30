@@ -10,6 +10,7 @@ import { router } from 'expo-router';
 import { useFavoriteStore } from '@/src/store/useFavoriteStore';
 import { goToInfoNews } from '@/src/utils/goToInfoNews';
 import { useReadStore } from '@/src/store/useReadStore';
+import { shareNews } from '@/src/utils/shareNews';
 
 interface CardProps {
     color?: string,
@@ -112,7 +113,7 @@ export default function Card({
                         {actions ? actions : (
                             <>
                                 <View style={{ flexDirection: 'row', gap: 5 }}>
-                                    <TouchableOpacity hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }} onPress={() => { }}>
+                                    <TouchableOpacity hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }} onPress={() => shareNews(data)}>
                                         <Entypo
                                             name="share"
                                             size={18}
