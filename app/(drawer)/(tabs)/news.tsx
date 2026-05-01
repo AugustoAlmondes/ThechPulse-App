@@ -32,7 +32,7 @@ export default function AllNews() {
     return (
         <>
             <Header>
-                <Text style={[styles.headerTitle, { color: theme.headerText }]}>Notícias</Text>
+                <Text style={[styles.headerTitle, { color: theme.headerText }]}>Últimas Notícias</Text>
             </Header>
 
             <ScrollView
@@ -40,30 +40,8 @@ export default function AllNews() {
                 style={[styles.container, { backgroundColor: theme.background }]}
                 keyboardShouldPersistTaps='handled'
             >
-                <View style={[styles.searchContainer, { backgroundColor: theme.searchBackground }]}>
-                    <Feather name="search" color={theme.searchPlaceholder} size={24} />
-                    <TextInput
-                        placeholder="Buscar por título"
-                        placeholderTextColor={theme.searchPlaceholder}
-                        style={[styles.searchInput, { color: theme.searchText }]}
-                        value={query}
-                        onChangeText={setQuery}
-                        returnKeyType="search"
-                        clearButtonMode="while-editing"
-                        autoCorrect={false}
-                    />
-                </View>
-
-                {!query.trim() && (
-                    <View style={styles.subjectsBody}>
-                        <Subjects />
-                    </View>
-                )}
 
                 <View style={{ gap: 25, marginBottom: 10 }}>
-                    {!query.trim() && (
-                        <Text style={[styles.title, { color: theme.textPrimary }]}>Últimas notícias</Text>
-                    )}
 
                     {filteredNews.length > 0 ? (
                         filteredNews.map((item, index) => (

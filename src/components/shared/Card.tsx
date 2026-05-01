@@ -116,21 +116,21 @@ export default function Card({
                                     <TouchableOpacity hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }} onPress={() => shareNews(data)}>
                                         <Entypo
                                             name="share"
-                                            size={18}
+                                            size={20}
                                             color={theme.textDisabled}
                                         />
                                     </TouchableOpacity>
                                     <TouchableOpacity hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }} onPress={handleRead}>
                                         <Ionicons
                                             name={"bookmark"}
-                                            size={18}
+                                            size={20}
                                             color={isRead ? COLORS.badges.blue : theme.textDisabled}
                                         />
                                     </TouchableOpacity>
                                     <TouchableOpacity hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }} onPress={handleFavorite}>
                                         <Ionicons
                                             name="heart"
-                                            size={18}
+                                            size={20}
                                             color={isFav ? COLORS.badges.red : theme.textDisabled}
                                         />
                                     </TouchableOpacity>

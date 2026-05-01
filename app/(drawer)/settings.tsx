@@ -11,7 +11,7 @@ import { useThemeColors } from '@/src/hooks/useThemeColors';
 
 export default function Settings() {
 
-    const [isLogin, setIsLogin] = useState(false);
+    const [isLogin, setIsLogin] = useState(true);
     const navigation = useNavigation();
     const theme = useThemeColors();
 
