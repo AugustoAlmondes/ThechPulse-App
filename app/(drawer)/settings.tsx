@@ -40,7 +40,7 @@ export default function Settings() {
             </Header>
 
             <ScrollView style={styles.container}>
-                {isLogin ?
+                {/* {isLogin ?
 
                     <View style={styles.section}>
                         <Text style={[styles.sectionTitle, { color: theme.sectionTitleColor }]}>Conta</Text>
@@ -83,7 +83,7 @@ export default function Settings() {
                             <Feather name="chevron-right" size={20} color={theme.chevronColor} />
                         </TouchableOpacity>
                     </View>
-                }
+                } */}
 
                 <View style={styles.section}>
                     <Text style={[styles.sectionTitle, { color: theme.sectionTitleColor }]}>Preferências</Text>
@@ -138,7 +138,7 @@ export default function Settings() {
                     </TouchableOpacity>
                 </View>
 
-                {isLogin && <TouchableOpacity
+                {/* {isLogin && <TouchableOpacity
                     style={[styles.settingItem, styles.logoutItem]}
                     activeOpacity={0.7}
                     onPress={() => router.replace('/login')}
@@ -147,7 +147,7 @@ export default function Settings() {
                         <Feather name="log-out" size={20} color={COLORS.feedback.error[500]} />
                         <Text style={[styles.itemText, { color: COLORS.feedback.error[500] }]}>Sair</Text>
                     </View>
-                </TouchableOpacity>}
+                </TouchableOpacity>} */}
 
                 <View style={{ height: 40 }} />
             </ScrollView>

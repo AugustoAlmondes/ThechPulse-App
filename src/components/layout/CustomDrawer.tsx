@@ -10,7 +10,7 @@ import { router } from "expo-router";
 
 export default function CustomDrawer(props: any) {
 
-    const [isLogin, setIsLogin] = useState(true);
+    // const [isLogin, setIsLogin] = useState(true);
     const theme = useThemeColors();
 
     return (
@@ -19,7 +19,7 @@ export default function CustomDrawer(props: any) {
             contentContainerStyle={styles.container}
             style={[styles.scroll, { backgroundColor: theme.drawerBackground }]}
         >
-            {
+            {/* {
                 isLogin ? <View style={styles.header}>
                     <View style={styles.userInfo}>
                         <Image
@@ -52,7 +52,7 @@ export default function CustomDrawer(props: any) {
                         </TouchableOpacity>
                         <Text style={[styles.signInSubtitle, { color: theme.textMuted }]}>Acesse seus favoritos e muito mais</Text>
                     </View>
-            }
+            } */}
 
             <View style={styles.drawerList}>
                 <DrawerItemList {...props} />
