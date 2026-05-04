@@ -1,9 +1,8 @@
 import Header from "@/src/components/layout/Header";
-import { SUBJECTS } from "@/src/constants/subjects";
 import { useThemeColors } from "@/src/hooks/useThemeColors";
 import { COLORS } from "@/src/theme/global";
 import Feather from '@expo/vector-icons/Feather';
-import { FlatList, StyleSheet, Text, TextInput, View } from "react-native";
+import { StyleSheet, Text, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
 import { REAL_NEWS } from "@/src/constants/news";
 import Card from "@/src/components/shared/Card";
@@ -65,21 +64,6 @@ export default function AllNews() {
                 </View>
             </ScrollView>
         </>
-    )
-}
-
-const Subjects = () => {
-    return (
-        <FlatList
-            showsHorizontalScrollIndicator={false}
-            horizontal
-            data={(SUBJECTS)}
-            keyExtractor={(_, index) => index.toString()}
-            contentContainerStyle={styles.subjects}
-            renderItem={({ item }) => (
-                <Text style={styles.subject}>{item}</Text>
-            )}
-        />
     )
 }
 

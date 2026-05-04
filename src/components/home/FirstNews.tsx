@@ -76,10 +76,10 @@ const styles = StyleSheet.create({
     button: {
         alignSelf: 'flex-start',
         flexDirection: 'row',
-        paddingHorizontal: 15,
-        paddingVertical: 4,
+        paddingHorizontal: 24,
+        paddingVertical: 10,
         marginTop: 10,
-        borderRadius: 2,
+        borderRadius: 10,
         gap: 10,
         justifyContent: 'center',
         alignItems: 'center'
