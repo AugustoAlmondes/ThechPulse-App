@@ -201,10 +201,10 @@ export const darkTheme: AppTheme = {
 // Semantic tokens for light theme
 export const lightTheme: AppTheme = {
     // Backgrounds
-    background: "#ffffffff",
-    backgroundSecondary: "#FFFFFF",
+    background: "#f1f5fcff",
+    backgroundSecondary: "#f1f5fcff",
     backgroundTertiary: "#E8ECF1",
-    surface: "#FFFFFF",
+    surface: "#f1f5fcff",
     surfaceHover: "#F0F3F7",
 
     // Text
@@ -220,23 +220,23 @@ export const lightTheme: AppTheme = {
     divider: "#CBD5DC" + '60',
 
     // Header / Navigation
-    headerBackground: "#FFFFFF",
+    headerBackground: "#f1f5fcff",
     headerText: "#1A2233",
     headerIcon: "#2C3E50",
-    tabBarBackground: "#FFFFFF",
+    tabBarBackground: "#f1f5fcff",
     tabBarActive: "#1A2233",
     tabBarInactive: "#8FA0AD",
-    drawerBackground: "#FFFFFF",
-    drawerActiveBackground: "#F0F3F7",
+    drawerBackground: "#f1f5fcff",
+    drawerActiveBackground: "#e3e9f4ff",
     drawerActiveText: "#1A2233",
     drawerInactiveText: "#6B7C8A",
 
     // Cards
-    cardBackground: "#F5F7FA",
+    cardBackground: "#e3e9f4ff",
     cardTitle: "#2C3E50",
     cardDescription: "#4A5568",
     cardDate: "#8FA0AD",
-    cardSubject: "#FFFFFF",
+    cardSubject: "#f1f5fcff",
 
     // Search
     searchBackground: "#E8ECF1",
@@ -245,7 +245,7 @@ export const lightTheme: AppTheme = {
 
     // Buttons
     primaryButton: COLORS.primary[500],
-    primaryButtonText: "#FFFFFF",
+    primaryButtonText: "#f1f5fcff",
     accentButton: COLORS.badges.indigo,
 
     // Misc
@@ -253,7 +253,7 @@ export const lightTheme: AppTheme = {
     overlay: 'rgba(245, 247, 250, 0.92)',
 
     // Settings
-    settingItemBackground: "#FFFFFF",
+    settingItemBackground: "#e3e9f4ff",
     settingItemText: "#1A2233",
     sectionTitleColor: "#6B7C8A",
     chevronColor: "#B0BEC5",

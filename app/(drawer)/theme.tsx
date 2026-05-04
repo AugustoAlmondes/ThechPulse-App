@@ -50,7 +50,7 @@ export default function Theme() {
                                     key={opt.key}
                                     style={[
                                         styles.option,
-                                        { backgroundColor: theme.surface },
+                                        { backgroundColor: theme.cardBackground },
                                         isSelected && styles.selectedOption,
                                     ]}
                                     onPress={() => setMode(opt.key)}
