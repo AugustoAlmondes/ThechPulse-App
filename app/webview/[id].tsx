@@ -9,6 +9,7 @@ import Entypo from '@expo/vector-icons/Entypo';
 import { useFavoriteStore } from '@/src/store/useFavoriteStore';
 import { TypeNews } from '@/src/types/NewsType';
 import { useReadStore } from '@/src/store/useReadStore';
+import { shareNews } from '@/src/utils/shareNews';
 
 export default function NewsWebView() {
     const { url, title, newsData, id } = useLocalSearchParams();
@@ -106,7 +107,9 @@ export default function NewsWebView() {
                 {isMenuOpen && (
                     <View style={styles.menuOptions}>
                         <TouchableOpacity activeOpacity={0.7} style={[styles.menuItem, { backgroundColor: theme.cardBackground }]} onPress={() => { }}>
-                            <Entypo name="share" size={20} color={theme.textPrimary} />
+                            <Entypo name="share" size={20} color={theme.textPrimary}
+                            onPress={() => shareNews({title: title as string, url: url as string})} 
+                            />
                         </TouchableOpacity>
 
                         <TouchableOpacity activeOpacity={0.7} style={[styles.menuItem, { backgroundColor: theme.cardBackground }]} onPress={handleRead}>

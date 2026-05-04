@@ -6,7 +6,6 @@ import Entypo from '@expo/vector-icons/Entypo';
 import { useThemeColors } from '@/src/hooks/useThemeColors'
 import { TypeNews } from '@/src/types/NewsType';
 import { Image } from 'expo-image';
-import { router } from 'expo-router';
 import { useFavoriteStore } from '@/src/store/useFavoriteStore';
 import { goToInfoNews } from '@/src/utils/goToInfoNews';
 import { useReadStore } from '@/src/store/useReadStore';
@@ -113,7 +112,7 @@ export default function Card({
                         {actions ? actions : (
                             <>
                                 <View style={{ flexDirection: 'row', gap: 5 }}>
-                                    <TouchableOpacity hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }} onPress={() => shareNews(data)}>
+                                    <TouchableOpacity hitSlop={{ top: 10, bottom: 10, left: 10, right: 10 }} onPress={() => shareNews({title: data.title, url: data.url})}>
                                         <Entypo
                                             name="share"
                                             size={20}
