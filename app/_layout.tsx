@@ -2,10 +2,13 @@ import { useSafeAreaInsets } from 'react-native-safe-area-context';
 import { Stack } from "expo-router";
 import { useThemeColors } from '@/src/hooks/useThemeColors';
 import { ThemeProvider } from '@/src/providers/ThemeProvider';
+import { QueryClientProvider } from '@tanstack/react-query';
+import { queryClient } from '@/src/lib/react-query';
 
 function RootLayoutInner() {
   const insets = useSafeAreaInsets();
   const theme = useThemeColors();
+
 
   return (
     <Stack
@@ -16,7 +19,6 @@ function RootLayoutInner() {
           backgroundColor: theme.background,
           paddingTop: insets.top,
           paddingBottom: insets.bottom,
-          boxShadow: 'none',
         }
       }}
     >
@@ -29,8 +31,10 @@ function RootLayoutInner() {
 
 export default function RootLayout() {
   return (
-    <ThemeProvider>
-      <RootLayoutInner />
-    </ThemeProvider>
+    <QueryClientProvider client={queryClient}>
+      <ThemeProvider>
+        <RootLayoutInner />
+      </ThemeProvider>
+    </QueryClientProvider>
   )
 }
