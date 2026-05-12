@@ -15,17 +15,17 @@ export default function AllNews() {
     const [query, setQuery] = useState('');
     const { shouldScrollToTop, resetScroll } = useScrollStore();
     const ScrollViewRef = useRef<ScrollView>(null);
-        const {
-            data,
-            isLoading,
-            isError,
-            refetch,
-            fetchNextPage,
-            hasNextPage,
-            isFetchingNextPage
-        } = useFeed();
+    const {
+        data,
+        isLoading,
+        isError,
+        refetch,
+        fetchNextPage,
+        hasNextPage,
+        isFetchingNextPage
+    } = useFeed();
 
-        const news = data?.pages.flatMap(page => page.news) || []
+    const news = data?.pages.flatMap(page => page.news) || []
 
     useEffect(() => {
         if (shouldScrollToTop) {
@@ -40,7 +40,7 @@ export default function AllNews() {
         )
         : news;
 
-        
+
     if (isLoading) {
         return (
             <View
@@ -125,6 +125,33 @@ export default function AllNews() {
                         </View>
                     )}
                 </View>
+                {
+                    hasNextPage && (
+                        <TouchableOpacity
+                            onPress={() => fetchNextPage()}
+                            style={[
+                                styles.button,
+                                {
+                                    backgroundColor:
+                                        theme.accentButton + '60',
+                                    alignSelf: 'center',
+                                }
+                            ]}
+                        >
+                            <Text
+                                style={{
+                                    color: theme.textPrimary,
+                                }}
+                            >
+                                {
+                                    isFetchingNextPage
+                                        ? 'Carregando...'
+                                        : 'Carregar mais'
+                                }
+                            </Text>
+                        </TouchableOpacity>
+                    )
+                }
             </ScrollView>
         </>
     )
@@ -181,6 +208,17 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         paddingVertical: 60,
         gap: 12,
+    },
+        button: {
+        alignSelf: 'flex-start',
+        flexDirection: 'row',
+        paddingHorizontal: 24,
+        paddingVertical: 10,
+        marginTop: 10,
+        borderRadius: 10,
+        gap: 10,
+        justifyContent: 'center',
+        alignItems: 'center'
     },
     emptyTitle: {
         fontSize: 18,
