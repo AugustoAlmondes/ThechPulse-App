@@ -1,11 +1,12 @@
-import FirstNews from "@/src/components/home/FirstNews";
+import LastestNews from "@/src/components/home/LastestNews";
 import Header from "@/src/components/layout/Header";
 import { useThemeColors } from "@/src/hooks/useThemeColors";
 import { COLORS } from "@/src/theme/global";
-import { Divider } from 'react-native-paper';
+import { ActivityIndicator, Divider } from 'react-native-paper';
 import { FlatList, RefreshControl, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import FavoriteNews from "@/src/components/home/FavoriteNews";
 import Entypo from "@expo/vector-icons/Entypo";
+import AntDesign from '@expo/vector-icons/AntDesign';
 // import { REAL_NEWS } from "@/src/constants/news";
 import Card from "@/src/components/shared/Card";
 import Feather from "@expo/vector-icons/Feather";
@@ -52,13 +53,7 @@ export default function Home() {
                     backgroundColor: theme.background,
                 }}
             >
-                <Text
-                    style={{
-                        color: theme.textPrimary,
-                    }}
-                >
-                    Carregando notícias...
-                </Text>
+                <ActivityIndicator size="large" color={theme.textPrimary} />
             </View>
         )
     }
@@ -131,7 +126,7 @@ export default function Home() {
             >
 
                 <View>
-                    <FirstNews />
+                    <LastestNews latestNews={news[0]} />
                 </View>
 
                 {favoriteNews.length > 0 &&
@@ -195,15 +190,17 @@ export default function Home() {
                             >
                                 <Entypo name="medal" size={24} color={COLORS.rank.gold} />
                             </View>
-                            <Card
-                                color={theme.cardBackground}
-                                data={news[Math.random() + 10]}
-                                showDate={false}
-                                showAction={false}
-                                showCreator={false}
-                                showImage={false}
-                                showSubjects={false}
-                            />
+                            {news.length > 0 && (
+                                <Card
+                                    color={theme.cardBackground}
+                                    data={news[0]}
+                                    showDate={false}
+                                    showAction={false}
+                                    showCreator={false}
+                                    showImage={false}
+                                    showSubjects={false}
+                                />
+                            )}
                         </View>
                         <View
                             style={{
@@ -222,15 +219,17 @@ export default function Home() {
                             >
                                 <Entypo name="medal" size={24} color={COLORS.rank.silver} />
                             </View>
-                            <Card
-                                color={theme.cardBackground}
-                                data={news[Math.random() + 10]}
-                                showDate={false}
-                                showAction={false}
-                                showCreator={false}
-                                showImage={false}
-                                showSubjects={false}
-                            />
+                            {news.length > 1 && (
+                                <Card
+                                    color={theme.cardBackground}
+                                    data={news[1]}
+                                    showDate={false}
+                                    showAction={false}
+                                    showCreator={false}
+                                    showImage={false}
+                                    showSubjects={false}
+                                />
+                            )}
                         </View>
                         <View
                             style={{
@@ -249,15 +248,17 @@ export default function Home() {
                             >
                                 <Entypo name="medal" size={24} color={COLORS.rank.bronze} />
                             </View>
-                            <Card
-                                color={theme.cardBackground}
-                                data={news[Math.random() + 10]}
-                                showDate={false}
-                                showAction={false}
-                                showCreator={false}
-                                showImage={false}
-                                showSubjects={false}
-                            />
+                            {news.length > 2 && (
+                                <Card
+                                    color={theme.cardBackground}
+                                    data={news[2]}
+                                    showDate={false}
+                                    showAction={false}
+                                    showCreator={false}
+                                    showImage={false}
+                                    showSubjects={false}
+                                />
+                            )}
                         </View>
                     </View>
                 </View>

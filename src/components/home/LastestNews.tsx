@@ -3,29 +3,29 @@ import Feather from '@expo/vector-icons/Feather';
 import { Pressable, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useThemeColors } from '@/src/hooks/useThemeColors'
 import { router } from 'expo-router'
-import { REAL_NEWS } from '@/src/constants/news';
 import { Image } from 'expo-image';
 import { goToInfoNews } from '@/src/utils/goToInfoNews';
+import { TypeNews } from '@/src/types/NewsType';
 
-export default function FirstNews() {
+export default function LastestNews({ latestNews }: { latestNews: TypeNews }) {
     const theme = useThemeColors();
-    const data = REAL_NEWS.news[0];
+
 
     return (
-        <View style={styles.container}>
+        <View>
             <Image
                 cachePolicy="disk"
                 transition={300}
                 style={styles.headerImage}
-                source={{ uri: REAL_NEWS.news[0].image }} />
+                source={{ uri: latestNews.image }} />
 
             <Text style={[styles.badge, { color: COLORS.neutral.white, backgroundColor: COLORS.badges.blue }]}>
-                {REAL_NEWS.news[0].category.toString().toUpperCase()}
+                {latestNews.category.toString().toUpperCase()}
             </Text>
 
             <View>
                 <Text style={[styles.title, { color: theme.textSecondary }]}>
-                    {data.title}
+                    {latestNews.title}
                 </Text>
 
                 <Text
@@ -33,12 +33,12 @@ export default function FirstNews() {
                     numberOfLines={3}
                     ellipsizeMode="tail"
                 >
-                    {data.description}
+                    {latestNews.description}
                 </Text>
             </View>
 
             <TouchableOpacity
-                onPress={() => goToInfoNews(data)}
+                onPress={() => goToInfoNews(latestNews)}
                 activeOpacity={0.7}
                 style={[styles.button, { backgroundColor: COLORS.badges.indigo }]}>
                 <Text
@@ -59,9 +59,6 @@ export default function FirstNews() {
 }
 
 const styles = StyleSheet.create({
-    container: {
-        padding: 5,
-    },
     title: {
         fontSize: 26,
         fontWeight: '500',
