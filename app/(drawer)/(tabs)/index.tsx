@@ -96,7 +96,13 @@ export default function Home() {
     return (
         <ScrollView
             ref={scrollViewRef}
-            refreshControl={<RefreshControl refreshing={false} size="default" />}
+            refreshControl={
+                <RefreshControl
+                    refreshing={isLoading}
+                    onRefresh={refetch}
+                    size="default"
+                />
+            }
             showsHorizontalScrollIndicator={false}
             stickyHeaderIndices={[0]}
             style={[styles.container, { backgroundColor: theme.background }]}>

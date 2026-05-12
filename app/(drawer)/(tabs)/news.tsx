@@ -2,18 +2,30 @@ import Header from "@/src/components/layout/Header";
 import { useThemeColors } from "@/src/hooks/useThemeColors";
 import { COLORS } from "@/src/theme/global";
 import Feather from '@expo/vector-icons/Feather';
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import { ScrollView } from "react-native-gesture-handler";
-import { REAL_NEWS } from "@/src/constants/news";
 import Card from "@/src/components/shared/Card";
 import { useEffect, useRef, useState } from "react";
 import { useScrollStore } from "@/src/store/useScrollStore";
+import { useFeed } from "@/src/hooks/useFeed";
+import { ActivityIndicator } from "react-native-paper";
 
 export default function AllNews() {
     const theme = useThemeColors();
     const [query, setQuery] = useState('');
     const { shouldScrollToTop, resetScroll } = useScrollStore();
     const ScrollViewRef = useRef<ScrollView>(null);
+        const {
+            data,
+            isLoading,
+            isError,
+            refetch,
+            fetchNextPage,
+            hasNextPage,
+            isFetchingNextPage
+        } = useFeed();
+
+        const news = data?.pages.flatMap(page => page.news) || []
 
     useEffect(() => {
         if (shouldScrollToTop) {
@@ -23,10 +35,61 @@ export default function AllNews() {
     }, [shouldScrollToTop, resetScroll])
 
     const filteredNews = query.trim()
-        ? REAL_NEWS.news.filter(item =>
+        ? news.filter(item =>
             item.title.toLowerCase().includes(query.toLowerCase())
         )
-        : REAL_NEWS.news;
+        : news;
+
+        
+    if (isLoading) {
+        return (
+            <View
+                style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: theme.background,
+                }}
+            >
+                <ActivityIndicator size="large" color={theme.textPrimary} />
+            </View>
+        )
+    }
+
+    if (isError) {
+        return (
+            <View
+                style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    padding: 20,
+                    backgroundColor: theme.background,
+                }}
+            >
+                <Text
+                    style={{
+                        color: theme.textPrimary,
+                        marginBottom: 10,
+                    }}
+                >
+                    Erro ao carregar notícias
+                </Text>
+
+                <TouchableOpacity
+                    onPress={() => refetch()}
+                >
+                    <Text
+                        style={{
+                            color: theme.accentButton,
+                        }}
+                    >
+                        Tentar novamente
+                    </Text>
+                </TouchableOpacity>
+            </View>
+        )
+    }
 
     return (
         <>
