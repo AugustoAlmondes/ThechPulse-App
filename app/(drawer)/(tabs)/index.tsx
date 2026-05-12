@@ -6,7 +6,7 @@ import { Divider } from 'react-native-paper';
 import { FlatList, RefreshControl, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import FavoriteNews from "@/src/components/home/FavoriteNews";
 import Entypo from "@expo/vector-icons/Entypo";
-import { REAL_NEWS } from "@/src/constants/news";
+// import { REAL_NEWS } from "@/src/constants/news";
 import Card from "@/src/components/shared/Card";
 import Feather from "@expo/vector-icons/Feather";
 import { router, useNavigation } from "expo-router";
@@ -14,7 +14,7 @@ import { DrawerActions } from "@react-navigation/native";
 import { useFavoriteStore } from "@/src/store/useFavoriteStore";
 import { useScrollStore } from "@/src/store/useScrollStore";
 import { useEffect, useRef } from "react";
-
+import { useFeed } from "@/src/hooks/useFeed";
 
 export default function Home() {
 
@@ -23,6 +23,17 @@ export default function Home() {
     const scrollViewRef = useRef<ScrollView>(null);
     const { shouldScrollToTop, resetScroll } = useScrollStore();
     const favoriteNews = useFavoriteStore(state => state.favoriteNews);
+    const {
+        data,
+        isLoading,
+        isError,
+        refetch,
+        fetchNextPage,
+        hasNextPage,
+        isFetchingNextPage
+    } = useFeed();
+
+    const news = data?.pages.flatMap(page => page.news) || []
 
     useEffect(() => {
         if (shouldScrollToTop) {
@@ -30,6 +41,62 @@ export default function Home() {
             resetScroll();
         }
     }, [shouldScrollToTop, resetScroll])
+
+    if (isLoading) {
+        return (
+            <View
+                style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    backgroundColor: theme.background,
+                }}
+            >
+                <Text
+                    style={{
+                        color: theme.textPrimary,
+                    }}
+                >
+                    Carregando notícias...
+                </Text>
+            </View>
+        )
+    }
+
+    if (isError) {
+        return (
+            <View
+                style={{
+                    flex: 1,
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    padding: 20,
+                    backgroundColor: theme.background,
+                }}
+            >
+                <Text
+                    style={{
+                        color: theme.textPrimary,
+                        marginBottom: 10,
+                    }}
+                >
+                    Erro ao carregar notícias
+                </Text>
+
+                <TouchableOpacity
+                    onPress={() => refetch()}
+                >
+                    <Text
+                        style={{
+                            color: theme.accentButton,
+                        }}
+                    >
+                        Tentar novamente
+                    </Text>
+                </TouchableOpacity>
+            </View>
+        )
+    }
 
     return (
         <ScrollView
@@ -130,7 +197,7 @@ export default function Home() {
                             </View>
                             <Card
                                 color={theme.cardBackground}
-                                data={REAL_NEWS.news[0]}
+                                data={news[Math.random() + 10]}
                                 showDate={false}
                                 showAction={false}
                                 showCreator={false}
@@ -157,7 +224,7 @@ export default function Home() {
                             </View>
                             <Card
                                 color={theme.cardBackground}
-                                data={REAL_NEWS.news[1]}
+                                data={news[Math.random() + 10]}
                                 showDate={false}
                                 showAction={false}
                                 showCreator={false}
@@ -184,7 +251,7 @@ export default function Home() {
                             </View>
                             <Card
                                 color={theme.cardBackground}
-                                data={REAL_NEWS.news[2]}
+                                data={news[Math.random() + 10]}
                                 showDate={false}
                                 showAction={false}
                                 showCreator={false}
@@ -202,7 +269,7 @@ export default function Home() {
                         VEJA MAIS
                     </Text>
                     {
-                        REAL_NEWS.news.map((item, index) => (
+                        news.map((item, index) => (
                             <Card
                                 key={index}
                                 showDate={false}

@@ -1,8 +1,9 @@
+import { NewsAPIResponse } from '../types/NewsType';
 import { api } from './api';
 
 export async function getLatestNews(
-    page = 1
-) {
+    { page = 1 }: { page: number }
+): Promise<NewsAPIResponse> {
     try {
         const response = await api.get('/news', {
             params: {
@@ -16,7 +17,7 @@ export async function getLatestNews(
         return {
             news: [],
             page: 1,
-            totalPages: 1
+            status: "error"
         };
     }
 };

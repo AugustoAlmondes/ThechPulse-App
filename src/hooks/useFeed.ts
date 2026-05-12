@@ -1,13 +1,19 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { getLatestNews } from '../services/news'
+import { TypeNews } from '../types/NewsType'
+
+interface UseFeedResponse {
+    news: TypeNews[];
+    page: number;
+    totalPages: number;
+}
 
 export function useFeed() {
-
     return useInfiniteQuery({
         queryKey: ['feed'],
 
         queryFn: ({ pageParam = 1 }) =>
-            getLatestNews(pageParam),
+            getLatestNews({ page: pageParam as number }),
 
         initialPageParam: 1,
 

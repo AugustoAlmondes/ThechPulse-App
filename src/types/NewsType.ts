@@ -7,7 +7,7 @@ export interface NewsType {
     by: string
 }
 
-export interface Main {
+export interface NewsAPIResponse {
     status: string;
     news: TypeNews[];
     page: number;

@@ -6,6 +6,6 @@ export const api = axios.create({
     headers:{
         "Content-Type":"application/json",
         "X-App-Key":process.env.EXPO_PUBLIC_APP_KEY,
-        "User-Agent":"TeachPulse/1.0.0 ReactNative"
+        "User-Agent":"TechPulse/1.0.0 ReactNative"
     }
 })
