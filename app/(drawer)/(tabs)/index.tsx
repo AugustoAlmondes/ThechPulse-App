@@ -2,12 +2,10 @@ import LastestNews from "@/src/components/home/LastestNews";
 import Header from "@/src/components/layout/Header";
 import { useThemeColors } from "@/src/hooks/useThemeColors";
 import { COLORS } from "@/src/theme/global";
-import { ActivityIndicator, Divider } from 'react-native-paper';
+import { ActivityIndicator } from 'react-native-paper';
 import { FlatList, RefreshControl, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import FavoriteNews from "@/src/components/home/FavoriteNews";
 import Entypo from "@expo/vector-icons/Entypo";
-// import AntDesign from '@expo/vector-icons/AntDesign';
-// import { REAL_NEWS } from "@/src/constants/news";
 import Card from "@/src/components/shared/Card";
 import Feather from "@expo/vector-icons/Feather";
 import { router, useNavigation } from "expo-router";
@@ -18,6 +16,9 @@ import { useEffect, useRef } from "react";
 import { useFeed } from "@/src/hooks/useFeed";
 import { queryClient } from "@/src/lib/react-query";
 import { useCheckUpdates } from "@/src/hooks/useCheckUpdates";
+
+const RANK_COLORS = [COLORS.rank.gold, COLORS.rank.silver, COLORS.rank.bronze];
+const RANK_LABELS = ['1º', '2º', '3º'];
 
 export default function Home() {
 
@@ -49,62 +50,37 @@ export default function Home() {
     }, [shouldScrollToTop, resetScroll])
 
     async function reloadFeed() {
-
         await queryClient.invalidateQueries({
             queryKey: ['feed'],
         });
-
         refetch();
-
-        scrollViewRef.current?.scrollTo({
-            y: 0,
-            animated: true,
-        });
+        scrollViewRef.current?.scrollTo({ y: 0, animated: true });
     }
 
     if (isLoading) {
         return (
-            <View
-                style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    backgroundColor: theme.background,
-                }}
-            >
-                <ActivityIndicator size="large" color={theme.textPrimary} />
+            <View style={[styles.centered, { backgroundColor: theme.background }]}>
+                <ActivityIndicator size="large" color={theme.accentButton} />
             </View>
         )
     }
 
     if (isError) {
         return (
-            <View
-                style={{
-                    flex: 1,
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    padding: 20,
-                    backgroundColor: theme.background,
-                }}
-            >
-                <Text
-                    style={{
-                        color: theme.textPrimary,
-                        marginBottom: 10,
-                    }}
-                >
-                    Erro ao carregar notícias
+            <View style={[styles.centered, { backgroundColor: theme.background, padding: 20 }]}>
+                <Feather name="wifi-off" size={40} color={theme.textMuted} style={{ marginBottom: 12 }} />
+                <Text style={{ color: theme.textPrimary, fontSize: 16, fontWeight: '600', marginBottom: 6 }}>
+                    Sem conexão
                 </Text>
-
+                <Text style={{ color: theme.textMuted, fontSize: 14, textAlign: 'center', marginBottom: 20 }}>
+                    Não foi possível carregar as notícias.
+                </Text>
                 <TouchableOpacity
                     onPress={() => refetch()}
+                    style={[styles.retryButton, { backgroundColor: theme.accentButton }]}
                 >
-                    <Text
-                        style={{
-                            color: theme.accentButton,
-                        }}
-                    >
+                    <Feather name="refresh-cw" size={15} color={COLORS.neutral.white} />
+                    <Text style={{ color: COLORS.neutral.white, fontWeight: 'bold', fontSize: 14 }}>
                         Tentar novamente
                     </Text>
                 </TouchableOpacity>
@@ -122,258 +98,258 @@ export default function Home() {
                     size="default"
                 />
             }
-            showsHorizontalScrollIndicator={false}
+            showsVerticalScrollIndicator={false}
             stickyHeaderIndices={[0]}
-            style={[styles.container, { backgroundColor: theme.background }]}>
+            style={[styles.container, { backgroundColor: theme.background }]}
+        >
+            {/* Header sticky */}
             <Header>
-                <View style={{
-                    flexDirection: 'row',
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    gap: 15
-                }}>
-                    <TouchableOpacity
-                        activeOpacity={0.7}
-                        onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
-                    >
-                        <Feather
-                            name="menu"
-                            size={27}
-                            color={theme.headerIcon}
-                            style={{ alignSelf: 'center', marginTop: 2 }}
-                        />
-                    </TouchableOpacity>
-                    <Text style={[styles.headerTitle, { color: theme.headerText }]}>TechPulse</Text>
-                </View>
+                <TouchableOpacity
+                    activeOpacity={0.7}
+                    onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+                >
+                    <Feather
+                        name="menu"
+                        size={26}
+                        color={theme.headerIcon}
+                    />
+                </TouchableOpacity>
+                <Text style={[styles.headerTitle, { color: theme.headerText }]}>TechPulse</Text>
+                <View style={{ width: 26 }} />
             </Header>
-            {
-                updates?.hasNew && (
-                    <TouchableOpacity
-                        activeOpacity={0.8}
-                        onPress={reloadFeed}
-                        style={{
-                            backgroundColor:
-                                theme.accentButton,
-                            paddingVertical: 12,
-                            paddingHorizontal: 16,
-                            marginHorizontal: 15,
-                            marginTop: 10,
-                            borderRadius: 12,
-                        }}
-                    >
-                        <Text
-                            style={{
-                                color: '#fff',
-                                fontWeight: 'bold',
-                                textAlign: 'center',
-                            }}
-                        >
-                            {
-                                updates.count === 1
-                                    ? '1 nova notícia disponível'
-                                    : `${updates.count} novas notícias disponíveis`
-                            }
-                        </Text>
-                    </TouchableOpacity>
-                )
-            }
-            <View
-                style={styles.newsBody}
-            >
 
-                <View>
-                    <LastestNews latestNews={news[0]} />
-                </View>
+            {/* Banner de novas notícias */}
+            {updates?.hasNew && (
+                <TouchableOpacity
+                    activeOpacity={0.85}
+                    onPress={reloadFeed}
+                    style={[styles.updateBanner, { backgroundColor: theme.accentButton }]}
+                >
+                    <Feather name="refresh-cw" size={14} color={COLORS.neutral.white} />
+                    <Text style={styles.updateBannerText}>
+                        {updates.count === 1
+                            ? '1 nova notícia disponível'
+                            : `${updates.count} novas notícias disponíveis`}
+                    </Text>
+                </TouchableOpacity>
+            )}
 
-                {favoriteNews.length > 0 &&
-                    <>
-                        <Divider style={[styles.divider, { backgroundColor: theme.divider }]} />
+            <View style={styles.body}>
 
-                        <View style={{ marginVertical: 10 }}>
-                            <Text style={[styles.title, { color: theme.textSubtle }]}>
-                                MEUS FAVORITOS
-                            </Text>
-                            <FlatList
-                                horizontal
-                                showsHorizontalScrollIndicator={false}
-                                data={favoriteNews}
-                                keyExtractor={(item) => item.id}
-                                renderItem={({ item }) => (
-                                    <FavoriteNews item={item} />
-                                )} />
+                {/* ─── Notícia em Destaque ─── */}
+                {news.length > 0 && (
+                    <View style={styles.section}>
+                        <SectionTitle label="EM DESTAQUE" />
+                        <LastestNews latestNews={news[0]} />
+                    </View>
+                )}
+
+                {/* ─── Meus Favoritos ─── */}
+                {favoriteNews.length > 0 && (
+                    <View style={styles.section}>
+                        <View style={styles.sectionRow}>
+                            <SectionTitle label="MEUS FAVORITOS" />
                             <TouchableOpacity
                                 onPress={() => router.push('/(drawer)/(tabs)/favorites')}
-                                activeOpacity={0.7} style={[styles.button, { backgroundColor: theme.accentButton + '60' }]}>
-                                <Text
-                                    style={{
-                                        color: theme.textPrimary,
-                                        fontSize: 14,
-                                        fontWeight: 'bold',
-                                    }}
-                                >Ver meu favoritos</Text>
-                                <Feather
-                                    name='arrow-right'
-                                    size={17}
-                                    color={theme.textPrimary}
-                                />
+                                activeOpacity={0.7}
+                                style={styles.seeAllBtn}
+                            >
+                                <Text style={[styles.seeAllText, { color: theme.accentButton }]}>Ver todos</Text>
+                                <Feather name='arrow-right' size={13} color={theme.accentButton} />
                             </TouchableOpacity>
                         </View>
-                    </>
-                }
-
-
-                <Divider style={[styles.divider, { backgroundColor: theme.divider }]} />
-
-                <View style={{ marginVertical: 10 }}>
-                    <Text style={[styles.title, { color: theme.textSubtle }]}>
-                        MAIS ACESSADAS
-                    </Text>
-                    <View style={{ gap: 20 }}>
-                        <View
-                            style={{
-                                gap: 5,
-                                flexDirection: 'row'
-                            }}
-                        >
-                            <View
-                                style={{
-                                    width: 40,
-                                    height: 40,
-                                    backgroundColor: theme.cardBackground,
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                }}
-                            >
-                                <Entypo name="medal" size={24} color={COLORS.rank.gold} />
-                            </View>
-                            {news.length > 0 && (
-                                <Card
-                                    color={theme.cardBackground}
-                                    data={news[0]}
-                                    showDate={false}
-                                    showAction={false}
-                                    showCreator={false}
-                                    showImage={false}
-                                    showSubjects={false}
-                                />
+                        <FlatList
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            data={favoriteNews}
+                            keyExtractor={(item) => item.id}
+                            contentContainerStyle={{ paddingBottom: 4 }}
+                            renderItem={({ item }) => (
+                                <FavoriteNews item={item} />
                             )}
-                        </View>
-                        <View
-                            style={{
-                                gap: 5,
-                                flexDirection: 'row'
-                            }}
-                        >
-                            <View
-                                style={{
-                                    width: 40,
-                                    height: 40,
-                                    backgroundColor: theme.cardBackground,
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                }}
-                            >
-                                <Entypo name="medal" size={24} color={COLORS.rank.silver} />
-                            </View>
-                            {news.length > 1 && (
-                                <Card
-                                    color={theme.cardBackground}
-                                    data={news[1]}
-                                    showDate={false}
-                                    showAction={false}
-                                    showCreator={false}
-                                    showImage={false}
-                                    showSubjects={false}
-                                />
-                            )}
-                        </View>
-                        <View
-                            style={{
-                                gap: 5,
-                                flexDirection: 'row'
-                            }}
-                        >
-                            <View
-                                style={{
-                                    width: 40,
-                                    height: 40,
-                                    backgroundColor: theme.cardBackground,
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                }}
-                            >
-                                <Entypo name="medal" size={24} color={COLORS.rank.bronze} />
-                            </View>
-                            {news.length > 2 && (
-                                <Card
-                                    color={theme.cardBackground}
-                                    data={news[2]}
-                                    showDate={false}
-                                    showAction={false}
-                                    showCreator={false}
-                                    showImage={false}
-                                    showSubjects={false}
-                                />
-                            )}
+                        />
+                    </View>
+                )}
+
+                {/* ─── Mais Acessadas (Top 3) ─── */}
+                {news.length >= 3 && (
+                    <View style={styles.section}>
+                        <SectionTitle label="MAIS ACESSADAS" />
+                        <View style={styles.rankList}>
+                            {[0, 1, 2].map((idx) => (
+                                news.length > idx && (
+                                    <View key={idx} style={[styles.rankRow, { backgroundColor: theme.cardBackground }]}>
+                                        <View style={styles.rankBadge}>
+                                            <Entypo name="medal" size={20} color={RANK_COLORS[idx]} />
+                                            <Text style={[styles.rankLabel, { color: RANK_COLORS[idx] }]}>
+                                                {RANK_LABELS[idx]}
+                                            </Text>
+                                        </View>
+                                        <View style={styles.rankCardWrapper}>
+                                            <Card
+                                                color="transparent"
+                                                data={news[idx]}
+                                                showDate={false}
+                                                showAction={false}
+                                                showCreator={false}
+                                                showImage={false}
+                                                showSubjects={true}
+                                                minHeigth={0}
+                                            />
+                                        </View>
+                                    </View>
+                                )
+                            ))}
                         </View>
                     </View>
-                </View>
+                )}
 
+                {/* ─── Veja Mais ─── */}
+                {news.length > 0 && (
+                    <View style={styles.section}>
+                        <SectionTitle label="VEJA MAIS" />
+                        <View style={styles.feedList}>
+                            {news.map((item, index) => (
+                                <Card
+                                    key={index}
+                                    showDate={true}
+                                    showAction={true}
+                                    color={theme.cardBackground}
+                                    data={item}
+                                />
+                            ))}
+                        </View>
 
-                <Divider style={[styles.divider, { backgroundColor: theme.divider }]} />
-                <View style={{ gap: 20 }}>
-                    <Text style={[styles.title, { color: theme.textSubtle }]}>
-                        VEJA MAIS
-                    </Text>
-                    {
-                        news.map((item, index) => (
-                            <Card
-                                key={index}
-                                showDate={false}
-                                showAction={false}
-                                color={theme.cardBackground}
-                                data={item}
-                            />
-                        ))
-                    }
-                </View>
+                        {hasNextPage && (
+                            <TouchableOpacity
+                                onPress={() => fetchNextPage()}
+                                activeOpacity={0.7}
+                                style={[styles.loadMoreBtn, { borderColor: theme.accentButton + '80' }]}
+                                disabled={isFetchingNextPage}
+                            >
+                                {isFetchingNextPage
+                                    ? <ActivityIndicator size="small" color={theme.accentButton} />
+                                    : <Text style={[styles.loadMoreText, { color: theme.accentButton }]}>Carregar mais</Text>
+                                }
+                            </TouchableOpacity>
+                        )}
+                    </View>
+                )}
             </View>
         </ScrollView>
     )
+}
+
+function SectionTitle({ label }: { label: string }) {
+    const theme = useThemeColors();
+    return (
+        <Text style={[styles.sectionTitle, { color: theme.textSubtle }]}>{label}</Text>
+    );
 }
 
 const styles = StyleSheet.create({
     container: {
         flex: 1,
     },
-    title: {
-        fontSize: 24,
-        fontWeight: '400',
-        marginBottom: 10,
-        marginLeft: 10
+    centered: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
     },
-    newsBody: {
-        width: '100%',
-        paddingHorizontal: 15,
-        marginBottom: 20,
-        gap: 20
+    body: {
+        paddingHorizontal: 16,
+        paddingBottom: 32,
+        gap: 28,
+        marginTop: 12,
     },
-    divider: {
-        height: 3
+    section: {
+        gap: 12,
+    },
+    sectionRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+    },
+    sectionTitle: {
+        fontSize: 11,
+        fontWeight: '700',
+        letterSpacing: 1.2,
+    },
+    seeAllBtn: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 4,
+    },
+    seeAllText: {
+        fontSize: 13,
+        fontWeight: '600',
     },
     headerTitle: {
-        fontSize: 24,
+        fontSize: 22,
+        fontWeight: '700',
     },
-    button: {
-        alignSelf: 'flex-start',
+    updateBanner: {
         flexDirection: 'row',
-        paddingHorizontal: 24,
-        paddingVertical: 10,
-        marginTop: 10,
-        borderRadius: 10,
-        gap: 10,
+        alignItems: 'center',
         justifyContent: 'center',
-        alignItems: 'center'
+        gap: 8,
+        marginHorizontal: 16,
+        marginTop: 10,
+        paddingVertical: 10,
+        paddingHorizontal: 16,
+        borderRadius: 10,
     },
-
+    updateBannerText: {
+        color: COLORS.neutral.white,
+        fontWeight: 'bold',
+        fontSize: 13,
+    },
+    rankList: {
+        gap: 10,
+    },
+    rankRow: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        borderRadius: 12,
+        overflow: 'hidden',
+        paddingLeft: 12,
+    },
+    rankBadge: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 36,
+        gap: 2,
+    },
+    rankLabel: {
+        fontSize: 10,
+        fontWeight: '700',
+    },
+    rankCardWrapper: {
+        flex: 1,
+    },
+    feedList: {
+        gap: 12,
+    },
+    loadMoreBtn: {
+        alignSelf: 'center',
+        paddingHorizontal: 28,
+        paddingVertical: 10,
+        borderRadius: 50,
+        borderWidth: 1.5,
+        marginTop: 4,
+        minWidth: 140,
+        alignItems: 'center',
+    },
+    loadMoreText: {
+        fontWeight: '600',
+        fontSize: 14,
+    },
+    retryButton: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 8,
+        paddingHorizontal: 20,
+        paddingVertical: 10,
+        borderRadius: 10,
+    },
 })
