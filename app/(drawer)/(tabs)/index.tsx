@@ -67,15 +67,17 @@ export default function Home() {
         )
     }
 
-    if (isError) {
+    if (isError || news.length === 0) {
         return (
             <View style={[styles.centered, { backgroundColor: theme.background, padding: 20 }]}>
-                <Feather name="wifi-off" size={40} color={theme.textMuted} style={{ marginBottom: 12 }} />
+                <Feather name={isError ? "wifi-off" : "alert-circle"} size={40} color={theme.textMuted} style={{ marginBottom: 12 }} />
                 <Text style={{ color: theme.textPrimary, fontSize: 16, fontWeight: '600', marginBottom: 6 }}>
-                    Sem conexão
+                    {isError ? "Sem conexão" : "Erro ao carregar"}
                 </Text>
                 <Text style={{ color: theme.textMuted, fontSize: 14, textAlign: 'center', marginBottom: 20 }}>
-                    Não foi possível carregar as notícias.
+                    {isError 
+                        ? "Não foi possível conectar ao servidor." 
+                        : "O servidor não retornou dados no momento."}
                 </Text>
                 <TouchableOpacity
                     onPress={() => refetch()}
