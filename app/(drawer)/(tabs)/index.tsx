@@ -16,6 +16,7 @@ import { useEffect, useRef } from "react";
 import { useFeed } from "@/src/hooks/useFeed";
 import { queryClient } from "@/src/lib/react-query";
 import { useCheckUpdates } from "@/src/hooks/useCheckUpdates";
+import { TypeNews } from "@/src/types/NewsType";
 
 const RANK_COLORS = [COLORS.rank.gold, COLORS.rank.silver, COLORS.rank.bronze];
 const RANK_LABELS = ['1º', '2º', '3º'];
@@ -39,6 +40,7 @@ export default function Home() {
 
     const news = data?.pages.flatMap(page => page.news) || []
     const latestTimestamp = news?.[0]?.published;
+    const latestNews = news.find((n) => n.image !== null && n.image !== '' && n.image !== 'None')
 
     const { data: updates } = useCheckUpdates(latestTimestamp);
 
@@ -140,7 +142,7 @@ export default function Home() {
                 {news.length > 0 && (
                     <View style={styles.section}>
                         <SectionTitle label="EM DESTAQUE" />
-                        <LastestNews latestNews={news[0]} />
+                        <LastestNews latestNews={latestNews as TypeNews} />
                     </View>
                 )}
 
@@ -219,20 +221,6 @@ export default function Home() {
                                 />
                             ))}
                         </View>
-
-                        {hasNextPage && (
-                            <TouchableOpacity
-                                onPress={() => fetchNextPage()}
-                                activeOpacity={0.7}
-                                style={[styles.loadMoreBtn, { borderColor: theme.accentButton + '80' }]}
-                                disabled={isFetchingNextPage}
-                            >
-                                {isFetchingNextPage
-                                    ? <ActivityIndicator size="small" color={theme.accentButton} />
-                                    : <Text style={[styles.loadMoreText, { color: theme.accentButton }]}>Carregar mais</Text>
-                                }
-                            </TouchableOpacity>
-                        )}
                     </View>
                 )}
             </View>
