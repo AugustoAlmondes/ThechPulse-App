@@ -81,7 +81,7 @@ export default function Card({
             <View style={styles.rightContent}>
                 {showSubjects && data.category && (
                     <Text style={[styles.subject, { backgroundColor: COLORS.badges.blue + 60, color: theme.cardSubject }]}>
-                        {data.category[0]}
+                        {data.category[0] === 'science_technology' ? 'Ciência e Tecnologia' : data.category[0].toUpperCase()}
                     </Text>
                 )}
 
