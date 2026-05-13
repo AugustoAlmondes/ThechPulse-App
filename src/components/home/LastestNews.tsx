@@ -10,14 +10,20 @@ import { TypeNews } from '@/src/types/NewsType';
 export default function LastestNews({ latestNews }: { latestNews: TypeNews }) {
     const theme = useThemeColors();
 
+    if (!latestNews) {
+        return null;
+    }
 
     return (
         <View>
-            <Image
-                cachePolicy="disk"
-                transition={300}
-                style={styles.headerImage}
-                source={{ uri: latestNews.image }} />
+            {
+                latestNews?.image &&
+                <Image
+                    cachePolicy="disk"
+                    transition={300}
+                    style={styles.headerImage}
+                    source={{ uri: latestNews?.image }} />
+            }
 
             <Text style={[styles.badge, { color: COLORS.neutral.white, backgroundColor: COLORS.badges.blue }]}>
                 {latestNews.category.toString().toUpperCase()}

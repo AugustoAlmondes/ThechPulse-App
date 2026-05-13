@@ -6,7 +6,7 @@ import { ActivityIndicator, Divider } from 'react-native-paper';
 import { FlatList, RefreshControl, ScrollView, StyleSheet, Text, TouchableOpacity, View } from "react-native";
 import FavoriteNews from "@/src/components/home/FavoriteNews";
 import Entypo from "@expo/vector-icons/Entypo";
-import AntDesign from '@expo/vector-icons/AntDesign';
+// import AntDesign from '@expo/vector-icons/AntDesign';
 // import { REAL_NEWS } from "@/src/constants/news";
 import Card from "@/src/components/shared/Card";
 import Feather from "@expo/vector-icons/Feather";
@@ -16,6 +16,8 @@ import { useFavoriteStore } from "@/src/store/useFavoriteStore";
 import { useScrollStore } from "@/src/store/useScrollStore";
 import { useEffect, useRef } from "react";
 import { useFeed } from "@/src/hooks/useFeed";
+import { queryClient } from "@/src/lib/react-query";
+import { useCheckUpdates } from "@/src/hooks/useCheckUpdates";
 
 export default function Home() {
 
@@ -35,6 +37,9 @@ export default function Home() {
     } = useFeed();
 
     const news = data?.pages.flatMap(page => page.news) || []
+    const latestTimestamp = news?.[0]?.published;
+
+    const { data: updates } = useCheckUpdates(latestTimestamp);
 
     useEffect(() => {
         if (shouldScrollToTop) {
@@ -42,6 +47,20 @@ export default function Home() {
             resetScroll();
         }
     }, [shouldScrollToTop, resetScroll])
+
+    async function reloadFeed() {
+
+        await queryClient.invalidateQueries({
+            queryKey: ['feed'],
+        });
+
+        refetch();
+
+        scrollViewRef.current?.scrollTo({
+            y: 0,
+            animated: true,
+        });
+    }
 
     if (isLoading) {
         return (
@@ -127,6 +146,37 @@ export default function Home() {
                     <Text style={[styles.headerTitle, { color: theme.headerText }]}>TechPulse</Text>
                 </View>
             </Header>
+            {
+                updates?.hasNew && (
+                    <TouchableOpacity
+                        activeOpacity={0.8}
+                        onPress={reloadFeed}
+                        style={{
+                            backgroundColor:
+                                theme.accentButton,
+                            paddingVertical: 12,
+                            paddingHorizontal: 16,
+                            marginHorizontal: 15,
+                            marginTop: 10,
+                            borderRadius: 12,
+                        }}
+                    >
+                        <Text
+                            style={{
+                                color: '#fff',
+                                fontWeight: 'bold',
+                                textAlign: 'center',
+                            }}
+                        >
+                            {
+                                updates.count === 1
+                                    ? '1 nova notícia disponível'
+                                    : `${updates.count} novas notícias disponíveis`
+                            }
+                        </Text>
+                    </TouchableOpacity>
+                )
+            }
             <View
                 style={styles.newsBody}
             >
