@@ -38,7 +38,7 @@ export const COLORS = {
         700: "#3f4d5a",
         800: "#2a3340",
         900: "#1f2933", // seu blackSoft
-        950: "#12171d",
+        950: "#19222bff",
 
         white: "#ffffff",
     },
@@ -152,10 +152,10 @@ export const darkTheme: AppTheme = {
     divider: COLORS.neutral[700] + '40',
 
     // Header / Navigation
-    headerBackground: COLORS.neutral[900],
+    headerBackground: COLORS.neutral[950],
     headerText: COLORS.neutral.white,
     headerIcon: COLORS.neutral.white,
-    tabBarBackground: COLORS.neutral[900],
+    tabBarBackground: COLORS.neutral[950],
     tabBarActive: COLORS.neutral.white,
     tabBarInactive: COLORS.neutral[300] + '60',
     drawerBackground: COLORS.neutral[900],

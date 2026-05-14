@@ -1,7 +1,5 @@
 import { useThemeColors } from '@/src/hooks/useThemeColors';
-import { COLORS } from '@/src/theme/global';
 import { StyleSheet, View } from "react-native";
-// import Entypo from "@expo/vector-icons/Entypo";
 import React from "react";
 
 export default function Header({ children }: { children: React.ReactNode }) {

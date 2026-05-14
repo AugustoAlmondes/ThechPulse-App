@@ -12,15 +12,15 @@ function RootLayoutInner() {
   const insets = useSafeAreaInsets();
   const theme = useThemeColors();
 
-  useEffect(() => {
-    if (Platform.OS === 'android') {
-      hideNavigationBar();
-    }
-  }, []);
+  // useEffect(() => {
+  //   if (Platform.OS === 'android') {
+  //     hideNavigationBar();
+  //   }
+  // }, []);
 
-  async function hideNavigationBar() {
-    await NavigationBar.setVisibilityAsync("hidden");
-  }
+  // async function hideNavigationBar() {
+  //   await NavigationBar.setVisibilityAsync("hidden");
+  // }
 
   return (
     <Stack
@@ -28,7 +28,7 @@ function RootLayoutInner() {
         headerShown: false,
         statusBarStyle: theme.statusBarStyle,
         contentStyle: {
-          backgroundColor: theme.background,
+          backgroundColor: theme.headerBackground,
           paddingTop: insets.top,
           paddingBottom: insets.bottom,
         }

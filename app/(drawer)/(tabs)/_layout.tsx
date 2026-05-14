@@ -6,7 +6,7 @@ import Entypo from '@expo/vector-icons/Entypo';
 import AllNews from "./news";
 import ReadLater from "./read";
 import { useScrollStore } from "@/src/store/useScrollStore";
-import { View, TouchableOpacity, StyleSheet, Platform } from "react-native";
+import { View, TouchableOpacity, StyleSheet, Platform, Text } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 
 const Tab = createMaterialTopTabNavigator();
@@ -46,7 +46,7 @@ function CustomTabBar({ state, descriptors, navigation, position }: MaterialTopT
     const theme = useThemeColors();
 
     return (
-        <View style={[styles.tabBarWrapper, { backgroundColor: theme.background }]}>
+        // <View style={[styles.tabBarWrapper, { backgroundColor: theme.headerBackground }]}>
             <View style={[styles.tabBarPill, { backgroundColor: theme.tabBarBackground }]}>
                 {state.routes.map((route, index) => {
                     const { options } = descriptors[route.key];
@@ -84,17 +84,17 @@ function CustomTabBar({ state, descriptors, navigation, position }: MaterialTopT
                             ]}>
                                 {tabItem?.icon(color, isFocused)}
                             </View>
-                            {/* <Text style={[
+                            <Text style={[
                                 styles.tabLabel,
                                 { color },
                                 isFocused && styles.tabLabelActive,
                             ]}>
                                 {label}
-                            </Text> */}
+                            </Text>
                         </TouchableOpacity>
                     );
                 })}
-            </View>
+            {/* </View> */}
         </View>
     );
 }
@@ -143,33 +143,31 @@ export default function TabsLayout() {
 
 const styles = StyleSheet.create({
     tabBarWrapper: {
-        paddingHorizontal: 16,
+        // paddingHorizontal: 16,
         paddingBottom: Platform.OS === 'ios' ? 24 : 12,
-        paddingTop: 8,
+        // paddingTop: 8,
     },
     tabBarPill: {
         flexDirection: 'row',
-        borderRadius: 20,
+        // borderRadius: 20,
         paddingVertical: 8,
-        paddingHorizontal: 4,
-        ...Platform.select({
-            android: {
-                elevation: 8,
-            },
-            ios: {
-                shadowColor: '#000',
-                shadowOffset: { width: 0, height: 4 },
-                shadowOpacity: 0.12,
-                shadowRadius: 12,
-            },
-        }),
+        // paddingHorizontal: 4,
+        // ...Platform.select({
+        //     android: {
+        //         elevation: 8,
+        //     },
+        //     ios: {
+        //         shadowColor: '#000',
+        //         shadowOffset: { width: 0, height: 4 },
+        //         shadowOpacity: 0.12,
+        //         shadowRadius: 12,
+        //     },
+        // }),
     },
     tabItem: {
         flex: 1,
-        height: 40,
         alignItems: 'center',
         justifyContent: 'center',
-        // height: 40,
         gap: 4,
     },
     iconContainer: {
