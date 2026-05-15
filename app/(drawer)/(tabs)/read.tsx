@@ -104,7 +104,11 @@ export default function ReadLater() {
                             Nenhuma notícia salva
                         </Text>
                         <Text style={[styles.emptySubtitle, { color: theme.textMuted }]}>
-                            Toque no 🔖 de qualquer notícia para salvá-la aqui e ler quando quiser
+                            Toque no ícone {<Ionicons
+                                name="bookmark"
+                                size={20}
+                                color={theme.textMuted}
+                            />} de qualquer notícia para salvá-la aqui e ler quando quiser
                         </Text>
                     </View>
                 )}

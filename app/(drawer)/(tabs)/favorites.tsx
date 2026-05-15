@@ -104,7 +104,11 @@ export default function Favorites() {
                         <Text style={[styles.emptySubtitle, { color: theme.textMuted }]}>
                             {query.trim()
                                 ? `Não encontramos favoritos com "${query}"`
-                                : 'Toque no ❤ de qualquer notícia para salvá-la aqui'}
+                                : <>Toque no ícone {<Ionicons
+                                name="heart"
+                                size={20}
+                                color={theme.textMuted}
+                            />} de qualquer notícia para salvá-la aqui</>}
                         </Text>
                     </View>
                 )}
