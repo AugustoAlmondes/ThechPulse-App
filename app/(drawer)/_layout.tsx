@@ -76,6 +76,14 @@ export default function DrawerLayout() {
             />
 
             <Drawer.Screen
+                name="language"
+                options={{
+                    drawerItemStyle: { display: 'none' },
+                    headerShown: false,
+                }}
+            />
+
+            <Drawer.Screen
                 name="privacy"
                 options={{
                     drawerItemStyle: { display: 'none' },

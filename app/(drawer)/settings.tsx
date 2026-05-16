@@ -101,6 +101,17 @@ export default function Settings() {
                     <TouchableOpacity
                         style={[styles.settingItem, { backgroundColor: theme.settingItemBackground }]}
                         activeOpacity={0.7}
+                        onPress={() => router.push('/(drawer)/language')}
+                    >
+                        <View style={styles.itemLeft}>
+                            <Feather name="globe" size={20} color={COLORS.badges.indigo} />
+                            <Text style={[styles.itemText, { color: theme.textPrimary }]}>Idioma das Notícias</Text>
+                        </View>
+                        <Feather name="chevron-right" size={20} color={theme.chevronColor} />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                        style={[styles.settingItem, { backgroundColor: theme.settingItemBackground }]}
+                        activeOpacity={0.7}
                         onPress={() => router.push('/(drawer)/notifications')}
                     >
                         <View style={styles.itemLeft}>
