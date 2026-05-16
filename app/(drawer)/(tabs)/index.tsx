@@ -69,26 +69,43 @@ export default function Home() {
 
     if (isError || news.length === 0) {
         return (
-            <View style={[styles.centered, { backgroundColor: theme.background, padding: 20 }]}>
-                <Feather name={isError ? "wifi-off" : "alert-circle"} size={40} color={theme.textMuted} style={{ marginBottom: 12 }} />
-                <Text style={{ color: theme.textPrimary, fontSize: 16, fontWeight: '600', marginBottom: 6 }}>
-                    {isError ? "Sem conexão" : "Erro ao carregar"}
-                </Text>
-                <Text style={{ color: theme.textMuted, fontSize: 14, textAlign: 'center', marginBottom: 20 }}>
-                    {isError 
-                        ? "Não foi possível conectar ao servidor." 
-                        : "O servidor não retornou dados no momento."}
-                </Text>
-                <TouchableOpacity
-                    onPress={() => refetch()}
-                    style={[styles.retryButton, { backgroundColor: theme.accentButton }]}
-                >
-                    <Feather name="refresh-cw" size={15} color={COLORS.neutral.white} />
-                    <Text style={{ color: COLORS.neutral.white, fontWeight: 'bold', fontSize: 14 }}>
-                        Tentar novamente
+            <>
+                <Header>
+                    <TouchableOpacity
+                        activeOpacity={0.7}
+                        onPress={() => navigation.dispatch(DrawerActions.openDrawer())}
+                    >
+                        <Feather
+                            name="menu"
+                            size={26}
+                            color={theme.headerIcon}
+                        />
+                    </TouchableOpacity>
+                    <Text style={[styles.headerTitle, { color: theme.headerText }]}>TechPulse</Text>
+                    <View style={{ width: 26 }} />
+                </Header>
+                <View style={[styles.centered, { backgroundColor: theme.background, padding: 20 }]}>
+                    <Feather name={isError ? "wifi-off" : "alert-circle"} size={40} color={theme.textMuted} style={{ marginBottom: 12 }} />
+                    <Text style={{ color: theme.textPrimary, fontSize: 16, fontWeight: '600', marginBottom: 6 }}>
+
+                        {isError ? "Sem conexão" : "Erro ao carregar"}
                     </Text>
-                </TouchableOpacity>
-            </View>
+                    <Text style={{ color: theme.textMuted, fontSize: 14, textAlign: 'center', marginBottom: 20 }}>
+                        {isError
+                            ? "Não foi possível conectar ao servidor."
+                            : "O servidor não retornou dados no momento."}
+                    </Text>
+                    <TouchableOpacity
+                        onPress={() => refetch()}
+                        style={[styles.retryButton, { backgroundColor: theme.accentButton }]}
+                    >
+                        <Feather name="refresh-cw" size={15} color={COLORS.neutral.white} />
+                        <Text style={{ color: COLORS.neutral.white, fontWeight: 'bold', fontSize: 14 }}>
+                            Tentar novamente
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+            </>
         )
     }
 

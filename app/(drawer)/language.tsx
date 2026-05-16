@@ -1,20 +1,16 @@
 import Header from '@/src/components/layout/Header';
 import { useThemeColors } from '@/src/hooks/useThemeColors';
-import { LanguageMode, useLanguageStore } from '@/src/store/useLanguageStore';
+import { ALL_LANGUAGES, LANGUAGE_OPTIONS, useLanguageStore } from '@/src/store/useLanguageStore';
 import { COLORS } from '@/src/theme/global';
 import Feather from '@expo/vector-icons/Feather';
 import { router } from 'expo-router';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-const OPTIONS: { key: LanguageMode; label: string; icon: 'globe' | 'flag' }[] = [
-    { key: 'all', label: 'Todos (PT e EN)', icon: 'globe' },
-    { key: 'pt', label: 'Português', icon: 'flag' },
-    { key: 'en', label: 'Inglês', icon: 'flag' },
-];
-
 export default function Language() {
     const theme = useThemeColors();
-    const { mode, setMode } = useLanguageStore();
+    const { selectedLanguages, toggleLanguage, setAllLanguages } = useLanguageStore();
+
+    const isAllSelected = selectedLanguages.length === ALL_LANGUAGES.length;
 
     return (
         <>
@@ -30,7 +26,7 @@ export default function Language() {
                             color={theme.headerIcon}
                         />
                     </TouchableOpacity>
-                    <Text style={[styles.headerTitle, { color: theme.headerText }]}>Idioma</Text>
+                    <Text style={[styles.headerTitle, { color: theme.headerText }]}>Idiomas</Text>
                 </View>
             </Header>
 
@@ -39,21 +35,48 @@ export default function Language() {
                     <Feather name="globe" size={64} color={COLORS.primary[500]} />
                     <Text style={[styles.title, { color: theme.textPrimary }]}>Preferências de Idioma</Text>
                     <Text style={[styles.description, { color: theme.textMuted }]}>
-                        Escolha o idioma das notícias que deseja ver.
+                        Selecione os idiomas das notícias que deseja ver.
                     </Text>
                     
                     <View style={styles.optionList}>
-                        {OPTIONS.map((opt) => {
-                            const isSelected = mode === opt.key;
+                        <TouchableOpacity
+                            style={[
+                                styles.option,
+                                { backgroundColor: theme.cardBackground },
+                                isAllSelected && styles.selectedOption,
+                            ]}
+                            onPress={setAllLanguages}
+                            activeOpacity={0.7}
+                        >
+                            <Feather
+                                name="globe"
+                                size={20}
+                                color={isAllSelected ? theme.textPrimary : theme.textMuted}
+                            />
+                            <Text
+                                style={[
+                                    styles.optionText,
+                                    { color: isAllSelected ? theme.textPrimary : theme.textMuted },
+                                ]}
+                            >
+                                Todos os Idiomas
+                            </Text>
+                            {isAllSelected && (
+                                <Feather name="check" size={20} color={COLORS.primary[500]} />
+                            )}
+                        </TouchableOpacity>
+
+                        {LANGUAGE_OPTIONS.map((opt) => {
+                            const isSelected = selectedLanguages.includes(opt.key);
                             return (
                                 <TouchableOpacity
                                     key={opt.key}
                                     style={[
                                         styles.option,
                                         { backgroundColor: theme.cardBackground },
-                                        isSelected && styles.selectedOption,
+                                        isSelected && !isAllSelected && styles.selectedOption,
                                     ]}
-                                    onPress={() => setMode(opt.key)}
+                                    onPress={() => toggleLanguage(opt.key)}
                                     activeOpacity={0.7}
                                 >
                                     <Feather

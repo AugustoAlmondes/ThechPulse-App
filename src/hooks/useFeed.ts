@@ -10,10 +10,10 @@ interface UseFeedResponse {
 }
 
 export function useFeed() {
-    const mode = useLanguageStore(state => state.mode);
+    const selectedLanguages = useLanguageStore(state => state.selectedLanguages);
 
     return useInfiniteQuery({
-        queryKey: ['feed', mode],
+        queryKey: ['feed', selectedLanguages.join(',')],
 
         queryFn: ({ pageParam = 1 }) =>
             getLatestNews({ page: pageParam as number }),
@@ -35,12 +35,11 @@ export function useFeed() {
             return allPages.length + 1;
         },
         select: (data) => {
-            if (mode === 'all') return data;
             return {
                 ...data,
                 pages: data.pages.map(page => ({
                     ...page,
-                    news: page.news.filter((n: TypeNews) => n.language === mode)
+                    news: page.news.filter((n: TypeNews) => selectedLanguages.includes(n.language as any))
                 }))
             };
         }
