@@ -225,20 +225,23 @@ export default function Home() {
                     </View>
                 )}
 
-                {/* ─── Veja Mais ─── */}
+                {/* ─── Últimas Atualizações ─── */}
                 {news.length > 0 && (
                     <View style={styles.section}>
-                        <SectionTitle label="VEJA MAIS" />
+                        <SectionTitle label="ÚLTIMAS ATUALIZAÇÕES" />
                         <View style={styles.feedList}>
-                            {news.map((item, index) => (
-                                <Card
-                                    key={index}
-                                    showDate={true}
-                                    showAction={true}
-                                    color={theme.cardBackground}
-                                    data={item}
-                                />
-                            ))}
+                            {news.map((item, index) =>{
+                                if(index >= 10) return
+                                return (
+                                    <Card
+                                        key={index}
+                                        showDate={true}
+                                        showAction={true}
+                                        color={theme.cardBackground}
+                                        data={item}
+                                    />
+                                )
+                            })}
                         </View>
                     </View>
                 )}

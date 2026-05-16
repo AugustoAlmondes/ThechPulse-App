@@ -10,11 +10,24 @@ import { useFavoriteStore } from '@/src/store/useFavoriteStore';
 import { TypeNews } from '@/src/types/NewsType';
 import { useReadStore } from '@/src/store/useReadStore';
 import { shareNews } from '@/src/utils/shareNews';
+import { useFontSizeStore, FONT_SIZE_VALUES } from '@/src/store/useFontSizeStore';
 
 export default function NewsWebView() {
     const { url, title, newsData, id } = useLocalSearchParams();
     const theme = useThemeColors();
     const router = useRouter();
+
+    // Font size
+    const fontSize = useFontSizeStore(s => s.fontSize);
+    const fontSizePx = FONT_SIZE_VALUES[fontSize];
+    const fontSizeScript = `
+        (function() {
+            var style = document.createElement('style');
+            style.innerHTML = 'body, p, span, div, li, td, th, a { font-size: ${fontSizePx}px !important; line-height: 1.6 !important; }';
+            document.head.appendChild(style);
+        })();
+        true;
+    `;
 
     // Favorite Logic
     const parsedData: TypeNews | null = newsData ? JSON.parse(newsData as string) : null;
@@ -89,6 +102,8 @@ export default function NewsWebView() {
                     source={{ uri: url as string }}
                     style={styles.webview}
                     startInLoadingState={true}
+                    injectedJavaScript={fontSizeScript}
+                    injectedJavaScriptBeforeContentLoaded={fontSizeScript}
                 />
             ) : (
                 <View style={styles.errorContainer}>
