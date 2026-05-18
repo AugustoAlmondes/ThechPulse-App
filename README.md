@@ -107,4 +107,4 @@ As seguintes ferramentas e tecnologias foram utilizadas na construção do proje
 
 ## 📝 Licença
 
-Este projeto está sob a licença [MIT](https://opensource.org/licenses/MIT). Sinta-se livre para usá-lo e contribuir.
+© 2026 **TechPulse**. Todos os direitos reservados.
