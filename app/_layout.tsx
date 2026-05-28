@@ -5,22 +5,30 @@ import { ThemeProvider } from '@/src/providers/ThemeProvider';
 import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from '@/src/lib/react-query';
 import { useEffect } from 'react';
-import * as NavigationBar from 'expo-navigation-bar';
 import { Platform } from 'react-native';
+import * as SplashScreen from 'expo-splash-screen';
+import { useThemeLoaded } from '@/src/providers/ThemeProvider';
+import { LoadingScreen } from '@/src/components/shared/LoadingScreen';
+
+// Mantém o splash screen nativo visível até liberarmos manualmente
+SplashScreen.preventAutoHideAsync();
 
 function RootLayoutInner() {
   const insets = useSafeAreaInsets();
   const theme = useThemeColors();
+  const isLoaded = useThemeLoaded();
 
-  // useEffect(() => {
-  //   if (Platform.OS === 'android') {
-  //     hideNavigationBar();
-  //   }
-  // }, []);
+  useEffect(() => {
+    if (isLoaded) {
+      // Esconde o splash nativo assim que o tema estiver pronto
+      SplashScreen.hideAsync();
+    }
+  }, [isLoaded]);
 
-  // async function hideNavigationBar() {
-  //   await NavigationBar.setVisibilityAsync("hidden");
-  // }
+  // Enquanto o tema não foi carregado do disco, exibe a tela de loading
+  if (!isLoaded) {
+    return <LoadingScreen />;
+  }
 
   return (
     <Stack
