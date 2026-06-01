@@ -12,6 +12,7 @@ import { router, useNavigation } from "expo-router";
 import { DrawerActions } from "@react-navigation/native";
 import { useFavoriteStore } from "@/src/store/useFavoriteStore";
 import { useScrollStore } from "@/src/store/useScrollStore";
+import { useReadStore } from "@/src/store/useReadStore";
 import { useEffect, useRef, useMemo } from "react";
 import { useFeed } from "@/src/hooks/useFeed";
 import { queryClient } from "@/src/lib/react-query";
@@ -28,6 +29,7 @@ export default function Home() {
     const scrollViewRef = useRef<ScrollView>(null);
     const { shouldScrollToTop, resetScroll } = useScrollStore();
     const favoriteNews = useFavoriteStore(state => state.favoriteNews);
+    const readNews = useReadStore(state => state.readNews);
     const {
         data,
         isLoading,
@@ -189,6 +191,33 @@ export default function Home() {
                             horizontal
                             showsHorizontalScrollIndicator={false}
                             data={favoriteNews}
+                            keyExtractor={(item) => item.id}
+                            contentContainerStyle={{ paddingBottom: 4 }}
+                            renderItem={({ item }) => (
+                                <FavoriteNews item={item} />
+                            )}
+                        />
+                    </View>
+                )}
+
+                {/* ─── Ler Depois ─── */}
+                {readNews.length > 0 && (
+                    <View style={styles.section}>
+                        <View style={styles.sectionRow}>
+                            <SectionTitle label="LER DEPOIS" />
+                            <TouchableOpacity
+                                onPress={() => router.push('/(drawer)/(tabs)/read')}
+                                activeOpacity={0.7}
+                                style={styles.seeAllBtn}
+                            >
+                                <Text style={[styles.seeAllText, { color: theme.accentButton }]}>Ver todos</Text>
+                                <Feather name='arrow-right' size={13} color={theme.accentButton} />
+                            </TouchableOpacity>
+                        </View>
+                        <FlatList
+                            horizontal
+                            showsHorizontalScrollIndicator={false}
+                            data={readNews}
                             keyExtractor={(item) => item.id}
                             contentContainerStyle={{ paddingBottom: 4 }}
                             renderItem={({ item }) => (
