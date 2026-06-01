@@ -12,7 +12,7 @@ import { router, useNavigation } from "expo-router";
 import { DrawerActions } from "@react-navigation/native";
 import { useFavoriteStore } from "@/src/store/useFavoriteStore";
 import { useScrollStore } from "@/src/store/useScrollStore";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useMemo } from "react";
 import { useFeed } from "@/src/hooks/useFeed";
 import { queryClient } from "@/src/lib/react-query";
 import { useCheckUpdates } from "@/src/hooks/useCheckUpdates";
@@ -41,6 +41,12 @@ export default function Home() {
     const news = data?.pages.flatMap(page => page.news) || []
     const latestTimestamp = news?.[0]?.published;
     const latestNews = news.find((n) => n.image !== null && n.image !== '' && n.image !== 'None')
+
+    const randomNews = useMemo(() => {
+        if (!news || news.length < 3) return [];
+        const shuffled = [...news].sort(() => 0.5 - Math.random());
+        return shuffled.slice(0, 3);
+    }, [news]);
 
     const { data: updates } = useCheckUpdates(latestTimestamp);
 
@@ -192,34 +198,32 @@ export default function Home() {
                     </View>
                 )}
 
-                {/* ─── Mais Acessadas (Top 3) ─── */}
-                {news.length >= 3 && (
+                {/* ─── Mais Acessadas (Aleatórias) ─── */}
+                {randomNews.length === 3 && (
                     <View style={styles.section}>
                         <SectionTitle label="MAIS ACESSADAS" />
                         <View style={styles.rankList}>
-                            {[0, 1, 2].map((idx) => (
-                                news.length > idx && (
-                                    <View key={idx} style={[styles.rankRow, { backgroundColor: theme.cardBackground }]}>
-                                        <View style={styles.rankBadge}>
-                                            <Entypo name="medal" size={20} color={RANK_COLORS[idx]} />
-                                            <Text style={[styles.rankLabel, { color: RANK_COLORS[idx] }]}>
-                                                {RANK_LABELS[idx]}
-                                            </Text>
-                                        </View>
-                                        <View style={styles.rankCardWrapper}>
-                                            <Card
-                                                color="transparent"
-                                                data={news[idx]}
-                                                showDate={false}
-                                                showAction={false}
-                                                showCreator={false}
-                                                showImage={false}
-                                                showSubjects={true}
-                                                minHeigth={0}
-                                            />
-                                        </View>
+                            {randomNews.map((item, idx) => (
+                                <View key={idx} style={[styles.rankRow, { backgroundColor: theme.cardBackground }]}>
+                                    <View style={styles.rankBadge}>
+                                        <Entypo name="medal" size={20} color={RANK_COLORS[idx]} />
+                                        <Text style={[styles.rankLabel, { color: RANK_COLORS[idx] }]}>
+                                            {RANK_LABELS[idx]}
+                                        </Text>
                                     </View>
-                                )
+                                    <View style={styles.rankCardWrapper}>
+                                        <Card
+                                            color="transparent"
+                                            data={item}
+                                            showDate={false}
+                                            showAction={false}
+                                            showCreator={false}
+                                            showImage={false}
+                                            showSubjects={true}
+                                            minHeigth={0}
+                                        />
+                                    </View>
+                                </View>
                             ))}
                         </View>
                     </View>
