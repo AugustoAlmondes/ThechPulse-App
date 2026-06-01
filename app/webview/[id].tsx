@@ -17,6 +17,68 @@ export default function NewsWebView() {
     const theme = useThemeColors();
     const router = useRouter();
 
+    const webViewRef = useRef<WebView>(null);
+    const [isAutoScrolling, setIsAutoScrolling] = useState(false);
+
+    const startAutoScroll = () => {
+        webViewRef.current?.injectJavaScript(`
+            (function() {
+    window.myScrollActive = true;
+
+    if (!window.myScrollLoopStarted) {
+        window.myScrollLoopStarted = true;
+
+        let accumulated = 0;
+
+        function step() {
+            if (!window.myScrollActive) {
+                window.myScrollLoopStarted = false;
+                return;
+            }
+
+            accumulated += 0.15;
+
+            if (accumulated >= 1) {
+                window.scrollBy(0, Math.floor(accumulated));
+                accumulated -= Math.floor(accumulated);
+            }
+
+            requestAnimationFrame(step);
+        }
+
+        requestAnimationFrame(step);
+    }
+})();
+true;
+        `);
+    };
+
+    const stopAutoScroll = () => {
+        webViewRef.current?.injectJavaScript(`
+            (function() {
+                window.myScrollActive = false;
+                window.myScrollLoopStarted = false;
+            })();
+            true;
+        `);
+    };
+
+    const toggleAutoScroll = () => {
+        if (isAutoScrolling) {
+            stopAutoScroll();
+            setIsAutoScrolling(false);
+        } else {
+            startAutoScroll();
+            setIsAutoScrolling(true);
+        }
+    };
+
+    const handleLoadEnd = () => {
+        if (isAutoScrolling) {
+            startAutoScroll();
+        }
+    };
+
     // Font size
     const fontSize = useFontSizeStore(s => s.fontSize);
     const fontSizePx = FONT_SIZE_VALUES[fontSize];
@@ -99,11 +161,13 @@ export default function NewsWebView() {
 
             {url ? (
                 <WebView
+                    ref={webViewRef}
                     source={{ uri: url as string }}
                     style={styles.webview}
                     startInLoadingState={true}
                     injectedJavaScript={fontSizeScript}
                     injectedJavaScriptBeforeContentLoaded={fontSizeScript}
+                    onLoadEnd={handleLoadEnd}
                 />
             ) : (
                 <View style={styles.errorContainer}>
@@ -121,6 +185,10 @@ export default function NewsWebView() {
             >
                 {isMenuOpen && (
                     <View style={styles.menuOptions}>
+                        <TouchableOpacity activeOpacity={0.7} style={[styles.menuItem, { backgroundColor: theme.cardBackground }]} onPress={toggleAutoScroll}>
+                            <Ionicons name={isAutoScrolling ? "pause" : "play"} size={20} color={isAutoScrolling ? COLORS.badges.green : theme.textPrimary} />
+                        </TouchableOpacity>
+
                         <TouchableOpacity activeOpacity={0.7} style={[styles.menuItem, { backgroundColor: theme.cardBackground }]} onPress={() => { }}>
                             <Entypo name="share" size={20} color={theme.textPrimary}
                             onPress={() => shareNews({title: title as string, url: url as string})} 
