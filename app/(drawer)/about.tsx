@@ -4,7 +4,7 @@ import { COLORS } from '@/src/theme/global';
 import Feather from '@expo/vector-icons/Feather';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { router } from 'expo-router';
-import { Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Image, Linking, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 const APP_VERSION = '1.0.0';
 
@@ -110,7 +110,8 @@ export default function About() {
                 {/* ── Hero ─────────────────────────────────────────────── */}
                 <View style={[styles.heroCard, { backgroundColor: theme.settingItemBackground }]}>
                     <View style={[styles.appIconWrapper, { backgroundColor: COLORS.primary[500] + '1A' }]}>
-                        <Ionicons name="pulse" size={52} color={COLORS.primary[500]} />
+                        {/* <Ionicons name="pulse" size={52} color={COLORS.primary[500]} /> */}
+                        <Image style={{ width: '100%', height: '100%' }} source={require('@/assets/images/icon.png')} />
                     </View>
 
                     <Text style={[styles.appName, { color: theme.textPrimary }]}>TechPulse</Text>
