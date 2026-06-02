@@ -8,6 +8,7 @@ import ReadLater from "./read";
 import { useScrollStore } from "@/src/store/useScrollStore";
 import { View, TouchableOpacity, StyleSheet, Platform, Text } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
+import { useReadStore } from "@/src/store/useReadStore";
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -44,62 +45,73 @@ const TAB_ITEMS = [
 
 function CustomTabBar({ state, descriptors, navigation, position }: MaterialTopTabBarProps) {
     const theme = useThemeColors();
+    const totalReadyNews = useReadStore(state => state.totalReadNews);
 
     return (
         // <View style={[styles.tabBarWrapper, { backgroundColor: theme.headerBackground }]}>
-            <View style={[styles.tabBarPill, { backgroundColor: theme.tabBarBackground }]}>
-                {state.routes.map((route, index) => {
-                    const { options } = descriptors[route.key];
-                    const isFocused = state.index === index;
-                    const tabItem = TAB_ITEMS.find(t => t.name === route.name);
-                    const label = tabItem?.label ?? route.name;
+        <View style={[styles.tabBarPill, { backgroundColor: theme.tabBarBackground }]}>
+            {state.routes.map((route, index) => {
+                const { options } = descriptors[route.key];
+                const isFocused = state.index === index;
+                const tabItem = TAB_ITEMS.find(t => t.name === route.name);
+                const label = tabItem?.label ?? route.name;
 
-                    const activeColor = theme.tabBarActive;
-                    const inactiveColor = theme.tabBarInactive;
-                    const color = isFocused ? activeColor : inactiveColor;
+                const activeColor = theme.tabBarActive;
+                const inactiveColor = theme.tabBarInactive;
+                const color = isFocused ? activeColor : inactiveColor;
 
-                    const onPress = () => {
-                        const event = navigation.emit({
-                            type: 'tabPress',
-                            target: route.key,
-                            canPreventDefault: true,
-                        });
-                        if (!isFocused && !event.defaultPrevented) {
-                            navigation.navigate(route.name);
-                        }
-                    };
+                const onPress = () => {
+                    const event = navigation.emit({
+                        type: 'tabPress',
+                        target: route.key,
+                        canPreventDefault: true,
+                    });
+                    if (!isFocused && !event.defaultPrevented) {
+                        navigation.navigate(route.name);
+                    }
+                };
 
-                    return (
-                        <TouchableOpacity
-                            key={route.key}
-                            accessibilityRole="button"
-                            accessibilityState={isFocused ? { selected: true } : {}}
-                            onPress={onPress}
-                            activeOpacity={0.8}
-                            style={styles.tabItem}
-                        >
-                            <View style={[
-                                styles.iconContainer,
-                                isFocused && { backgroundColor: theme.accentButton + '22', borderRadius: 15, }
-                            ]}>
-                                {tabItem?.icon(color, isFocused)}
-                            </View>
-                            <Text style={[
-                                styles.tabLabel,
-                                { color },
-                                isFocused && styles.tabLabelActive,
-                            ]}>
-                                {label}
-                            </Text>
-                        </TouchableOpacity>
-                    );
-                })}
+                return (
+                    <TouchableOpacity
+                        key={route.key}
+                        accessibilityRole="button"
+                        accessibilityState={isFocused ? { selected: true } : {}}
+                        onPress={onPress}
+                        activeOpacity={0.8}
+                        style={styles.tabItem}
+                    >
+                        <View style={[
+                            styles.iconContainer,
+                            isFocused && { backgroundColor: theme.accentButton + '22', borderRadius: 15, }
+                        ]}>
+                            {tabItem?.icon(color, isFocused)}
+
+                            {route.name === 'read' && totalReadyNews > 0 && (
+                                <View style={styles.badge}>
+                                    <Text style={styles.badgeText}>
+                                        {totalReadyNews > 99 ? '99+' : totalReadyNews}
+                                    </Text>
+                                </View>
+                            )}
+
+                        </View>
+                        <Text style={[
+                            styles.tabLabel,
+                            { color },
+                            isFocused && styles.tabLabelActive,
+                        ]}>
+                            {label}
+                        </Text>
+                    </TouchableOpacity>
+                );
+            })}
             {/* </View> */}
         </View>
     );
 }
 
 export default function TabsLayout() {
+    const totalReadyNews = useReadStore(state => state.totalReadNews);
     const triggerScrollToTop = useScrollStore(state => state.triggerScrollToTop);
 
     return (
@@ -142,6 +154,24 @@ export default function TabsLayout() {
 }
 
 const styles = StyleSheet.create({
+    badge: {
+        position: 'absolute',
+        top: 2,
+        right: 10,
+        minWidth: 18,
+        height: 18,
+        borderRadius: 9,
+        backgroundColor: '#FF3B30',
+        justifyContent: 'center',
+        alignItems: 'center',
+        paddingHorizontal: 4,
+    },
+
+    badgeText: {
+        color: '#FFF',
+        fontSize: 10,
+        fontWeight: '700',
+    },
     tabBarWrapper: {
         // paddingHorizontal: 16,
         paddingBottom: Platform.OS === 'ios' ? 24 : 12,

@@ -3,7 +3,7 @@ import { persist } from 'zustand/middleware'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 import { TypeNews } from '../types/NewsType'
 
-const LIMIT_NEWS = 3;
+const LIMIT_NEWS = 5;
 
 type TypeReadStore = {
     readNews: TypeNews[];
