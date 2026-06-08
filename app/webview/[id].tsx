@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { View, StyleSheet, TouchableOpacity, Text, Animated, PanResponder } from 'react-native';
 import { WebView } from 'react-native-webview';
 import { useLocalSearchParams, useRouter } from 'expo-router';
@@ -11,11 +11,25 @@ import { TypeNews } from '@/src/types/NewsType';
 import { useReadStore } from '@/src/store/useReadStore';
 import { shareNews } from '@/src/utils/shareNews';
 import { useFontSizeStore, FONT_SIZE_VALUES } from '@/src/store/useFontSizeStore';
+import { useInterstitialAd } from '@/src/hooks/useInterstitialAd';
 
 export default function NewsWebView() {
     const { url, title, newsData, id } = useLocalSearchParams();
     const theme = useThemeColors();
     const router = useRouter();
+
+    // AdMob — Anúncio Intersticial
+    const { showAd } = useInterstitialAd();
+
+    useEffect(() => {
+        // Exibe o anúncio assim que a tela monta.
+        // showAd() retorna false silenciosamente se o anúncio ainda não carregou.
+        const timer = setTimeout(() => {
+            showAd();
+        }, 500); // Pequeno delay para garantir que o anúncio teve tempo de carregar
+        return () => clearTimeout(timer);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
     const webViewRef = useRef<WebView>(null);
     const [isAutoScrolling, setIsAutoScrolling] = useState(false);

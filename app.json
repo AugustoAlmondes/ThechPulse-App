@@ -48,7 +48,6 @@
         "backgroundImage": "./assets/images/icon.png",
         "monochromeImage": "./assets/images/icon.png"
       },
-      "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
       "blockedPermissions": [
         "android.permission.READ_CONTACTS",
@@ -65,14 +64,17 @@
       "backgroundColor": "#ffffff",
       "lang": "pt-BR"
     },
-    "notification": {
-      "icon": "./assets/images/notification-icon.png",
-      "color": "#0A84FF",
-      "androidMode": "default",
-      "androidCollapsedTitle": "TechPulse — #{unread_notifications} novidades"
-    },
     "plugins": [
       "expo-router",
+      [
+        "expo-notifications",
+        {
+          "icon": "./assets/images/notification-icon.png",
+          "color": "#0A84FF",
+          "androidMode": "default",
+          "androidCollapsedTitle": "TechPulse — #{unread_notifications} novidades"
+        }
+      ],
       [
         "expo-splash-screen",
         {
@@ -84,6 +86,13 @@
             "image": "./assets/images/splash-icon.png",
             "backgroundColor": "#0D0D0D"
           }
+        }
+      ],
+      [
+        "react-native-google-mobile-ads",
+        {
+          "androidAppId": "ca-app-pub-3940256099942544~3347511713",
+          "iosAppId": "ca-app-pub-4090620149559368~8667683523"
         }
       ],
       "expo-font",
