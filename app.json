@@ -15,7 +15,11 @@
     "primaryColor": "#0A84FF",
     "privacy": "public",
     "owner": "augustoalmondes",
-    "platforms": ["ios", "android", "web"],
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "githubUrl": "https://github.com/augustoalmondes/TechPulse-App",
     "ios": {
       "supportsTablet": true,
@@ -31,7 +35,7 @@
       }
     },
     "android": {
-      "package": "com.augustoalmondes.techpulse",
+      "package": "com.techpulse",
       "versionCode": 1,
       "compileSdkVersion": 35,
       "targetSdkVersion": 35,
@@ -105,7 +109,7 @@
     },
     "experiments": {
       "typedRoutes": true,
-      "reactCompiler": true
+      // "reactCompiler": false
     }
   }
 }
