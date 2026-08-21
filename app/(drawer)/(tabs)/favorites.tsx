@@ -6,10 +6,13 @@ import { useScrollStore } from "@/src/store/useScrollStore";
 import Feather from "@expo/vector-icons/Feather";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useEffect, useRef, useState } from "react";
-import { TextInput, ScrollView, StyleSheet, Text, View } from "react-native";
+import { TextInput, ScrollView, StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { useNavigation } from "expo-router";
+import { DrawerActions } from "@react-navigation/native";
 import { COLORS } from "@/src/theme/global";
 
 export default function Favorites() {
+    const navigation = useNavigation();
     const theme = useThemeColors();
     const { favoriteNews } = useFavoriteStore();
     const { shouldScrollToTop, resetScroll } = useScrollStore();
@@ -32,6 +35,9 @@ export default function Favorites() {
     return (
         <>
             <Header>
+                <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
+                    <Feather name="menu" size={26} color={theme.headerIcon} />
+                </TouchableOpacity>
                 <Text style={[styles.headerTitle, { color: theme.headerText }]}>Favoritos</Text>
                 <View style={{ width: 26 }} />
             </Header>

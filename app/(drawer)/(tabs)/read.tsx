@@ -8,8 +8,11 @@ import Ionicons from "@expo/vector-icons/Ionicons";
 import Feather from "@expo/vector-icons/Feather";
 import { useScrollStore } from "@/src/store/useScrollStore";
 import { useEffect, useRef } from "react";
+import { useNavigation } from "expo-router";
+import { DrawerActions } from "@react-navigation/native";
 
 export default function ReadLater() {
+    const navigation = useNavigation();
     const theme = useThemeColors();
     const read = useReadStore(state => state.readNews);
     const totalReadyNews = useReadStore(state => state.totalReadNews);
@@ -31,6 +34,9 @@ export default function ReadLater() {
     return (
         <>
             <Header>
+                <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
+                    <Feather name="menu" size={26} color={theme.headerIcon} />
+                </TouchableOpacity>
                 <Text style={[styles.headerTitle, { color: theme.headerText }]}>Ler Depois</Text>
                 <View style={{ width: 26 }} />
             </Header>

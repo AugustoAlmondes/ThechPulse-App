@@ -1,6 +1,9 @@
 import { useThemeStore, ThemeMode } from '@/src/store/useThemeStore'
 import * as SecureStore from 'expo-secure-store'
 import React, { createContext, useContext, useEffect, useRef } from 'react'
+import { Platform, useColorScheme } from 'react-native'
+import * as NavigationBar from 'expo-navigation-bar'
+import { darkTheme, lightTheme } from '@/src/theme/global'
 
 const STORAGE_KEY = 'app_theme_mode'
 
@@ -20,6 +23,8 @@ const ThemeContext = createContext<ThemeContextValue>({ isLoaded: false })
  */
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const setMode = useThemeStore((s) => s.setMode)
+    const mode = useThemeStore((s) => s.mode)
+    const systemScheme = useColorScheme()
     const [isLoaded, setIsLoaded] = React.useState(false)
     const isFirstRun = useRef(true)
 
@@ -52,6 +57,17 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
         })
         return unsub
     }, [])
+
+    // Sync Android navigation bar with theme
+    useEffect(() => {
+        if (Platform.OS !== 'android') return
+        if (!isLoaded) return
+        const resolvedIsDark = mode === 'system' ? (systemScheme ?? 'dark') === 'dark' : mode === 'dark'
+        const bg = resolvedIsDark ? darkTheme.tabBarBackground : lightTheme.tabBarBackground
+        const buttonStyle = resolvedIsDark ? 'light' : 'dark'
+        NavigationBar.setBackgroundColorAsync(bg).catch(() => {})
+        NavigationBar.setButtonStyleAsync(buttonStyle as any).catch(() => {})
+    }, [mode, systemScheme, isLoaded])
 
     return (
         <ThemeContext.Provider value={{ isLoaded }}>

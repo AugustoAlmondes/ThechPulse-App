@@ -1,8 +1,9 @@
 import { COLORS } from '@/src/theme/global'
-import { TypeNews } from '@/src/types/NewsType'
+import { TypeNews, hasValidImage } from '@/src/types/NewsType'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useThemeColors } from '@/src/hooks/useThemeColors'
 import { Image } from 'expo-image'
+import Feather from '@expo/vector-icons/Feather'
 import { goToInfoNews } from '@/src/utils/goToInfoNews'
 
 export default function FavoriteNews({ item }: { item: TypeNews }) {
@@ -14,12 +15,19 @@ export default function FavoriteNews({ item }: { item: TypeNews }) {
             onPress={() => goToInfoNews(item)}
             style={[styles.container, { backgroundColor: theme.favoriteCardBackground }]}
         >
-            <Image
-                cachePolicy="disk"
-                transition={200}
-                style={styles.image}
-                source={{ uri: item.image }}
-            />
+            {hasValidImage(item.image) ? (
+                <Image
+                    cachePolicy="disk"
+                    transition={200}
+                    style={styles.image}
+                    source={{ uri: (item.image as string).trim() }}
+                    contentFit="cover"
+                />
+            ) : (
+                <View style={[styles.image, styles.placeholder, { backgroundColor: theme.textDisabled + '18', borderColor: theme.border }]}>
+                    <Feather name="image" size={24} color={theme.textMuted} />
+                </View>
+            )}
             <View style={styles.info}>
                 <Text style={[styles.category, { color: theme.accentButton }]}>
                     {item.category?.toString().toUpperCase()}
@@ -46,6 +54,11 @@ const styles = StyleSheet.create({
         width: '100%',
         height: 120,
         objectFit: 'cover',
+    },
+    placeholder: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 1,
     },
     info: {
         padding: 12,

@@ -68,13 +68,14 @@ export default function Language() {
 
                         {LANGUAGE_OPTIONS.map((opt) => {
                             const isSelected = selectedLanguages.includes(opt.key);
+                            const isVisuallySelected = isSelected && !isAllSelected;
                             return (
                                 <TouchableOpacity
                                     key={opt.key}
                                     style={[
                                         styles.option,
                                         { backgroundColor: theme.cardBackground },
-                                        isSelected && !isAllSelected && styles.selectedOption,
+                                        isVisuallySelected && styles.selectedOption,
                                     ]}
                                     onPress={() => toggleLanguage(opt.key)}
                                     activeOpacity={0.7}
@@ -82,17 +83,17 @@ export default function Language() {
                                     <Feather
                                         name={opt.icon}
                                         size={20}
-                                        color={isSelected ? theme.textPrimary : theme.textMuted}
+                                        color={isVisuallySelected ? theme.textPrimary : theme.textMuted}
                                     />
                                     <Text
                                         style={[
                                             styles.optionText,
-                                            { color: isSelected ? theme.textPrimary : theme.textMuted },
+                                            { color: isVisuallySelected ? theme.textPrimary : theme.textMuted },
                                         ]}
                                     >
                                         {opt.label}
                                     </Text>
-                                    {isSelected && (
+                                    {isVisuallySelected && (
                                         <Feather name="check" size={20} color={COLORS.primary[500]} />
                                     )}
                                 </TouchableOpacity>

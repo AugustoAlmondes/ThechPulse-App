@@ -3,8 +3,9 @@ import { COLORS } from '@/src/theme/global'
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import Ionicons from '@expo/vector-icons/Ionicons';
 import Entypo from '@expo/vector-icons/Entypo';
+import Feather from '@expo/vector-icons/Feather';
 import { useThemeColors } from '@/src/hooks/useThemeColors'
-import { TypeNews } from '@/src/types/NewsType';
+import { TypeNews, hasValidImage } from '@/src/types/NewsType';
 import { Image } from 'expo-image';
 import { useFavoriteStore } from '@/src/store/useFavoriteStore';
 import { goToInfoNews } from '@/src/utils/goToInfoNews';
@@ -63,19 +64,28 @@ export default function Card({
         }
     }
 
+    const showImageValid = showImage && hasValidImage(data.image);
+
     return (
         <TouchableOpacity
             activeOpacity={0.8}
             style={[styles.container, { backgroundColor: color || theme.cardBackground, minHeight: minHeigth }]}
             onPress={() => goToInfoNews(data)}
         >
-            {showImage && data.image && (
-                <Image
-                    cachePolicy="disk"
-                    transition={300}
-                    source={{ uri: data.image.toString() }}
-                    style={styles.image}
-                />
+            {showImage && (
+                hasValidImage(data.image) ? (
+                    <Image
+                        cachePolicy="disk"
+                        transition={300}
+                        source={{ uri: (data.image as string).trim() }}
+                        style={styles.image}
+                        contentFit="cover"
+                    />
+                ) : (
+                    <View style={[styles.image, styles.imagePlaceholder, { backgroundColor: theme.textDisabled + '18', borderColor: theme.border }]}>
+                        <Feather name="image" size={28} color={theme.textMuted} />
+                    </View>
+                )
             )}
 
             <View style={styles.rightContent}>
@@ -158,6 +168,11 @@ const styles = StyleSheet.create({
         height: 100,
         borderRadius: 2,
         objectFit: 'cover',
+    },
+    imagePlaceholder: {
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderWidth: 1,
     },
     rightContent: {
         flex: 1,

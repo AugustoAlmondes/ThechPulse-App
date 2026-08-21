@@ -1,25 +1,26 @@
 import { NewsAPIResponse } from '../types/NewsType';
+import { normalizeImage } from '../types/NewsType';
 import { api } from './api';
 
 export async function getLatestNews(
     { page = 1 }: { page: number }
 ): Promise<NewsAPIResponse> {
-    try {
-        const response = await api.get('/news', {
-            params: {
-                page
-            }
-        });
+    const response = await api.get('/news', {
+        params: {
+            page
+        }
+    });
 
-        return response.data;
-    } catch (error) {
-        console.log("Error", error)
-        return {
-            news: [],
-            page: 1,
-            status: "error"
-        };
-    }
+    const data: NewsAPIResponse = response.data;
+    // Normalização centralizada: trata null, "", "None" e URLs inválidas
+    const normalized = {
+        ...data,
+        news: (data.news || []).map((n) => ({
+            ...n,
+            image: normalizeImage(n.image),
+        })),
+    };
+    return normalized;
 };
 
 export async function checkUpdates(

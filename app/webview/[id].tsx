@@ -190,10 +190,8 @@ true;
                             <Ionicons name={isAutoScrolling ? "pause" : "play"} size={20} color={isAutoScrolling ? COLORS.badges.green : theme.textPrimary} />
                         </TouchableOpacity>
 
-                        <TouchableOpacity activeOpacity={0.7} style={[styles.menuItem, { backgroundColor: theme.cardBackground }]} onPress={() => { }}>
-                            <Entypo name="share" size={20} color={theme.textPrimary}
-                            onPress={() => shareNews({title: title as string, url: url as string})} 
-                            />
+                        <TouchableOpacity activeOpacity={0.7} style={[styles.menuItem, { backgroundColor: theme.cardBackground }]} onPress={() => shareNews({title: title as string, url: url as string})}>
+                            <Entypo name="share" size={20} color={theme.textPrimary} />
                         </TouchableOpacity>
 
                         <TouchableOpacity activeOpacity={0.7} style={[styles.menuItem, { backgroundColor: theme.cardBackground }]} onPress={handleRead}>

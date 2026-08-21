@@ -15,6 +15,8 @@ import {
     TouchableOpacity,
     View,
 } from "react-native";
+import { useNavigation } from "expo-router";
+import { DrawerActions } from "@react-navigation/native";
 
 // ─── Helper: formata 'YYYY-MM-DD' para texto legível em pt-BR ─────────────────
 function formatDate(dateStr: string): string {
@@ -30,6 +32,7 @@ function formatDate(dateStr: string): string {
 
 // ─── Componente principal ─────────────────────────────────────────────────────
 export default function Historic() {
+    const navigation = useNavigation();
     const theme = useThemeColors();
     const days = useHistoricStore((state) => state.days);
     const removeHistoricEntry = useHistoricStore((state) => state.removeHistoricEntry);
@@ -60,9 +63,14 @@ export default function Historic() {
         <>
             <Header>
                 <View style={styles.headerRow}>
-                    <Text style={[styles.headerTitle, { color: theme.headerText }]}>
-                        Histórico
-                    </Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 12 }}>
+                        <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
+                            <Feather name="menu" size={26} color={theme.headerIcon} />
+                        </TouchableOpacity>
+                        <Text style={[styles.headerTitle, { color: theme.headerText }]}>
+                            Histórico
+                        </Text>
+                    </View>
                     {totalHistoric > 0 && (
                         <TouchableOpacity
                             onPress={handleClearAll}

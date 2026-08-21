@@ -17,7 +17,7 @@ import { useEffect, useRef, useMemo } from "react";
 import { useFeed } from "@/src/hooks/useFeed";
 import { queryClient } from "@/src/lib/react-query";
 import { useCheckUpdates } from "@/src/hooks/useCheckUpdates";
-import { TypeNews } from "@/src/types/NewsType";
+import { hasValidImage, TypeNews } from "@/src/types/NewsType";
 
 const RANK_COLORS = [COLORS.rank.gold, COLORS.rank.silver, COLORS.rank.bronze];
 const RANK_LABELS = ['1º', '2º', '3º'];
@@ -34,6 +34,7 @@ export default function Home() {
         data,
         isLoading,
         isError,
+        isFetching,
         refetch,
         fetchNextPage,
         hasNextPage,
@@ -42,7 +43,7 @@ export default function Home() {
 
     const news = data?.pages.flatMap(page => page.news) || []
     const latestTimestamp = news?.[0]?.published;
-    const latestNews = news.find((n) => n.image !== null && n.image !== '' && n.image !== 'None')
+    const latestNews = news.find((n) => hasValidImage(n.image))
 
     const randomNews = useMemo(() => {
         if (!news || news.length < 3) return [];
@@ -63,9 +64,13 @@ export default function Home() {
         await queryClient.invalidateQueries({
             queryKey: ['feed'],
         });
-        refetch();
         scrollViewRef.current?.scrollTo({ y: 0, animated: true });
     }
+
+    const handleRefresh = () => {
+        if (isFetching) return;
+        queryClient.invalidateQueries({ queryKey: ['feed'] });
+    };
 
     if (isLoading) {
         return (
@@ -105,11 +110,17 @@ export default function Home() {
                     </Text>
                     <TouchableOpacity
                         onPress={() => refetch()}
-                        style={[styles.retryButton, { backgroundColor: theme.accentButton }]}
+                        disabled={isFetching}
+                        activeOpacity={0.7}
+                        style={[styles.retryButton, { backgroundColor: theme.accentButton, opacity: isFetching ? 0.6 : 1 }]}
                     >
-                        <Feather name="refresh-cw" size={15} color={COLORS.neutral.white} />
+                        {isFetching ? (
+                            <ActivityIndicator size="small" color={COLORS.neutral.white} />
+                        ) : (
+                            <Feather name="refresh-cw" size={15} color={COLORS.neutral.white} />
+                        )}
                         <Text style={{ color: COLORS.neutral.white, fontWeight: 'bold', fontSize: 14 }}>
-                            Tentar novamente
+                            {isFetching ? 'Carregando...' : 'Tentar novamente'}
                         </Text>
                     </TouchableOpacity>
                 </View>
@@ -118,20 +129,7 @@ export default function Home() {
     }
 
     return (
-        <ScrollView
-            ref={scrollViewRef}
-            refreshControl={
-                <RefreshControl
-                    refreshing={isLoading}
-                    onRefresh={refetch}
-                    size="default"
-                />
-            }
-            showsVerticalScrollIndicator={false}
-            stickyHeaderIndices={[0]}
-            style={[styles.container, { backgroundColor: theme.background }]}
-        >
-            {/* Header sticky */}
+        <>
             <Header>
                 <TouchableOpacity
                     activeOpacity={0.7}
@@ -146,6 +144,19 @@ export default function Home() {
                 <Text style={[styles.headerTitle, { color: theme.headerText }]}>TechPulse</Text>
                 <View style={{ width: 26 }} />
             </Header>
+
+            <ScrollView
+                ref={scrollViewRef}
+                refreshControl={
+                    <RefreshControl
+                        refreshing={isFetching}
+                        onRefresh={handleRefresh}
+                        size="default"
+                    />
+                }
+                showsVerticalScrollIndicator={false}
+                style={[styles.container, { backgroundColor: theme.background }]}
+            >
 
             {/* Banner de novas notícias */}
             {updates?.hasNew && (
@@ -280,6 +291,7 @@ export default function Home() {
                 )}
             </View>
         </ScrollView>
+        </>
     )
 }
 

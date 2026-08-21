@@ -4,7 +4,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { useThemeColors } from '@/src/hooks/useThemeColors'
 import { Image } from 'expo-image';
 import { goToInfoNews } from '@/src/utils/goToInfoNews';
-import { TypeNews } from '@/src/types/NewsType';
+import { TypeNews, hasValidImage } from '@/src/types/NewsType';
 
 export default function LastestNews({ latestNews }: { latestNews: TypeNews }) {
     const theme = useThemeColors();
@@ -13,19 +13,22 @@ export default function LastestNews({ latestNews }: { latestNews: TypeNews }) {
         return null;
     }
 
+    const hasImage = hasValidImage(latestNews?.image);
+
     return (
         <TouchableOpacity
             activeOpacity={0.9}
             onPress={() => goToInfoNews(latestNews)}
             style={[styles.card, { backgroundColor: theme.cardBackground }]}
         >
-            {latestNews?.image && (
+            {hasImage ? (
                 <View style={styles.imageWrapper}>
                     <Image
                         cachePolicy="disk"
                         transition={300}
                         style={styles.headerImage}
-                        source={{ uri: latestNews?.image }}
+                        source={{ uri: (latestNews?.image as string).trim() }}
+                        contentFit="cover"
                     />
                     <View style={styles.imageGradient} />
                     <View style={styles.badgeOnImage}>
@@ -37,10 +40,14 @@ export default function LastestNews({ latestNews }: { latestNews: TypeNews }) {
                         </View>
                     </View>
                 </View>
+            ) : (
+                <View style={[styles.placeholder, { backgroundColor: theme.textDisabled + '18', borderColor: theme.border }]}>
+                    <Feather name="image" size={32} color={theme.textMuted} />
+                </View>
             )}
 
             <View style={styles.content}>
-                {!latestNews?.image && (
+                {!hasImage && (
                     <Text style={[styles.badge, { color: COLORS.neutral.white, backgroundColor: COLORS.badges.blue, alignSelf: 'flex-start' }]}>
                         {latestNews.category.toString().toUpperCase()}
                     </Text>
@@ -77,6 +84,13 @@ const styles = StyleSheet.create({
     card: {
         borderRadius: 16,
         overflow: 'hidden',
+    },
+    placeholder: {
+        height: 140,
+        width: '100%',
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderBottomWidth: 1,
     },
     imageWrapper: {
         position: 'relative',

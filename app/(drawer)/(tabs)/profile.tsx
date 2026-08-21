@@ -6,8 +6,12 @@ import { REAL_NEWS } from "@/src/constants/news";
 import Card from "@/src/components/shared/Card";
 import { useEffect, useRef } from "react";
 import { useScrollStore } from "@/src/store/useScrollStore";
+import { useNavigation } from "expo-router";
+import { DrawerActions } from "@react-navigation/native";
+import Feather from "@expo/vector-icons/Feather";
 
 export default function Profile() {
+    const navigation = useNavigation();
     const theme = useThemeColors();
     const { shouldScrollToTop, resetScroll } = useScrollStore();
     const ScrollViewRef = useRef<ScrollView>(null);
@@ -23,7 +27,11 @@ export default function Profile() {
     return (
         <>
             <Header>
+                <TouchableOpacity activeOpacity={0.7} onPress={() => navigation.dispatch(DrawerActions.openDrawer())}>
+                    <Feather name="menu" size={26} color={theme.headerIcon} />
+                </TouchableOpacity>
                 <Text style={[styles.headerTitle, { color: theme.headerText }]}>Perfil</Text>
+                <View style={{ width: 26 }} />
             </Header>
 
             <ScrollView ref={ScrollViewRef} style={[styles.container, { backgroundColor: theme.background }]}
