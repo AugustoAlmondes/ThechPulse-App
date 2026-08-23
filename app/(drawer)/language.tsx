@@ -1,6 +1,6 @@
 import Header from '@/src/components/layout/Header';
 import { useThemeColors } from '@/src/hooks/useThemeColors';
-import { ALL_LANGUAGES, LANGUAGE_OPTIONS, useLanguageStore } from '@/src/store/useLanguageStore';
+import { LANGUAGE_OPTIONS, useLanguageStore } from '@/src/store/useLanguageStore';
 import { COLORS } from '@/src/theme/global';
 import Feather from '@expo/vector-icons/Feather';
 import { router } from 'expo-router';
@@ -8,9 +8,7 @@ import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 export default function Language() {
     const theme = useThemeColors();
-    const { selectedLanguages, toggleLanguage, setAllLanguages } = useLanguageStore();
-
-    const isAllSelected = selectedLanguages.length === ALL_LANGUAGES.length;
+    const { selectedLanguages, toggleLanguage } = useLanguageStore();
 
     return (
         <>
@@ -39,61 +37,35 @@ export default function Language() {
                     </Text>
                     
                     <View style={styles.optionList}>
-                        <TouchableOpacity
-                            style={[
-                                styles.option,
-                                { backgroundColor: theme.cardBackground },
-                                isAllSelected && styles.selectedOption,
-                            ]}
-                            onPress={setAllLanguages}
-                            activeOpacity={0.7}
-                        >
-                            <Feather
-                                name="globe"
-                                size={20}
-                                color={isAllSelected ? theme.textPrimary : theme.textMuted}
-                            />
-                            <Text
-                                style={[
-                                    styles.optionText,
-                                    { color: isAllSelected ? theme.textPrimary : theme.textMuted },
-                                ]}
-                            >
-                                Todos os Idiomas
-                            </Text>
-                            {isAllSelected && (
-                                <Feather name="check" size={20} color={COLORS.primary[500]} />
-                            )}
-                        </TouchableOpacity>
-
                         {LANGUAGE_OPTIONS.map((opt) => {
                             const isSelected = selectedLanguages.includes(opt.key);
-                            const isVisuallySelected = isSelected && !isAllSelected;
                             return (
                                 <TouchableOpacity
                                     key={opt.key}
                                     style={[
                                         styles.option,
                                         { backgroundColor: theme.cardBackground },
-                                        isVisuallySelected && styles.selectedOption,
+                                        isSelected && styles.selectedOption,
                                     ]}
                                     onPress={() => toggleLanguage(opt.key)}
                                     activeOpacity={0.7}
+                                    accessibilityRole="checkbox"
+                                    accessibilityState={{ checked: isSelected }}
                                 >
                                     <Feather
                                         name={opt.icon}
                                         size={20}
-                                        color={isVisuallySelected ? theme.textPrimary : theme.textMuted}
+                                        color={isSelected ? theme.textPrimary : theme.textMuted}
                                     />
                                     <Text
                                         style={[
                                             styles.optionText,
-                                            { color: isVisuallySelected ? theme.textPrimary : theme.textMuted },
+                                            { color: isSelected ? theme.textPrimary : theme.textMuted },
                                         ]}
                                     >
                                         {opt.label}
                                     </Text>
-                                    {isVisuallySelected && (
+                                    {isSelected && (
                                         <Feather name="check" size={20} color={COLORS.primary[500]} />
                                     )}
                                 </TouchableOpacity>

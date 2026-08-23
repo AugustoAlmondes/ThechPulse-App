@@ -58,13 +58,15 @@ describe('useFeed hook', () => {
     const { result } = renderHook(() => useFeed(), { wrapper: createWrapper() });
     await waitFor(() => expect(result.current.isSuccess).toBe(true));
     expect(result.current.hasNextPage).toBe(true);
-    // fetchNextPage should call page 2 without refresh
+    // fetchNextPage should call page 2 without refresh, but with languages
     await act(async () => {
       await result.current.fetchNextPage();
     });
     await waitFor(() => expect(result.current.data?.pages.length).toBe(2));
-    // Check second call was page 2 without refresh
-    expect(mockedGet).toHaveBeenCalledWith('/news', { params: { page: 2 } });
+    // Check second call was page 2 without refresh (languages may be present)
+    const secondCall = mockedGet.mock.calls.find((c: any) => c[1]?.params?.page === 2);
+    expect(secondCall).toBeTruthy();
+    expect(secondCall[1].params.refresh).toBeFalsy();
     const refreshCalls = mockedGet.mock.calls.filter((c: any) => c[1]?.params?.refresh === true);
     expect(refreshCalls.length).toBe(0);
   });

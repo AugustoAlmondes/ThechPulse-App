@@ -2,7 +2,7 @@ import { useInfiniteQuery, useQueryClient } from '@tanstack/react-query'
 import { useCallback, useRef, useState } from 'react'
 import { getLatestNews } from '../services/news'
 import { TypeNews } from '../types/NewsType'
-import { useLanguageStore } from '../store/useLanguageStore'
+import { formatLanguagesQuery, useLanguageStore } from '../store/useLanguageStore'
 
 interface UseFeedResponse {
     news: TypeNews[];
@@ -12,15 +12,16 @@ interface UseFeedResponse {
 
 export function useFeed() {
     const selectedLanguages = useLanguageStore(state => state.selectedLanguages);
+    const languagesKey = formatLanguagesQuery(selectedLanguages);
     const queryClient = useQueryClient();
     const [isRefreshing, setIsRefreshing] = useState(false);
     const refreshingRef = useRef(false);
 
     const query = useInfiniteQuery({
-        queryKey: ['feed', selectedLanguages.join(',')],
+        queryKey: ['feed', languagesKey],
 
         queryFn: ({ pageParam = 1 }) =>
-            getLatestNews({ page: pageParam as number }),
+            getLatestNews({ page: pageParam as number, languages: selectedLanguages }),
 
         initialPageParam: 1,
 
@@ -38,6 +39,8 @@ export function useFeed() {
                 ...data,
                 pages: data.pages.map(page => ({
                     ...page,
+                    // Filtro client-side como fallback enquanto backend não filtra;
+                    // quando backend enviar languages, já virá filtrado e select apenas mantém.
                     news: page.news.filter((n: TypeNews) => selectedLanguages.includes(n.language as any))
                 }))
             };
@@ -49,8 +52,8 @@ export function useFeed() {
         refreshingRef.current = true;
         setIsRefreshing(true);
         try {
-            const fresh = await getLatestNews({ page: 1, refresh: true });
-            const key = ['feed', selectedLanguages.join(',')] as const;
+            const fresh = await getLatestNews({ page: 1, refresh: true, languages: selectedLanguages });
+            const key = ['feed', languagesKey] as const;
             queryClient.setQueryData(key, (old: any) => {
                 if (!old) {
                     return {
@@ -73,7 +76,7 @@ export function useFeed() {
             refreshingRef.current = false;
             setIsRefreshing(false);
         }
-    }, [query.isFetching, queryClient, selectedLanguages]);
+    }, [query.isFetching, queryClient, selectedLanguages, languagesKey]);
 
     return {
         ...query,

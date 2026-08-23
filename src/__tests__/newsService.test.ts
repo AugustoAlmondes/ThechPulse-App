@@ -1,6 +1,10 @@
 import { api } from '../services/api';
 import { getLatestNews } from '../services/news';
 
+jest.mock('@react-native-async-storage/async-storage', () =>
+  require('@react-native-async-storage/async-storage/jest/async-storage-mock')
+);
+
 jest.mock('../services/api', () => ({
   api: {
     get: jest.fn(),
