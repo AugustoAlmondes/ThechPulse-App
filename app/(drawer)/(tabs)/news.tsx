@@ -8,7 +8,6 @@ import Card from "@/src/components/shared/Card";
 import { useEffect, useRef, useState } from "react";
 import { useScrollStore } from "@/src/store/useScrollStore";
 import { useFeed } from "@/src/hooks/useFeed";
-import { queryClient } from "@/src/lib/react-query";
 import { useNavigation } from "expo-router";
 import { DrawerActions } from "@react-navigation/native";
 
@@ -24,6 +23,8 @@ export default function AllNews() {
         isLoading,
         isError,
         isFetching,
+        isRefreshing,
+        refresh,
         refetch,
         fetchNextPage,
         hasNextPage,
@@ -31,8 +32,7 @@ export default function AllNews() {
     } = useFeed();
 
     const handleRefresh = () => {
-        if (isFetching) return;
-        queryClient.invalidateQueries({ queryKey: ['feed'] });
+        refresh();
     };
 
     const news = data?.pages.flatMap(page => page.news) || []
@@ -183,7 +183,7 @@ export default function AllNews() {
                 onScroll={handleScroll}
                 scrollEventThrottle={16}
                 refreshControl={
-                    <RefreshControl refreshing={isFetching && !isFetchingNextPage} onRefresh={handleRefresh} />
+                    <RefreshControl refreshing={isRefreshing} onRefresh={handleRefresh} />
                 }
                 keyboardShouldPersistTaps="handled"
                 showsVerticalScrollIndicator={false}

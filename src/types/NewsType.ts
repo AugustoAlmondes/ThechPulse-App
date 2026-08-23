@@ -11,6 +11,9 @@ export interface NewsAPIResponse {
     status: string;
     news: TypeNews[];
     page: number;
+    hasMore: boolean;
+    count: number;
+    cached: boolean;
 }
 
 export interface TypeNews {

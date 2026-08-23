@@ -3,12 +3,13 @@ import { normalizeImage } from '../types/NewsType';
 import { api } from './api';
 
 export async function getLatestNews(
-    { page = 1 }: { page: number }
+    { page = 1, refresh = false }: { page?: number; refresh?: boolean }
 ): Promise<NewsAPIResponse> {
+    const params: Record<string, unknown> = { page };
+    if (refresh) params.refresh = true;
+
     const response = await api.get('/news', {
-        params: {
-            page
-        }
+        params,
     });
 
     const data: NewsAPIResponse = response.data;

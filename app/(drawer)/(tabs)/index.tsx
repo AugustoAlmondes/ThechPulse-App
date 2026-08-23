@@ -15,7 +15,6 @@ import { useScrollStore } from "@/src/store/useScrollStore";
 import { useReadStore } from "@/src/store/useReadStore";
 import { useEffect, useRef, useMemo } from "react";
 import { useFeed } from "@/src/hooks/useFeed";
-import { queryClient } from "@/src/lib/react-query";
 import { useCheckUpdates } from "@/src/hooks/useCheckUpdates";
 import { hasValidImage, TypeNews } from "@/src/types/NewsType";
 
@@ -35,6 +34,8 @@ export default function Home() {
         isLoading,
         isError,
         isFetching,
+        isRefreshing,
+        refresh,
         refetch,
         fetchNextPage,
         hasNextPage,
@@ -61,15 +62,12 @@ export default function Home() {
     }, [shouldScrollToTop, resetScroll])
 
     async function reloadFeed() {
-        await queryClient.invalidateQueries({
-            queryKey: ['feed'],
-        });
+        await refresh();
         scrollViewRef.current?.scrollTo({ y: 0, animated: true });
     }
 
     const handleRefresh = () => {
-        if (isFetching) return;
-        queryClient.invalidateQueries({ queryKey: ['feed'] });
+        refresh();
     };
 
     if (isLoading) {
@@ -149,7 +147,7 @@ export default function Home() {
                 ref={scrollViewRef}
                 refreshControl={
                     <RefreshControl
-                        refreshing={isFetching}
+                        refreshing={isRefreshing}
                         onRefresh={handleRefresh}
                         size="default"
                     />
