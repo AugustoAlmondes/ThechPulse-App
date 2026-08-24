@@ -99,50 +99,6 @@ export default function Settings() {
             </Header>
 
             <ScrollView style={styles.container}>
-                {/* {isLogin ?
-
-                    <View style={styles.section}>
-                        <Text style={[styles.sectionTitle, { color: theme.sectionTitleColor }]}>Conta</Text>
-                        <View style={{
-                            gap: 5,
-                            backgroundColor: theme.settingItemBackground,
-                            borderRadius: 10,
-                            alignItems: 'center',
-                            justifyContent: 'center',
-                            padding: 20
-                        }}>
-                            <View>
-                                <Image source={{ uri: 'https://i.pravatar.cc/100' }} style={styles.avatar} />
-                            </View>
-                            <Text
-                                style={{ fontSize: 18, color: theme.textPrimary }}
-                            >
-                                Augusto Almondes
-                            </Text>
-                            <Text
-                                style={{ fontSize: 12, color: theme.textTertiary }}
-                            >
-                                augusto@teste.com
-                            </Text>
-                        </View>
-                    </View>
-                    :
-
-                    <View style={styles.section}>
-                        <Text style={[styles.sectionTitle, { color: theme.sectionTitleColor }]}>Conta</Text>
-                        <TouchableOpacity
-                            style={[styles.settingItem, { backgroundColor: theme.settingItemBackground }]}
-                            activeOpacity={0.7}
-                            onPress={() => router.push('/login')}
-                        >
-                            <View style={styles.itemLeft}>
-                                <Feather name="user" size={20} color={COLORS.badges.indigo} />
-                                <Text style={[styles.itemText, { color: theme.textPrimary }]}>Entrar</Text>
-                            </View>
-                            <Feather name="chevron-right" size={20} color={theme.chevronColor} />
-                        </TouchableOpacity>
-                    </View>
-                } */}
 
                 <View style={styles.section}>
                     <Text style={[styles.sectionTitle, { color: theme.sectionTitleColor }]}>Preferências</Text>
@@ -296,17 +252,6 @@ export default function Settings() {
                     </TouchableOpacity>
                 </View>
 
-                {/* {isLogin && <TouchableOpacity
-                    style={[styles.settingItem, styles.logoutItem]}
-                    activeOpacity={0.7}
-                    onPress={() => router.replace('/login')}
-                >
-                    <View style={styles.itemLeft}>
-                        <Feather name="log-out" size={20} color={COLORS.feedback.error[500]} />
-                        <Text style={[styles.itemText, { color: COLORS.feedback.error[500] }]}>Sair</Text>
-                    </View>
-                </TouchableOpacity>} */}
-
                 <View style={{ height: 40 }} />
             </ScrollView>
         </View>
@@ -381,11 +326,5 @@ const styles = StyleSheet.create({
     fontSizeLabel: {
         fontSize: 13,
         fontWeight: '600',
-    },
-    logoutItem: {
-        marginTop: 30,
-        backgroundColor: COLORS.feedback.error[500] + '15',
-        borderWidth: 1,
-        borderColor: COLORS.feedback.error[500] + '30',
     },
 });

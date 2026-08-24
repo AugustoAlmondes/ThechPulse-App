@@ -11,6 +11,7 @@ import { useFavoriteStore } from '@/src/store/useFavoriteStore';
 import { goToInfoNews } from '@/src/utils/goToInfoNews';
 import { useReadStore } from '@/src/store/useReadStore';
 import { shareNews } from '@/src/utils/shareNews';
+import { getCategoryLabel } from '@/src/utils/getCategoryLabel';
 
 interface CardProps {
     color?: string,
@@ -89,9 +90,9 @@ export default function Card({
             )}
 
             <View style={styles.rightContent}>
-                {showSubjects && data.category && (
+                {showSubjects && (
                     <Text style={[styles.subject, { backgroundColor: COLORS.badges.blue + 60, color: theme.cardSubject }]}>
-                        {data.category[0] === 'science_technology' ? 'Ciência e Tecnologia' : data.category[0].toUpperCase()}
+                        {getCategoryLabel(data.category)}
                     </Text>
                 )}
 

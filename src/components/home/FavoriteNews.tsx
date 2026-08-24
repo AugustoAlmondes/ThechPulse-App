@@ -5,6 +5,7 @@ import { useThemeColors } from '@/src/hooks/useThemeColors'
 import { Image } from 'expo-image'
 import Feather from '@expo/vector-icons/Feather'
 import { goToInfoNews } from '@/src/utils/goToInfoNews'
+import { getCategoryLabel } from '@/src/utils/getCategoryLabel'
 
 export default function FavoriteNews({ item }: { item: TypeNews }) {
     const theme = useThemeColors();
@@ -30,7 +31,7 @@ export default function FavoriteNews({ item }: { item: TypeNews }) {
             )}
             <View style={styles.info}>
                 <Text style={[styles.category, { color: theme.accentButton }]}>
-                    {item.category?.toString().toUpperCase()}
+                    {getCategoryLabel(item.category)}
                 </Text>
                 <Text style={[styles.title, { color: theme.textSecondary }]} numberOfLines={3}>
                     {item.title}

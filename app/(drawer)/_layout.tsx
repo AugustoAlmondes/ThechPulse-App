@@ -44,7 +44,7 @@ export default function DrawerLayout() {
             <Drawer.Screen
                 name="history"
                 options={{
-                    title: 'Histócio',
+                    title: 'Histórico',
                     headerShown: false,
                     drawerIcon: ({ color }) => <Ionicons name='time' size={20} color={color} />
                 }}

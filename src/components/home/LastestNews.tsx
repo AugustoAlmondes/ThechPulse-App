@@ -5,6 +5,7 @@ import { useThemeColors } from '@/src/hooks/useThemeColors'
 import { Image } from 'expo-image';
 import { goToInfoNews } from '@/src/utils/goToInfoNews';
 import { TypeNews, hasValidImage } from '@/src/types/NewsType';
+import { getCategoryLabel } from '@/src/utils/getCategoryLabel';
 
 export default function LastestNews({ latestNews }: { latestNews: TypeNews }) {
     const theme = useThemeColors();
@@ -33,7 +34,7 @@ export default function LastestNews({ latestNews }: { latestNews: TypeNews }) {
                     <View style={styles.imageGradient} />
                     <View style={styles.badgeOnImage}>
                         <Text style={[styles.badge, { color: COLORS.neutral.white, backgroundColor: COLORS.badges.blue }]}>
-                            {latestNews.category.toString().toUpperCase()}
+                            {getCategoryLabel(latestNews.category)}
                         </Text>
                         <View style={[styles.tagNew, { backgroundColor: COLORS.badges.indigo + 'CC' }]}>
                             <Text style={styles.tagNewText}>DESTAQUE</Text>
@@ -49,7 +50,7 @@ export default function LastestNews({ latestNews }: { latestNews: TypeNews }) {
             <View style={styles.content}>
                 {!hasImage && (
                     <Text style={[styles.badge, { color: COLORS.neutral.white, backgroundColor: COLORS.badges.blue, alignSelf: 'flex-start' }]}>
-                        {latestNews.category.toString().toUpperCase()}
+                        {getCategoryLabel(latestNews.category)}
                     </Text>
                 )}
 
