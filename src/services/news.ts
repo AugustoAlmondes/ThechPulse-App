@@ -28,25 +28,43 @@ export async function getLatestNews(
     return normalized;
 };
 
+export interface CheckUpdatesParams {
+    after: string;
+    languages?: LanguageCode[];
+}
+
+export interface CheckUpdatesResponse {
+    hasNew: boolean;
+    count: number;
+    // compat with old naming
+    hasUpdates?: boolean;
+}
+
 export async function checkUpdates(
-    after: string
-) {
+    after: string,
+    languages?: LanguageCode[]
+): Promise<CheckUpdatesResponse> {
     try {
+        const params: Record<string, unknown> = { after };
+        if (languages && languages.length > 0) {
+            params.languages = formatLanguagesQuery(languages);
+        }
         const response = await api.get(
             '/news/check-updates',
-            {
-                params: {
-                    after
-                }
-            }
+            { params }
         );
-        return response.data;
+        return response.data as CheckUpdatesResponse;
     } catch (error) {
         console.log("Error", error)
         return {
+            hasNew: false,
             hasUpdates: false,
             count: 0
         };
     }
+}
+
+export async function checkUpdatesWithParams(params: CheckUpdatesParams): Promise<CheckUpdatesResponse> {
+    return checkUpdates(params.after, params.languages);
 }
 

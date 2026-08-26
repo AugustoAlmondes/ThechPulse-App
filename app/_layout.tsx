@@ -9,6 +9,9 @@ import { Platform } from 'react-native';
 import * as SplashScreen from 'expo-splash-screen';
 import { useThemeLoaded } from '@/src/providers/ThemeProvider';
 import { LoadingScreen } from '@/src/components/shared/LoadingScreen';
+import { useNotificationPolling } from '@/src/hooks/useNotificationPolling';
+import * as Notifications from 'expo-notifications';
+import { router } from 'expo-router';
 
 // Mantém o splash screen nativo visível até liberarmos manualmente
 SplashScreen.preventAutoHideAsync();
@@ -17,6 +20,7 @@ function RootLayoutInner() {
   const insets = useSafeAreaInsets();
   const theme = useThemeColors();
   const isLoaded = useThemeLoaded();
+  useNotificationPolling();
 
   useEffect(() => {
     if (isLoaded) {
@@ -24,6 +28,17 @@ function RootLayoutInner() {
       SplashScreen.hideAsync();
     }
   }, [isLoaded]);
+
+  useEffect(() => {
+    const sub = Notifications.addNotificationResponseReceivedListener((response) => {
+      const data: any = response.notification.request.content.data;
+      // Agrupada (count>1) or single: leva para lista de notícias
+      try {
+        router.push('/(drawer)/(tabs)/news' as any);
+      } catch {}
+    });
+    return () => sub.remove();
+  }, []);
 
   // Enquanto o tema não foi carregado do disco, exibe a tela de loading
   if (!isLoaded) {
