@@ -34,7 +34,8 @@
       "permissions": [
         "android.permission.INTERNET",
         "android.permission.ACCESS_NETWORK_STATE",
-        "android.permission.VIBRATE"
+        "android.permission.VIBRATE",
+        "android.permission.RECEIVE_BOOT_COMPLETED"
       ],
       "adaptiveIcon": {
         "backgroundColor": "#E6F4FE",

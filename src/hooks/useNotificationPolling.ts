@@ -4,15 +4,18 @@ import { useNotificationStore } from '../store/useNotificationStore';
 import { useLanguageStore } from '../store/useLanguageStore';
 import { setupNotifications } from '../services/localNotifications';
 import { checkForNewNotifications } from '../services/notificationService';
+import { registerNotificationBackgroundTask, unregisterNotificationBackgroundTask } from '../tasks/notificationBackgroundTask';
 
 /**
- * Foreground polling only — runs checkForNewNotifications while app is active.
+ * Foreground polling + background registration.
+ * Foreground:
  * - On mount: setup channel/handler
  * - When enabled + languages change: trigger check
  * - On AppState -> active: trigger check
- * - Optional interval 15m while active (reuses foreground window; not background)
- *
- * Does NOT use BackgroundFetch, TaskManager, RECEIVE_BOOT_COMPLETED.
+ * - Interval 15m while active
+ * Background:
+ * - When enabled: register BackgroundFetch task (15m, startOnBoot:true)
+ * - When disabled: unregister
  */
 export function useNotificationPolling() {
     const enabled = useNotificationStore((s) => s.enabled);
@@ -23,6 +26,15 @@ export function useNotificationPolling() {
     useEffect(() => {
         setupNotifications().catch(() => {});
     }, []);
+
+    // Background task lifecycle tied to enabled
+    useEffect(() => {
+        if (enabled) {
+            registerNotificationBackgroundTask().catch(() => {});
+        } else {
+            unregisterNotificationBackgroundTask().catch(() => {});
+        }
+    }, [enabled]);
 
     // Trigger check when enabled or languages change
     useEffect(() => {

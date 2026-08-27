@@ -12,6 +12,7 @@ import { LoadingScreen } from '@/src/components/shared/LoadingScreen';
 import { useNotificationPolling } from '@/src/hooks/useNotificationPolling';
 import * as Notifications from 'expo-notifications';
 import { router } from 'expo-router';
+import '@/src/tasks/notificationBackgroundTask';
 
 // Mantém o splash screen nativo visível até liberarmos manualmente
 SplashScreen.preventAutoHideAsync();

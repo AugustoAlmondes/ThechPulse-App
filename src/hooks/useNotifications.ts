@@ -4,6 +4,7 @@ import * as Notifications from 'expo-notifications';
 import { useNotificationStore } from '../store/useNotificationStore';
 import { requestNotificationPermissions, getNotificationPermissions, setupNotifications } from '../services/localNotifications';
 import { checkForNewNotifications } from '../services/notificationService';
+import { registerNotificationBackgroundTask, unregisterNotificationBackgroundTask } from '../tasks/notificationBackgroundTask';
 
 /**
  * Hook exposing enable/disable and manual check.
@@ -38,6 +39,8 @@ export function useNotifications() {
         }
         await setupNotifications();
         setEnabled(true);
+        // Register background task after enabling (best effort, not blocking)
+        registerNotificationBackgroundTask().catch(() => {});
         // After enabling, trigger an initial check (best effort)
         checkForNewNotifications().catch(() => {});
         return true;
@@ -45,6 +48,7 @@ export function useNotifications() {
 
     const disableNotifications = useCallback(() => {
         setEnabled(false);
+        unregisterNotificationBackgroundTask().catch(() => {});
     }, [setEnabled]);
 
     const toggleNotifications = useCallback(async () => {
