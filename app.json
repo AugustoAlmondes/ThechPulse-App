@@ -13,7 +13,11 @@
     "description": "TechPulse é um aplicativo de notícias de tecnologia que traz as últimas novidades do mundo tech de forma rápida, intuitiva e elegante. Salve favoritos, leia mais tarde e acompanhe seu histórico de leitura.",
     "primaryColor": "#0A84FF",
     "owner": "augustoalmondes",
-    "platforms": ["ios", "android", "web"],
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
     "githubUrl": "https://github.com/augustoalmondes/TechPulse-App",
     "ios": {
       "supportsTablet": true,
@@ -96,6 +100,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "6790f749-0232-4927-8620-a515e30213c4"
+      }
     }
   }
 }
