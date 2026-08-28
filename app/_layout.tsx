@@ -67,7 +67,7 @@ function RootLayoutInner() {
         headerShown: false,
         statusBarStyle: theme.statusBarStyle,
         contentStyle: {
-          backgroundColor: theme.bg.primary,
+          backgroundColor: theme.background,
           paddingTop: insets.top,
           paddingBottom: insets.bottom,
         }

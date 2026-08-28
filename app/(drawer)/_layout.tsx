@@ -91,13 +91,6 @@ export default function DrawerLayout() {
                 }}
             />
 
-            <Drawer.Screen
-                name="notifications"
-                options={{
-                    drawerItemStyle: { display: 'none' },
-                    headerShown: false,
-                }}
-            />
-        </Drawer>
+            </Drawer>
     )
 }
