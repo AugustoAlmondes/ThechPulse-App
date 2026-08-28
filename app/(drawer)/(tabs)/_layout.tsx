@@ -1,14 +1,16 @@
 import { createMaterialTopTabNavigator, MaterialTopTabBarProps } from "@react-navigation/material-top-tabs"
-import Favorites from "./favorites";
 import { useThemeColors } from "@/src/hooks/useThemeColors";
-import Home from ".";
 import Entypo from '@expo/vector-icons/Entypo';
-import AllNews from "./news";
-import ReadLater from "./read";
 import { useScrollStore } from "@/src/store/useScrollStore";
 import { View, TouchableOpacity, StyleSheet, Platform, Text } from "react-native";
 import Ionicons from "@expo/vector-icons/Ionicons";
 import { useReadStore } from "@/src/store/useReadStore";
+import React from "react";
+
+const Home = React.lazy(() => import("."));
+const Favorites = React.lazy(() => import("./favorites"));
+const AllNews = React.lazy(() => import("./news"));
+const ReadLater = React.lazy(() => import("./read"));
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -115,7 +117,7 @@ export default function TabsLayout() {
     const triggerScrollToTop = useScrollStore(state => state.triggerScrollToTop);
 
     return (
-        <>
+        <React.Suspense fallback={null}>
             <Tab.Navigator
                 tabBarPosition="bottom"
                 tabBar={(props) => <CustomTabBar {...props} />}
@@ -149,7 +151,7 @@ export default function TabsLayout() {
                     options={{ tabBarLabel: 'Ler depois' }}
                 />
             </Tab.Navigator>
-        </>
+        </React.Suspense>
     )
 }
 

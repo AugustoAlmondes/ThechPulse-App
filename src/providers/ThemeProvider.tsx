@@ -3,7 +3,7 @@ import * as SecureStore from 'expo-secure-store'
 import React, { createContext, useContext, useEffect, useRef } from 'react'
 import { Platform, useColorScheme } from 'react-native'
 import * as NavigationBar from 'expo-navigation-bar'
-import { darkTheme, lightTheme } from '@/src/theme/global'
+import { lightTheme, darkTheme } from '@/src/design/tokens'
 
 const STORAGE_KEY = 'app_theme_mode'
 
@@ -13,14 +13,6 @@ interface ThemeContextValue {
 
 const ThemeContext = createContext<ThemeContextValue>({ isLoaded: false })
 
-/**
- * ThemeProvider:
- * - On mount: reads saved theme from expo-secure-store and hydrates the Zustand store
- * - When setMode is called: persists the value back to expo-secure-store via a subscription
- *
- * This pattern avoids using AsyncStorage (which crashes on RN New Architecture with v3.x)
- * and avoids Zustand's persist middleware entirely.
- */
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const setMode = useThemeStore((s) => s.setMode)
     const mode = useThemeStore((s) => s.mode)
@@ -28,7 +20,6 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
     const [isLoaded, setIsLoaded] = React.useState(false)
     const isFirstRun = useRef(true)
 
-    // Hydrate store from disk on mount
     useEffect(() => {
         SecureStore.getItemAsync(STORAGE_KEY)
             .then((saved) => {
@@ -36,34 +27,28 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
                     setMode(saved as ThemeMode)
                 }
             })
-            .catch(() => {
-                // Ignore read errors — default to initial store value ('dark')
-            })
+            .catch(() => {})
             .finally(() => {
                 setIsLoaded(true)
             })
     }, [])
 
-    // Subscribe to store changes and persist to disk (skip the first emission)
     useEffect(() => {
         const unsub = useThemeStore.subscribe((state) => {
             if (isFirstRun.current) {
                 isFirstRun.current = false
                 return
             }
-            SecureStore.setItemAsync(STORAGE_KEY, state.mode).catch(() => {
-                // Ignore write errors silently
-            })
+            SecureStore.setItemAsync(STORAGE_KEY, state.mode).catch(() => {})
         })
         return unsub
     }, [])
 
-    // Sync Android navigation bar with theme
     useEffect(() => {
         if (Platform.OS !== 'android') return
         if (!isLoaded) return
         const resolvedIsDark = mode === 'system' ? (systemScheme ?? 'dark') === 'dark' : mode === 'dark'
-        const bg = resolvedIsDark ? darkTheme.tabBarBackground : lightTheme.tabBarBackground
+        const bg = resolvedIsDark ? darkTheme.bg.primary : lightTheme.bg.primary
         const buttonStyle = resolvedIsDark ? 'light' : 'dark'
         NavigationBar.setBackgroundColorAsync(bg).catch(() => {})
         NavigationBar.setButtonStyleAsync(buttonStyle as any).catch(() => {})

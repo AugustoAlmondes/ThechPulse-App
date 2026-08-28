@@ -12,20 +12,37 @@ import { LoadingScreen } from '@/src/components/shared/LoadingScreen';
 import { useNotificationPolling } from '@/src/hooks/useNotificationPolling';
 import * as Notifications from 'expo-notifications';
 import { router } from 'expo-router';
+import { useFonts } from 'expo-font';
+import {
+  Inter_400Regular,
+  Inter_500Medium,
+  Inter_600SemiBold,
+  Inter_700Bold,
+} from '@expo-google-fonts/inter';
+import {
+  SpaceGrotesk_600SemiBold,
+  SpaceGrotesk_700Bold,
+} from '@expo-google-fonts/space-grotesk';
 import '@/src/tasks/notificationBackgroundTask';
 
-// Mantém o splash screen nativo visível até liberarmos manualmente
 SplashScreen.preventAutoHideAsync();
 
 function RootLayoutInner() {
   const insets = useSafeAreaInsets();
   const theme = useThemeColors();
   const isLoaded = useThemeLoaded();
+  const [fontsLoaded] = useFonts({
+    Inter_400Regular,
+    Inter_500Medium,
+    Inter_600SemiBold,
+    Inter_700Bold,
+    SpaceGrotesk_600SemiBold,
+    SpaceGrotesk_700Bold,
+  });
   useNotificationPolling();
 
   useEffect(() => {
     if (isLoaded) {
-      // Esconde o splash nativo assim que o tema estiver pronto
       SplashScreen.hideAsync();
     }
   }, [isLoaded]);
@@ -33,7 +50,6 @@ function RootLayoutInner() {
   useEffect(() => {
     const sub = Notifications.addNotificationResponseReceivedListener((response) => {
       const data: any = response.notification.request.content.data;
-      // Agrupada (count>1) or single: leva para lista de notícias
       try {
         router.push('/(drawer)/(tabs)/news' as any);
       } catch {}
@@ -41,8 +57,7 @@ function RootLayoutInner() {
     return () => sub.remove();
   }, []);
 
-  // Enquanto o tema não foi carregado do disco, exibe a tela de loading
-  if (!isLoaded) {
+  if (!isLoaded || !fontsLoaded) {
     return <LoadingScreen />;
   }
 
@@ -52,7 +67,7 @@ function RootLayoutInner() {
         headerShown: false,
         statusBarStyle: theme.statusBarStyle,
         contentStyle: {
-          backgroundColor: theme.headerBackground,
+          backgroundColor: theme.bg.primary,
           paddingTop: insets.top,
           paddingBottom: insets.bottom,
         }
